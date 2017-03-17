@@ -67,12 +67,10 @@
 		65723E371E7B3E2C0086F9B8 /* On the Map */ = {
 			isa = PBXGroup;
 			children = (
-				65723E381E7B3E2C0086F9B8 /* AppDelegate.swift */,
 				65723E4B1E7B44B10086F9B8 /* Model */,
 				65723E4A1E7B44A60086F9B8 /* View */,
 				65723E4C1E7B44BE0086F9B8 /* Controller */,
 				65723E4D1E7B44E80086F9B8 /* Supporting Files */,
-				65723E5A1E7B54370086F9B8 /* GCDConvenience.swift */,
 			);
 			path = "On the Map";
 			sourceTree = "<group>";
@@ -107,6 +105,8 @@
 		65723E4D1E7B44E80086F9B8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				65723E5A1E7B54370086F9B8 /* GCDConvenience.swift */,
+				65723E381E7B3E2C0086F9B8 /* AppDelegate.swift */,
 				65723E441E7B3E2C0086F9B8 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -392,6 +392,7 @@
 				65723E491E7B3E2C0086F9B8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
