@@ -51,11 +51,14 @@ class OTMAuthViewViewController: UIViewController {
         
         let parameters = [OTMClient.Constants.ParameterKeys.Username: email, OTMClient.Constants.ParameterKeys.Password: password]
         
-        _ = OTMClient.sharedInstance().taskForPOSTMethod(OTMClient.Constants.Methods.AuthenticateSessionNew, parameters: parameters) { (success, error) in
+        _ = OTMClient.sharedInstance().taskForPOSTLogin(OTMClient.Constants.Methods.AuthenticateSessionNew, parameters: parameters) { (userID, error) in
             performUIUpdatesOnMain {
-                print("Hello, World!")
-                self.loginActivity.stopAnimating()
-                self.loginButton.isEnabled = true
+                if (userID != nil) {
+                    print("Hello, World!")
+                    self.loginActivity.stopAnimating()
+                    self.loginButton.isEnabled = true
+                }
+                
             }
             
         }

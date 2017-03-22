@@ -16,11 +16,11 @@ class OTMClient: NSObject {
     
     var session = URLSession.shared
     var sessionID: String? = nil
-    var userID: Int? = nil
+    var userID: String? = nil
     
     // MARK: POST
     
-    func taskForPOSTMethod(_ method: String, parameters: [String:String], completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func taskForPOSTLogin(_ method: String, parameters: [String:String], completionHandlerForLogin: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         // Setup parameters
         let parameters = OTMParametersFromDictionary(parameters)
@@ -38,7 +38,7 @@ class OTMClient: NSObject {
             func sendError(_ error: String) {
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForPOST(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
+                completionHandlerForLogin(nil, NSError(domain: "taskForPOSTLogin", code: 1, userInfo: userInfo))
             }
             
             /* GUARD: Was there an error? */
@@ -48,12 +48,10 @@ class OTMClient: NSObject {
             }
             
             /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = ((response as? HTTPURLResponse)?.statusCode) else {
+            guard let statusCode = ((response as? HTTPURLResponse)?.statusCode), statusCode == 200 else {
                 sendError("Your request returned an invalid status code")
                 return
             }
-            
-            print(statusCode)
             
             /* GUARD: Was there any data returned? */
             guard let data = data else {
@@ -63,8 +61,20 @@ class OTMClient: NSObject {
             
             let range = Range(5 ..< data.count)
             let newData = data.subdata(in: range) /* subset response data! */
-            print(NSString(data: newData, encoding: String.Encoding.utf8.rawValue)!)
-            completionHandlerForPOST(true as AnyObject?, nil)
+//            print(NSString(data: newData, encoding: String.Encoding.utf8.rawValue)!)
+            var accountJSONParsed: AnyObject! = nil
+            do {
+                accountJSONParsed = try JSONSerialization.jsonObject(with: newData, options: .allowFragments) as AnyObject
+            } catch {
+                completionHandlerForLogin(nil, NSError(domain: "JSONSerialization", code: 9, userInfo: [NSLocalizedDescriptionKey : error]))
+            }
+            print(accountJSONParsed)
+            
+            let accountDictionary = accountJSONParsed[Constants.JSONResponseKeys.Account] as AnyObject
+            print(accountDictionary)
+            let ID = accountDictionary[Constants.JSONResponseKeys.UserID]!
+            print(ID!)
+            completionHandlerForLogin("hello" as AnyObject, nil)
         }
         
         /* 7. Start the request */
