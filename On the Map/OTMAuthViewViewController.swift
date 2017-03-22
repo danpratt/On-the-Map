@@ -49,28 +49,17 @@ class OTMAuthViewViewController: UIViewController {
             return
         }
         
-        // Start a session
-        var request = URLRequest(url: URL(string: OTMClient.Constants.Methods.AuthenticateSessionNew)!)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = "{\"udacity\": {\"username\": \"\(email)\", \"password\": \"\(password)\"}}".data(using: .utf8)
+        let parameters = [OTMClient.Constants.ParameterKeys.Username: email, OTMClient.Constants.ParameterKeys.Password: password]
         
-        let task = session.dataTask(with: request) { data, response, error in
-         
-            if error != nil { // Handle error…
-                return
-            }
-            let range = Range(5 ..< data!.count)
-            let newData = data?.subdata(in: range) /* subset response data! */
-            print(NSString(data: newData!, encoding: String.Encoding.utf8.rawValue)!)
-            performUIUpdatesOnMain({ 
+        _ = OTMClient.sharedInstance().taskForPOSTMethod(OTMClient.Constants.Methods.AuthenticateSessionNew, parameters: parameters) { (success, error) in
+            performUIUpdatesOnMain {
+                print("Hello, World!")
                 self.loginActivity.stopAnimating()
-            })
+                self.loginButton.isEnabled = true
+            }
             
         }
         
-        task.resume()
         
     }
     
