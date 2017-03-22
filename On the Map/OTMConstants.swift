@@ -15,9 +15,29 @@ extension OTMClient {
         
         // MARK: Parameter Keys
         struct ParameterKeys {
+            // Account
             static let Udacity = "udacity"
             static let Username = "username"
             static let Password = "password"
+            
+            // Application and API Keys
+            static let ApplicationID = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
+            static let API_Key = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
+        }
+        
+        // MARK: JSONParameterKeys
+        struct JSONParameterKeys {
+            // Post
+            static let JSONApplication = "application/json"
+            static let Accept = "Accept"
+            static let Content = "Content-Type"
+            static let IDHeaderField = "X-Parse-Application-Id"
+            static let APIHeaderField = "X-Parse-REST-API-Key"
+        }
+        
+        // MARK: HTTP Method
+        struct HTTPMethods {
+            static let Post = "POST"
         }
         
         // MARK: JSON Response Keys
@@ -35,10 +55,14 @@ extension OTMClient {
         // MARK: Methods
         struct Methods {
             
-            // MARK: Account
-            
-            // MARK: Authentication
+            // Authentication
             static let AuthenticateSessionNew = "https://www.udacity.com/api/session"
+            
+            // Getting Student Locations
+            static let StudentLocations = "https://parse.udacity.com/parse/classes/StudentLocation"
+            
+            // Getting Public User Data
+            static let GetPublicData = "https://www.udacity.com/api/users/"
         }
     }
     

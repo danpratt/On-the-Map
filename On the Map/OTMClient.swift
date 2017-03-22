@@ -18,27 +18,33 @@ class OTMClient: NSObject {
     var sessionID: String? = nil
     var userID: String? = nil
     
-    // MARK: POST
+    // MARK: GET
+    func taskForGETMethod(_ method: String, parameters: String? = nil, httpHeaderFields: [String:String]? = nil, completionHandlerForGET: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
     
-    func taskForPOSTLogin(_ method: String, parameters: [String:String], completionHandlerForLogin: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
-        
+        // Create method var to use in case there are params
+        var method = method
         // Setup parameters
-        let parameters = OTMParametersFromDictionary(parameters)
+        if parameters != nil {
+            method.append("/\(parameters)")
+        }
         
         // Build request for task
         var request = URLRequest(url: URL(string: method)!)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = parameters
+        if httpHeaderFields != nil {
+            for (key, value) in httpHeaderFields! {
+                request.addValue(key, forHTTPHeaderField: value)
+            }
+        }
         
-        /* 4. Make the request */
-        let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
+        // Create task
+        
+        let task = session.dataTask(with: request) { (data, response, error) in
             
+            // error method
             func sendError(_ error: String) {
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForLogin(nil, NSError(domain: "taskForPOSTLogin", code: 1, userInfo: userInfo))
+                completionHandlerForGET(nil, NSError(domain: "taskForGETMethod: \(method)", code: 1, userInfo: userInfo))
             }
             
             /* GUARD: Was there an error? */
@@ -47,11 +53,17 @@ class OTMClient: NSObject {
                 return
             }
             
-            /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = ((response as? HTTPURLResponse)?.statusCode), statusCode == 200 else {
+            /* GUARD: Did we get a successful 200 response? */
+            guard let statusCode = ((response as? HTTPURLResponse)?.statusCode) else {
                 sendError("Your request returned an invalid status code")
                 return
             }
+            
+            print("GET status code: \(statusCode)")
+            
+            // Check statusCode for other failures
+            // check username/password
+            // check invalid url
             
             /* GUARD: Was there any data returned? */
             guard let data = data else {
@@ -59,14 +71,74 @@ class OTMClient: NSObject {
                 return
             }
             
-            let range = Range(5 ..< data.count)
-            let newData = data.subdata(in: range) /* subset response data! */
+            // Put data into a var, we might need to shave some characters in some cases
+            var newData = data
+            
+            // The only method that requires us to change data has httpHeaderFields, so check to see if that is nil
+            if httpHeaderFields == nil {
+                newData = self.removeFirstFiveCharactersFrom(data: data)
+            }
+            
+            completionHandlerForGET(newData as AnyObject?, nil)
+        }
+        task.resume()
+        return task
+    }
+    
+    // MARK: POST
+    
+    func taskForPOSTMethod(_ method: String, parameters: [String:String], httpHeaderFields: [String:String],completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+        
+        // Setup parameters
+        let parameters = OTMPOSTParametersFromDictionary(parameters)
+        
+        // Build request for task
+        var request = URLRequest(url: URL(string: method)!)
+        request.httpMethod = Constants.HTTPMethods.Post
+        request.addValue(OTMClient.Constants.JSONParameterKeys.JSONApplication, forHTTPHeaderField: OTMClient.Constants.JSONParameterKeys.Content)
+        for (key, value) in httpHeaderFields {
+            request.addValue(key, forHTTPHeaderField: value)
+        }
+        request.httpBody = parameters
+        
+        // Create task
+        let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
+            
+            func sendError(_ error: String) {
+                print(error)
+                let userInfo = [NSLocalizedDescriptionKey : error]
+                completionHandlerForPOST(nil, NSError(domain: "taskForPOSTMethod: \(method)", code: 1, userInfo: userInfo))
+            }
+            
+            /* GUARD: Was there an error? */
+            guard (error == nil) else {
+                sendError("There was an error with your request: \(error)")
+                return
+            }
+            
+            /* GUARD: Did we get a successful 200 response? */
+            guard let statusCode = ((response as? HTTPURLResponse)?.statusCode), statusCode == 200 else {
+                sendError("Your request returned an invalid status code")
+                return
+            }
+            
+            // Check statusCode for other failures
+            // check username/password
+            // check invalid url
+            
+            /* GUARD: Was there any data returned? */
+            guard let data = data else {
+                sendError("No data was returned by the request!")
+                return
+            }
+            
+            let newData = self.removeFirstFiveCharactersFrom(data: data)
 //            print(NSString(data: newData, encoding: String.Encoding.utf8.rawValue)!)
             var accountJSONParsed: AnyObject! = nil
             do {
                 accountJSONParsed = try JSONSerialization.jsonObject(with: newData, options: .allowFragments) as AnyObject
             } catch {
-                completionHandlerForLogin(nil, NSError(domain: "JSONSerialization", code: 9, userInfo: [NSLocalizedDescriptionKey : error]))
+                completionHandlerForPOST(nil, NSError(domain: "JSONSerialization", code: 9, userInfo: [NSLocalizedDescriptionKey : error]))
             }
             print(accountJSONParsed)
             
@@ -74,10 +146,10 @@ class OTMClient: NSObject {
             print(accountDictionary)
             let ID = accountDictionary[Constants.JSONResponseKeys.UserID]!
             print(ID!)
-            completionHandlerForLogin("hello" as AnyObject, nil)
+            completionHandlerForPOST(ID! as AnyObject, nil)
         }
         
-        /* 7. Start the request */
+        // Start the request
         task.resume()
         
         return task
@@ -86,7 +158,7 @@ class OTMClient: NSObject {
     // MARK: Private functions
     
     // create a URL from parameters
-    private func OTMParametersFromDictionary(_ parameters: [String:String], withPathExtension: String? = nil) -> Data {
+    private func OTMPOSTParametersFromDictionary(_ parameters: [String:String], withPathExtension: String? = nil) -> Data {
         
         var paramsToReturn: String = "{\"\(OTMClient.Constants.ParameterKeys.Udacity)\": {"
         
@@ -101,6 +173,13 @@ class OTMClient: NSObject {
         paramsToReturn.append("}}")
         print(paramsToReturn)
         return paramsToReturn.data(using: String.Encoding.utf8)!
+    }
+    
+    // Shave first five characters from response
+    private func removeFirstFiveCharactersFrom(data: Data) -> Data {
+        let range = Range(5 ..< data.count)
+        let newData = data.subdata(in: range) /* subset response data! */
+        return newData
     }
     
     // MARK: Shared Instance

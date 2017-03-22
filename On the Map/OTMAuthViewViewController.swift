@@ -51,7 +51,9 @@ class OTMAuthViewViewController: UIViewController {
         
         let parameters = [OTMClient.Constants.ParameterKeys.Username: email, OTMClient.Constants.ParameterKeys.Password: password]
         
-        _ = OTMClient.sharedInstance().taskForPOSTLogin(OTMClient.Constants.Methods.AuthenticateSessionNew, parameters: parameters) { (userID, error) in
+        let headerFields = [OTMClient.Constants.JSONParameterKeys.JSONApplication:OTMClient.Constants.JSONParameterKeys.Accept]
+        
+        _ = OTMClient.sharedInstance().taskForPOSTMethod(OTMClient.Constants.Methods.AuthenticateSessionNew, parameters: parameters, httpHeaderFields: headerFields) { (userID, error) in
             performUIUpdatesOnMain {
                 if (userID != nil) {
                     print("Hello, World!")
@@ -59,6 +61,15 @@ class OTMAuthViewViewController: UIViewController {
                     self.loginButton.isEnabled = true
                 }
                 
+                let httpHeaderFields = [OTMClient.Constants.ParameterKeys.ApplicationID:OTMClient.Constants.JSONParameterKeys.IDHeaderField, OTMClient.Constants.ParameterKeys.API_Key:OTMClient.Constants.JSONParameterKeys.APIHeaderField]
+                
+                OTMClient.sharedInstance().taskForGETMethod(OTMClient.Constants.Methods.StudentLocations, httpHeaderFields: httpHeaderFields, completionHandlerForGET: { (data, error) in
+                    if (data != nil) {
+                        print(NSString(data: data as! Data, encoding: String.Encoding.utf8.rawValue)!)
+                    }
+                    
+                })
+
             }
             
         }
