@@ -67,7 +67,7 @@ extension OTMClient {
         struct Methods {
             
             // Authentication
-            static let AuthenticateSessionNew = "https://www.udacity.com/api/session"
+            static let AuthenticateSession = "https://www.udacity.com/api/session"
             
             // Getting Student Locations
             static let StudentLocations = "https://parse.udacity.com/parse/classes/StudentLocation"

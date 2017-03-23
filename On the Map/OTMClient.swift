@@ -209,6 +209,55 @@ class OTMClient: NSObject {
         return task
     }
     
+    // MARK: Delete
+    
+    func taskForDELETEMethod(_ method: String, completionHandlerForDELETE: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+        
+        let request = NSMutableURLRequest(url: URL(string: method)!)
+        request.httpMethod = Constants.HTTPMethods.Delete
+        var xsrfCookie: HTTPCookie? = nil
+        let sharedCookieStorage = HTTPCookieStorage.shared
+        for cookie in sharedCookieStorage.cookies! {
+            if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
+        }
+        if let xsrfCookie = xsrfCookie {
+            request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
+        }
+        
+        let task = session.dataTask(with: request as URLRequest) { data, response, error in
+            
+            // Error handler function
+            func sendError(_ error: String) {
+                print(error)
+                let userInfo = [NSLocalizedDescriptionKey : error]
+                completionHandlerForDELETE(nil, NSError(domain: "taskForPOSTMethod: \(method)", code: 1, userInfo: userInfo))
+            }
+            
+            /* GUARD: Was there an error? */
+            guard (error == nil) else {
+                sendError("There was an error with your request: \(error)")
+                return
+            }
+            
+            /* GUARD: Did we get a successful 200 response? */
+            guard let statusCode = ((response as? HTTPURLResponse)?.statusCode), statusCode == 200 else {
+                sendError("Your request returned an invalid status code")
+                return
+            }
+            
+            /* GUARD: Was there any data returned? */
+            guard let data = data else {
+                sendError("No data was returned by the request!")
+                return
+            }
+            
+            completionHandlerForDELETE(self.removeFirstFiveCharactersFrom(data: data) as AnyObject, nil)
+        }
+        task.resume()
+        
+        return task
+    }
+    
     // MARK: Private functions
     
     // create a URL from parameters

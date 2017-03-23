@@ -53,7 +53,7 @@ class OTMAuthViewViewController: UIViewController {
         
         let headerFields = [OTMClient.Constants.JSONParameterKeys.JSONApplication:OTMClient.Constants.JSONParameterKeys.Accept]
         
-        _ = OTMClient.sharedInstance().taskForPOSTMethod(OTMClient.Constants.Methods.AuthenticateSessionNew, parameters: parameters, httpHeaderFields: headerFields) { (userID, error) in
+        _ = OTMClient.sharedInstance().taskForPOSTMethod(OTMClient.Constants.Methods.AuthenticateSession, parameters: parameters, httpHeaderFields: headerFields) { (userID, error) in
             performUIUpdatesOnMain {
                 if (userID != nil) {
                     print("Hello, World!")
