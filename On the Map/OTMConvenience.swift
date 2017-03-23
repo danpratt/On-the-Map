@@ -37,9 +37,8 @@ extension OTMClient {
                         print("Success")
                         self.hostViewController.loginActivity.stopAnimating()
                         self.mapPinData = mapPinData!
-                        for map in self.mapPinData! {
-                            print("Printing Map: \(map)")
-                        }
+                        
+                        completionHandlerForAuth(success, nil)
                     }
                     
                 }

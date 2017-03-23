@@ -18,7 +18,7 @@
         <!--Map-->
         <scene sceneID="R4j-ov-dkN">
             <objects>
-                <viewController id="Wbc-sz-PCd" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MapView" id="Wbc-sz-PCd" customClass="OTMMapViewController" customModule="On_the_Map" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0DV-yN-ij6"/>
                         <viewControllerLayoutGuide type="bottom" id="fAf-za-Ghc"/>
@@ -43,6 +43,9 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="icon_mapview-selected" id="aoI-6A-nv7" userLabel="Map"/>
+                    <connections>
+                        <outlet property="mapView" destination="Iak-JI-mbH" id="oV2-aG-CwE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sih-cF-Ut4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -73,7 +76,7 @@
         <!--List-->
         <scene sceneID="3jZ-XP-3Cw">
             <objects>
-                <tableViewController id="rNF-Jr-J7B" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ListView" id="rNF-Jr-J7B" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="9TF-c1-A7b">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -83,7 +86,7 @@
                                 <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FQP-yN-PhJ" id="gvF-Kb-gEG">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -206,7 +209,7 @@
         <!--Navigation Controller-->
         <scene sceneID="67M-7Z-bQG">
             <objects>
-                <navigationController id="aK7-Hl-fTf" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="OTMNavController" id="aK7-Hl-fTf" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="dLS-G6-1JQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

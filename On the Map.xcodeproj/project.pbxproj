@@ -11,7 +11,7 @@
 		65723E3E1E7B3E2C0086F9B8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65723E3C1E7B3E2C0086F9B8 /* Main.storyboard */; };
 		65723E401E7B3E2C0086F9B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65723E3F1E7B3E2C0086F9B8 /* Assets.xcassets */; };
 		65723E431E7B3E2C0086F9B8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65723E411E7B3E2C0086F9B8 /* LaunchScreen.storyboard */; };
-		65723E511E7B460D0086F9B8 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65723E501E7B460D0086F9B8 /* MapViewController.swift */; };
+		65723E511E7B460D0086F9B8 /* OTMMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65723E501E7B460D0086F9B8 /* OTMMapViewController.swift */; };
 		65723E531E7B46320086F9B8 /* TableOfPinsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65723E521E7B46320086F9B8 /* TableOfPinsViewController.swift */; };
 		65723E551E7B47460086F9B8 /* OTMConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65723E541E7B47460086F9B8 /* OTMConstants.swift */; };
 		65723E571E7B49170086F9B8 /* OTMAuthViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65723E561E7B49170086F9B8 /* OTMAuthViewViewController.swift */; };
@@ -28,7 +28,7 @@
 		65723E3F1E7B3E2C0086F9B8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		65723E421E7B3E2C0086F9B8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		65723E441E7B3E2C0086F9B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		65723E501E7B460D0086F9B8 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		65723E501E7B460D0086F9B8 /* OTMMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMMapViewController.swift; sourceTree = "<group>"; };
 		65723E521E7B46320086F9B8 /* TableOfPinsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableOfPinsViewController.swift; sourceTree = "<group>"; };
 		65723E541E7B47460086F9B8 /* OTMConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMConstants.swift; sourceTree = "<group>"; };
 		65723E561E7B49170086F9B8 /* OTMAuthViewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMAuthViewViewController.swift; sourceTree = "<group>"; };
@@ -101,7 +101,7 @@
 		65723E4C1E7B44BE0086F9B8 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				65723E501E7B460D0086F9B8 /* MapViewController.swift */,
+				65723E501E7B460D0086F9B8 /* OTMMapViewController.swift */,
 				65723E521E7B46320086F9B8 /* TableOfPinsViewController.swift */,
 				65723E561E7B49170086F9B8 /* OTMAuthViewViewController.swift */,
 			);
@@ -235,7 +235,7 @@
 				65723E531E7B46320086F9B8 /* TableOfPinsViewController.swift in Sources */,
 				658F101C1E84438200E6731C /* OTMConvenience.swift in Sources */,
 				65723E551E7B47460086F9B8 /* OTMConstants.swift in Sources */,
-				65723E511E7B460D0086F9B8 /* MapViewController.swift in Sources */,
+				65723E511E7B460D0086F9B8 /* OTMMapViewController.swift in Sources */,
 				65723E571E7B49170086F9B8 /* OTMAuthViewViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

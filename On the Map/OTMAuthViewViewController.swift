@@ -63,6 +63,8 @@ class OTMAuthViewViewController: UIViewController {
     
     private func completeLogin() {
         print("Hello, World!")
+        let controller = storyboard!.instantiateViewController(withIdentifier: "OTMNavController") as! UINavigationController
+        present(controller, animated: true, completion: nil)
     }
     
     private func displayError(_ error: String) {
