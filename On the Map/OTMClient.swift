@@ -90,7 +90,8 @@ class OTMClient: NSObject {
     func taskForPOSTMethod(_ method: String, parameters: [String:String], httpHeaderFields: [String:String],completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         // Setup parameters
-        let parameters = OTMPOSTParametersFromDictionary(parameters)
+        let parentParameters = "{\"\(OTMClient.Constants.ParameterKeys.Udacity)\": {"
+        let parameters = OTMParametersFromDictionary(parameters, withParent: parentParameters)
         
         // Build request for task
         var request = URLRequest(url: URL(string: method)!)
@@ -155,12 +156,33 @@ class OTMClient: NSObject {
         return task
     }
     
+    // MARK: PUT
+    func taskForPUTMethod(_ method: String, withObjectID objectID: String, httpHeaderFields: [String:String], completionHandlerForPUT: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+        
+        // Create a URL using the objectID
+        let urlString = method + "/" + objectID
+        
+        // Create the request
+        var request = URLRequest(url: URL(string: urlString)!)
+        request.httpMethod = Constants.HTTPMethods.Put
+        request.addValue(<#T##value: String##String#>, forHTTPHeaderField: <#T##String#>)
+        
+        return URLSessionDataTask()
+    }
+    
     // MARK: Private functions
     
     // create a URL from parameters
-    private func OTMPOSTParametersFromDictionary(_ parameters: [String:String], withPathExtension: String? = nil) -> Data {
+    private func OTMParametersFromDictionary(_ parameters: [String:String], withParent parent: String? = nil) -> Data {
         
-        var paramsToReturn: String = "{\"\(OTMClient.Constants.ParameterKeys.Udacity)\": {"
+        var paramsToReturn: String!
+        
+        if parent == nil {
+            paramsToReturn = ""
+        } else {
+            paramsToReturn = parent
+        }
+        
         
         for (key, value) in parameters {
             paramsToReturn.append("\"\(key)\": \"\(value)\", ")
@@ -170,7 +192,12 @@ class OTMClient: NSObject {
         paramsToReturn.characters.removeLast()
         paramsToReturn.characters.removeLast()
         // Add closing brackets
-        paramsToReturn.append("}}")
+        if parent == nil {
+            paramsToReturn.append("}")
+        } else {
+            paramsToReturn.append("}}")
+        }
+        
         print(paramsToReturn)
         return paramsToReturn.data(using: String.Encoding.utf8)!
     }

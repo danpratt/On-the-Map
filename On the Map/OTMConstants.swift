@@ -20,6 +20,15 @@ extension OTMClient {
             static let Username = "username"
             static let Password = "password"
             
+            // PUT Location
+            static let UniqueKey = "uniqueKey"
+            static let FirstName = "firstName"
+            static let LastName = "lastName"
+            static let MapString = "mapString"
+            static let MediaURL = "mediaURL"
+            static let Latitude = "latitude"
+            static let Longitude = "longitude"
+            
             // Application and API Keys
             static let ApplicationID = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
             static let API_Key = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
@@ -38,6 +47,7 @@ extension OTMClient {
         // MARK: HTTP Method
         struct HTTPMethods {
             static let Post = "POST"
+            static let Put = "PUT"
         }
         
         // MARK: JSON Response Keys
