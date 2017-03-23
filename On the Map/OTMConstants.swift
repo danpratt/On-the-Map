@@ -61,7 +61,19 @@ extension OTMClient {
             static let UserID = "key"
             static let SessionID = "id"
             
-            
+        }
+        
+        // MARK: JSON Map Pin Results
+        struct JSONMapResponseKeys {
+            static let Results = "results"
+            static let ObjectID = "objectId"
+            static let Key = "uniqueKey"
+            static let NameLast = "lastName"
+            static let NameFirst = "firstName"
+            static let MapString = "mapString"
+            static let MediaURL = "mediaURL"
+            static let Latitude = "latitude"
+            static let Longitude = "longitude"
         }
         
         // MARK: Methods

@@ -26,8 +26,23 @@ extension OTMClient {
             if success {
                 print("User ID: \(userID)")
                 print("Session ID: \(sessionID)")
+                // Write User and session ID's
                 self.userID = userID!
                 self.sessionID = sessionID!
+                
+                // Get the data to populate the map with
+                self.getMapPinData() { (success, mapPinData, errorString) in
+                    
+                    if success {
+                        print("Success")
+                        self.hostViewController.loginActivity.stopAnimating()
+                        self.mapPinData = mapPinData!
+                        for map in self.mapPinData! {
+                            print("Printing Map: \(map)")
+                        }
+                    }
+                    
+                }
             }
         }
         
@@ -62,6 +77,23 @@ extension OTMClient {
             }
         }
         
+    }
+    
+    private func getMapPinData(_ completionHandlerForGetMapPindata: @escaping (_ succes: Bool, _ mapPinData: [OTMMapData]?, _ errorString: String?) -> Void) {
+        let httpHeaderFields = [OTMClient.Constants.ParameterKeys.ApplicationID:OTMClient.Constants.JSONParameterKeys.IDHeaderField, OTMClient.Constants.ParameterKeys.API_Key:OTMClient.Constants.JSONParameterKeys.APIHeaderField]
+        
+        let _ = taskForGETMethod(Constants.Methods.StudentLocations, httpHeaderFields: httpHeaderFields) { (data, error) in
+            if let error = error {
+                print(error)
+                completionHandlerForGetMapPindata(false, nil, "Unable to get map data")
+                return
+            } else {
+                let dictionaries = data?[Constants.JSONMapResponseKeys.Results] as! [[String:AnyObject]]
+                let mapData = OTMMapData.mapDataFromDictionaries(dictionaries)
+                
+                completionHandlerForGetMapPindata(true, mapData, nil)
+            }
+        }
     }
     
 }

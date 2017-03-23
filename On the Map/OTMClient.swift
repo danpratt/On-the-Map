@@ -18,6 +18,8 @@ class OTMClient: NSObject {
     var sessionID: String? = nil
     var userID: String? = nil
     
+    var mapPinData: [OTMMapData]? = nil
+    
     // Stored hostVieController to get UN/ PW
     var hostViewController: OTMAuthViewViewController!
     
@@ -82,7 +84,8 @@ class OTMClient: NSObject {
                 newData = self.removeFirstFiveCharactersFrom(data: data)
             }
             
-            completionHandlerForGET(newData as AnyObject?, nil)
+            self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForGET)
+            
         }
         task.resume()
         return task
