@@ -157,17 +157,56 @@ class OTMClient: NSObject {
     }
     
     // MARK: PUT
-    func taskForPUTMethod(_ method: String, withObjectID objectID: String, httpHeaderFields: [String:String], completionHandlerForPUT: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func taskForPUTMethod(_ method: String, withObjectID objectID: String, parameters: [String:String], httpHeaderFields: [String:String], completionHandlerForPUT: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         // Create a URL using the objectID
         let urlString = method + "/" + objectID
         
+        // Setup parameters
+        let parameters = OTMParametersFromDictionary(parameters)
+        
         // Create the request
         var request = URLRequest(url: URL(string: urlString)!)
         request.httpMethod = Constants.HTTPMethods.Put
-        request.addValue(<#T##value: String##String#>, forHTTPHeaderField: <#T##String#>)
+        request.addValue(OTMClient.Constants.JSONParameterKeys.JSONApplication, forHTTPHeaderField: OTMClient.Constants.JSONParameterKeys.Content)
+        for (key, value) in httpHeaderFields {
+            request.addValue(key, forHTTPHeaderField: value)
+        }
+        request.httpBody = parameters
         
-        return URLSessionDataTask()
+        // Create the task
+        let task = session.dataTask(with: request) { data, response, error in
+            
+            func sendError(_ error: String) {
+                print(error)
+                let userInfo = [NSLocalizedDescriptionKey : error]
+                completionHandlerForPUT(nil, NSError(domain: "taskForPOSTMethod: \(method)", code: 1, userInfo: userInfo))
+            }
+            
+            /* GUARD: Was there an error? */
+            guard (error == nil) else {
+                sendError("There was an error with your request: \(error)")
+                return
+            }
+            
+            /* GUARD: Did we get a successful 200 response? */
+            guard let statusCode = ((response as? HTTPURLResponse)?.statusCode), statusCode == 200 else {
+                sendError("Your request returned an invalid status code")
+                return
+            }
+            
+            /* GUARD: Was there any data returned? */
+            guard let data = data else {
+                sendError("No data was returned by the request!")
+                return
+            }
+            
+            completionHandlerForPUT(data as AnyObject, nil)
+        }
+        
+        
+        task.resume()
+        return task
     }
     
     // MARK: Private functions

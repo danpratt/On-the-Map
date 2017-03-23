@@ -48,6 +48,7 @@ extension OTMClient {
         struct HTTPMethods {
             static let Post = "POST"
             static let Put = "PUT"
+            static let Delete = "DELETE"
         }
         
         // MARK: JSON Response Keys
