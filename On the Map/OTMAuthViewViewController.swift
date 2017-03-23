@@ -15,7 +15,9 @@ class OTMAuthViewViewController: UIViewController {
 //    var urlRequest: URLRequest? = nil
 //    var requestToken: String? = nil
 //    var completionHandlerForView: ((_ success: Bool, _ errorString: String?) -> Void)? = nil
-    var session = URLSession.shared
+    var username: String? = nil
+    var password: String? = nil
+    var session: URLSession!
     
     // MARK: Outlets
     @IBOutlet weak var emailTextField: UITextField!
@@ -35,46 +37,36 @@ class OTMAuthViewViewController: UIViewController {
     
     // This method is called when the user tapps the login button and begins the login process.
     @IBAction func loginButtonTapped(_ sender: Any) {
-        loginActivity.startAnimating()
-        loginButton.isEnabled = false
         
-        func sendError(_ error: String) {
-            print(error)
-            let userInfo = [NSLocalizedDescriptionKey : error]
-            let _ = NSError(domain: "Login", code: 1, userInfo: userInfo)
-        }
+        username = emailTextField.text
+        password = passwordTextField.text
         
-        guard let email = emailTextField.text, let password = passwordTextField.text else {
-            sendError("Unable to get email / password")
-            return
-        }
+        print("Username: \(username)")
+        print("Password: \(password)")
         
-        let parameters = [OTMClient.Constants.ParameterKeys.Username: email, OTMClient.Constants.ParameterKeys.Password: password]
-        
-        let headerFields = [OTMClient.Constants.JSONParameterKeys.JSONApplication:OTMClient.Constants.JSONParameterKeys.Accept]
-        
-        _ = OTMClient.sharedInstance().taskForPOSTMethod(OTMClient.Constants.Methods.AuthenticateSession, parameters: parameters, httpHeaderFields: headerFields) { (userID, error) in
-            performUIUpdatesOnMain {
-                if (userID != nil) {
-                    print("Hello, World!")
-                    self.loginActivity.stopAnimating()
-                    self.loginButton.isEnabled = true
-                }
-                
-                let httpHeaderFields = [OTMClient.Constants.ParameterKeys.ApplicationID:OTMClient.Constants.JSONParameterKeys.IDHeaderField, OTMClient.Constants.ParameterKeys.API_Key:OTMClient.Constants.JSONParameterKeys.APIHeaderField]
-                
-                OTMClient.sharedInstance().taskForGETMethod(OTMClient.Constants.Methods.StudentLocations, httpHeaderFields: httpHeaderFields, completionHandlerForGET: { (data, error) in
-                    if (data != nil) {
-                        print(NSString(data: data as! Data, encoding: String.Encoding.utf8.rawValue)!)
-                    }
-                    
-                })
-
-            }
+        if username != "" && password != "" {
             
+            OTMClient.sharedInstance().authenticateWithUdacity(self) { (success, errorString) in
+                performUIUpdatesOnMain {
+                    if success {
+                        self.completeLogin()
+                    } else {
+                        self.displayError(errorString ?? "No error string found")
+                    }
+                }
+            }
+        } else {
+            displayError("Username and password fields cannot be blank")
         }
-        
-        
+
+    }
+    
+    private func completeLogin() {
+        print("Hello, World!")
+    }
+    
+    private func displayError(_ error: String) {
+        print(error)
     }
     
 

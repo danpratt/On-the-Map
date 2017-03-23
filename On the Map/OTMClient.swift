@@ -18,6 +18,9 @@ class OTMClient: NSObject {
     var sessionID: String? = nil
     var userID: String? = nil
     
+    // Stored hostVieController to get UN/ PW
+    var hostViewController: OTMAuthViewViewController!
+    
     // MARK: GET
     func taskForGETMethod(_ method: String, parameters: String? = nil, httpHeaderFields: [String:String]? = nil, completionHandlerForGET: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
     
@@ -87,7 +90,7 @@ class OTMClient: NSObject {
     
     // MARK: POST
     
-    func taskForPOSTMethod(_ method: String, parameters: [String:String], httpHeaderFields: [String:String],completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func taskForPOSTMethod(_ method: String, parameters: [String:String], httpHeaderFields: [String:String],completionHandlerForPOST: @escaping (_ result: NSDictionary?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         // Setup parameters
         let parentParameters = "{\"\(OTMClient.Constants.ParameterKeys.Udacity)\": {"
@@ -134,20 +137,7 @@ class OTMClient: NSObject {
             }
             
             let newData = self.removeFirstFiveCharactersFrom(data: data)
-//            print(NSString(data: newData, encoding: String.Encoding.utf8.rawValue)!)
-            var accountJSONParsed: AnyObject! = nil
-            do {
-                accountJSONParsed = try JSONSerialization.jsonObject(with: newData, options: .allowFragments) as AnyObject
-            } catch {
-                completionHandlerForPOST(nil, NSError(domain: "JSONSerialization", code: 9, userInfo: [NSLocalizedDescriptionKey : error]))
-            }
-            print(accountJSONParsed)
-            
-            let accountDictionary = accountJSONParsed[Constants.JSONResponseKeys.Account] as AnyObject
-            print(accountDictionary)
-            let ID = accountDictionary[Constants.JSONResponseKeys.UserID]!
-            print(ID!)
-            completionHandlerForPOST(ID! as AnyObject, nil)
+            self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForPOST)
         }
         
         // Start the request
@@ -258,7 +248,7 @@ class OTMClient: NSObject {
         return task
     }
     
-    // MARK: Private functions
+    // MARK: Private helper functions
     
     // create a URL from parameters
     private func OTMParametersFromDictionary(_ parameters: [String:String], withParent parent: String? = nil) -> Data {
@@ -296,6 +286,21 @@ class OTMClient: NSObject {
         let newData = data.subdata(in: range) /* subset response data! */
         return newData
     }
+    
+    // given raw JSON, return a usable Foundation object
+    private func convertDataWithCompletionHandler(_ data: Data, completionHandlerForConvertData: (_ result: NSDictionary?, _ error: NSError?) -> Void) {
+        
+        var parsedResult: AnyObject! = nil
+        do {
+            parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! NSDictionary
+        } catch {
+            let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
+            completionHandlerForConvertData(nil, NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
+        }
+        
+        completionHandlerForConvertData(parsedResult as! NSDictionary?, nil)
+    }
+    
     
     // MARK: Shared Instance
     

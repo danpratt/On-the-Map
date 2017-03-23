@@ -17,6 +17,7 @@
 		65723E571E7B49170086F9B8 /* OTMAuthViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65723E561E7B49170086F9B8 /* OTMAuthViewViewController.swift */; };
 		65723E591E7B498F0086F9B8 /* OTMClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65723E581E7B498F0086F9B8 /* OTMClient.swift */; };
 		65723E5B1E7B54370086F9B8 /* GCDConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65723E5A1E7B54370086F9B8 /* GCDConvenience.swift */; };
+		658F101C1E84438200E6731C /* OTMConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F101B1E84438200E6731C /* OTMConvenience.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		65723E5C1E7B5D550086F9B8 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		65723E5D1E7B5D550086F9B8 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		65723E5E1E7B5D550086F9B8 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
+		658F101B1E84438200E6731C /* OTMConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OTMConvenience.swift; path = "On the Map/OTMConvenience.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +53,7 @@
 		65723E2C1E7B3E2C0086F9B8 = {
 			isa = PBXGroup;
 			children = (
+				658F101B1E84438200E6731C /* OTMConvenience.swift */,
 				65723E371E7B3E2C0086F9B8 /* On the Map */,
 				65723E361E7B3E2C0086F9B8 /* Products */,
 			);
@@ -226,6 +229,7 @@
 				65723E391E7B3E2C0086F9B8 /* AppDelegate.swift in Sources */,
 				65723E591E7B498F0086F9B8 /* OTMClient.swift in Sources */,
 				65723E531E7B46320086F9B8 /* TableOfPinsViewController.swift in Sources */,
+				658F101C1E84438200E6731C /* OTMConvenience.swift in Sources */,
 				65723E551E7B47460086F9B8 /* OTMConstants.swift in Sources */,
 				65723E511E7B460D0086F9B8 /* MapViewController.swift in Sources */,
 				65723E571E7B49170086F9B8 /* OTMAuthViewViewController.swift in Sources */,

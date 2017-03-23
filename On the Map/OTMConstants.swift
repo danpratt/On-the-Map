@@ -59,6 +59,7 @@ extension OTMClient {
             
             static let IsRegistered = "registered"
             static let UserID = "key"
+            static let SessionID = "id"
             
             
         }
