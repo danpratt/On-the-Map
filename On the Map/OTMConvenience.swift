@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import MapKit
 
 // MARK: - OTMClient (Convenient Resource Methods)
 

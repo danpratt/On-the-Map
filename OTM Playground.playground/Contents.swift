@@ -1,12 +1,41 @@
 //: Playground - noun: a place where people can play
 
 import UIKit
+import MapKit
+import CoreLocation
+import PlaygroundSupport
 
-var str = "Hello, playground"
+// this line tells the Playground to execute indefinitely
+PlaygroundPage.current.needsIndefiniteExecution = true
 
-print("{\"udacity\": {\"username\": \"account@domain.com\", \"password\": \"********\"}}")
+//var str = "Hello, playground"
+//
+//print("{\"udacity\": {\"username\": \"account@domain.com\", \"password\": \"********\"}}")
+//
+//let url = "https://parse.udacity.com/parse/classes/StudentLocation?where={\"uniqueKey\":\"1234\"}"
+//let escapedURL:String! = url.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)
+//
+//print(escapedURL)
 
-let url = "https://parse.udacity.com/parse/classes/StudentLocation?where={\"uniqueKey\":\"1234\"}"
-let escapedURL:String! = url.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)
+let request = MKLocalSearchRequest()
+request.naturalLanguageQuery = "Berlin, Germany"
 
-print(escapedURL)
+let search = MKLocalSearch(request: request)
+
+search.start { (response, error) in
+
+    
+    if error != nil {
+        print("Error \(error.debugDescription)")
+    } else {
+        for item in response!.mapItems {
+            print(item.name ?? "No Item")
+            print(item.placemark.coordinate)
+        }
+    }
+}
+
+CLGeocoder().geocodeAddressString("Seattle, WA") { (placemark, error) in
+    print(placemark ?? "Can't find it")
+}
+

@@ -30,7 +30,7 @@ class OTMClient: NSObject {
         var method = method
         // Setup parameters
         if parameters != nil {
-            method.append("/\(parameters)")
+            method.append("/\(String(describing: parameters))")
         }
         
         // Build request for task
@@ -54,7 +54,7 @@ class OTMClient: NSObject {
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
-                sendError("There was an error with your request: \(error)")
+                sendError("There was an error with your request: \(String(describing: error))")
                 return
             }
             
