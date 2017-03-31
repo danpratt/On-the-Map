@@ -41,9 +41,6 @@ class OTMAuthViewViewController: UIViewController {
         username = emailTextField.text
         password = passwordTextField.text
         
-        print("Username: \(username)")
-        print("Password: \(password)")
-        
         if username != "" && password != "" {
             
             OTMClient.sharedInstance().authenticateWithUdacity(self) { (success, errorString) in
@@ -62,7 +59,6 @@ class OTMAuthViewViewController: UIViewController {
     }
     
     private func completeLogin() {
-        print("Hello, World!")
         let controller = storyboard!.instantiateViewController(withIdentifier: "OTMNavController") as! UINavigationController
         present(controller, animated: true, completion: nil)
     }

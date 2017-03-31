@@ -17,6 +17,8 @@ class OTMClient: NSObject {
     var session = URLSession.shared
     var sessionID: String? = nil
     var userID: String? = nil
+    var firstName: String? = nil
+    var lastName: String? = nil
     
     var mapPinData: [OTMMapData]? = nil
     
@@ -119,7 +121,7 @@ class OTMClient: NSObject {
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
-                sendError("There was an error with your request: \(error)")
+                sendError("There was an error with your request: \(String(describing: error))")
                 return
             }
             
@@ -178,7 +180,7 @@ class OTMClient: NSObject {
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
-                sendError("There was an error with your request: \(error)")
+                sendError("There was an error with your request: \(String(describing: error))")
                 return
             }
             
@@ -228,7 +230,7 @@ class OTMClient: NSObject {
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
-                sendError("There was an error with your request: \(error)")
+                sendError("There was an error with your request: \(String(describing: error))")
                 return
             }
             
@@ -279,7 +281,6 @@ class OTMClient: NSObject {
             paramsToReturn.append("}}")
         }
         
-        print(paramsToReturn)
         return paramsToReturn.data(using: String.Encoding.utf8)!
     }
     

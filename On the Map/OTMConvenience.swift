@@ -25,24 +25,33 @@ extension OTMClient {
         
         getLoginItems() { (success, userID, sessionID, errorString) in
             if success {
-                print("User ID: \(userID)")
-                print("Session ID: \(sessionID)")
                 // Write User and session ID's
                 self.userID = userID!
                 self.sessionID = sessionID!
                 
-                // Get the data to populate the map with
-                self.getMapPinData() { (success, mapPinData, errorString) in
-                    
+                // Get the logged in user's data
+                self.getUsersData({ (success, first, last, errorString) in
                     if success {
-                        print("Success")
-                        self.hostViewController.loginActivity.stopAnimating()
-                        self.mapPinData = mapPinData!
+                        // Write the User's First / Last Name
+                        self.firstName = first
+                        self.lastName = last
                         
-                        completionHandlerForAuth(success, nil)
+                        print("First Name: \(String(describing: self.firstName))")
+                        print("Last Name:  \(String(describing: self.lastName))")
+                        
+                        // Get the data to populate the map with
+                        self.getMapPinData() { (success, mapPinData, errorString) in
+                            
+                            if success {
+                                
+                                self.hostViewController.loginActivity.stopAnimating()
+                                self.mapPinData = mapPinData!
+                                
+                                completionHandlerForAuth(success, nil)
+                            }
+                        }
                     }
-                    
-                }
+                })
             }
         }
         
@@ -79,6 +88,42 @@ extension OTMClient {
         
     }
     
+    // Get logged in user's info to use when added locations
+    private func getUsersData(_ completionHandlerForGetUserDate: @escaping (_ success: Bool, _ firstName: String?, _ lastName: String?, _ errorString: String?) -> Void) {
+        
+        // Make sure the UserID has been populated
+        guard let ID = self.userID else {
+            completionHandlerForGetUserDate(false, nil, nil, "Getting User ID Failed")
+            return
+        }
+        
+        let method = ("\(Constants.Methods.GetPublicUserData)/\(ID)")
+        
+        let _ = taskForGETMethod(method) { (data, error) in
+            if let error = error {
+                print(error)
+                completionHandlerForGetUserDate(false, nil, nil, "Unable to get User Data")
+                return
+            } else {
+                if let userDataDictionary = data?[Constants.JSONUserDataResponseKeys.User] as? [String:AnyObject] {
+                    guard let first = userDataDictionary[Constants.JSONUserDataResponseKeys.FirstName] as? String else {
+                        completionHandlerForGetUserDate(false, nil, nil, "Unable to get User First Name")
+                        return
+                    }
+                    
+                    guard let last = userDataDictionary[Constants.JSONUserDataResponseKeys.LastName] as? String else {
+                        completionHandlerForGetUserDate(false, nil, nil, "Unable to get User Last Name")
+                        return
+                    }
+                    
+                    completionHandlerForGetUserDate(true, first, last, nil)
+                }
+                
+            }
+        }
+    }
+    
+    // Get existing user data to show map locations
     private func getMapPinData(_ completionHandlerForGetMapPindata: @escaping (_ succes: Bool, _ mapPinData: [OTMMapData]?, _ errorString: String?) -> Void) {
         let httpHeaderFields = [OTMClient.Constants.ParameterKeys.ApplicationID:OTMClient.Constants.JSONParameterKeys.IDHeaderField, OTMClient.Constants.ParameterKeys.API_Key:OTMClient.Constants.JSONParameterKeys.APIHeaderField]
         

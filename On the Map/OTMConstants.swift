@@ -74,6 +74,15 @@ extension OTMClient {
             static let MediaURL = "mediaURL"
             static let Latitude = "latitude"
             static let Longitude = "longitude"
+            static let CreationDate = "createdAt"
+            static let UpdatedDate = "updatedAt"
+        }
+        
+        // MARK: JSON User Data Response Keys
+        struct JSONUserDataResponseKeys {
+            static let User = "user"
+            static let FirstName = "first_name"
+            static let LastName = "last_name"
         }
         
         // MARK: Methods
@@ -86,7 +95,7 @@ extension OTMClient {
             static let StudentLocations = "https://parse.udacity.com/parse/classes/StudentLocation"
             
             // Getting Public User Data
-            static let GetPublicData = "https://www.udacity.com/api/users/"
+            static let GetPublicUserData = "https://www.udacity.com/api/users/"
         }
     }
     

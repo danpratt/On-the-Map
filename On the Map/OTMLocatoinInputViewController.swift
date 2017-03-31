@@ -10,10 +10,12 @@ import UIKit
 import CoreLocation
 import MapKit
 
-class OTMLocatoinInputViewController: UIViewController {
+class OTMLocatoinInputViewController: UIViewController, UITextFieldDelegate {
 
     // MARK: - Properties
     lazy var geoCoder = CLGeocoder()
+    var userMapPinData: OTMMapData?
+    var placeName: String!
     
     // IBOutlets
     @IBOutlet weak var locationEntry: UITextField!
@@ -22,10 +24,12 @@ class OTMLocatoinInputViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.locationEntry.delegate = self
     }
 
     @IBAction func findLocationButtonPressed(_ sender: Any) {
         if let searchString = locationEntry.text {
+            placeName = searchString
             performUIUpdatesOnMain {
                 self.findLocationActivityMonitor.isHidden = false
                 self.findLocationActivityMonitor.startAnimating()
@@ -35,7 +39,7 @@ class OTMLocatoinInputViewController: UIViewController {
                 self.processResponse(withPlacemarks: placemarks, error: error)
             })
         } else {
-            print("Must enter something")
+            print("You Must enter something")
         }
         
         
@@ -58,8 +62,44 @@ class OTMLocatoinInputViewController: UIViewController {
             if let placemarks = placemarks, placemarks.count > 0 {
                 location = placemarks.first?.location
             }
+
+            let userDataDictionary: [String : AnyObject] = [OTMClient.Constants.JSONMapResponseKeys.Key:OTMClient.sharedInstance().userID as AnyObject,
+                                                            OTMClient.Constants.JSONMapResponseKeys.MapString: placeName as AnyObject,
+                                      OTMClient.Constants.JSONMapResponseKeys.Latitude:location?.coordinate.latitude as AnyObject,
+                                      OTMClient.Constants.JSONMapResponseKeys.Longitude:location?.coordinate.longitude as AnyObject,
+                                      OTMClient.Constants.JSONMapResponseKeys.CreationDate:location?.timestamp as AnyObject,
+                                      OTMClient.Constants.JSONMapResponseKeys.UpdatedDate:location?.timestamp as AnyObject
+                                      ]
             
             print(location ?? "location was nil")
+            userMapPinData = OTMMapData(dictionary: userDataDictionary as [String : AnyObject])
+            let addLocationVC = storyboard?.instantiateViewController(withIdentifier: "AddLocationView") as! OTMAddLocationViewController
+            addLocationVC.userMapPinData = userMapPinData
+            present(addLocationVC, animated: true, completion: nil)
+        }
+    }
+    
+    // MARK: - Delegate Functions
+    
+    // Clear text entry when user clicks into field
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        textField.text = ""
+        return true
+    }
+    
+    // When Go Button is Pressed, begin search
+    // Go button will only work if user has typed something, so checking
+    // that something is in the textField will be redundant
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        findLocationButtonPressed(self)
+        return true
+    }
+    
+    // If user taps out, we want the keyboard to go away, but we don't want to start the search
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if self.locationEntry.isFirstResponder {
+            self.locationEntry.resignFirstResponder()
         }
     }
 

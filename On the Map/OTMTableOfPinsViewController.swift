@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TableOfPinsViewController: UITableViewController {
+class OTMTableOfPinsViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

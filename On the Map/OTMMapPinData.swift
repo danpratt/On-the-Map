@@ -8,6 +8,8 @@
 
 // MARK: MapPinData Struct
 
+import Foundation
+
 struct OTMMapData {
     
     // MARK: Properties
@@ -20,6 +22,8 @@ struct OTMMapData {
     let mediaURL: String? // URL Provided by student
     let latitude: Double
     let longitude: Double
+    let creationDate: Date?
+    var modifiedDate: Date?
     
     // MARK: Init
     
@@ -32,6 +36,8 @@ struct OTMMapData {
         mediaURL = dictionary[OTMClient.Constants.JSONMapResponseKeys.MediaURL] as? String
         latitude = dictionary[OTMClient.Constants.JSONMapResponseKeys.Latitude] as! Double
         longitude = dictionary[OTMClient.Constants.JSONMapResponseKeys.Longitude] as! Double
+        creationDate = dictionary[OTMClient.Constants.JSONMapResponseKeys.CreationDate] as? Date
+        modifiedDate = dictionary[OTMClient.Constants.JSONMapResponseKeys.UpdatedDate] as? Date
     }
     
     static func mapDataFromDictionaries(_ dictionaries:[[String:AnyObject]]) -> [OTMMapData] {
