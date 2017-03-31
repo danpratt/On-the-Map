@@ -19,7 +19,9 @@ class OTMClient: NSObject {
     var userID: String? = nil
     var firstName: String? = nil
     var lastName: String? = nil
+    var usersExistingObjectID: String? = nil
     
+    // MapPin Data
     var mapPinData: [OTMMapData]? = nil
     
     // Stored hostVieController to get UN/ PW

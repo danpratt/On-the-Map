@@ -22,8 +22,6 @@ struct OTMMapData {
     let mediaURL: String? // URL Provided by student
     let latitude: Double
     let longitude: Double
-    let creationDate: Date?
-    var modifiedDate: Date?
     
     // MARK: Init
     
@@ -36,8 +34,6 @@ struct OTMMapData {
         mediaURL = dictionary[OTMClient.Constants.JSONMapResponseKeys.MediaURL] as? String
         latitude = dictionary[OTMClient.Constants.JSONMapResponseKeys.Latitude] as! Double
         longitude = dictionary[OTMClient.Constants.JSONMapResponseKeys.Longitude] as! Double
-        creationDate = dictionary[OTMClient.Constants.JSONMapResponseKeys.CreationDate] as? Date
-        modifiedDate = dictionary[OTMClient.Constants.JSONMapResponseKeys.UpdatedDate] as? Date
     }
     
     static func mapDataFromDictionaries(_ dictionaries:[[String:AnyObject]]) -> [OTMMapData] {
@@ -45,6 +41,10 @@ struct OTMMapData {
         
         // Iterate through the data and create map data objects
         for dictionary in dictionaries {
+            if dictionary[OTMClient.Constants.JSONMapResponseKeys.Key] as? String == OTMClient.sharedInstance().userID {
+                print("Found existing")
+                OTMClient.sharedInstance().usersExistingObjectID = dictionary[OTMClient.Constants.JSONMapResponseKeys.ObjectID] as? String
+            }
             mapData.append(OTMMapData(dictionary: dictionary))
         }
         

@@ -23,6 +23,9 @@ extension OTMClient {
         hostViewController.loginButton.isEnabled = false
         hostViewController.loginActivity.startAnimating()
         
+        // Start the login process
+        
+        // TODO: - Add error handling
         getLoginItems() { (success, userID, sessionID, errorString) in
             if success {
                 // Write User and session ID's

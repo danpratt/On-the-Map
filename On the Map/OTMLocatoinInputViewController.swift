@@ -17,6 +17,8 @@ class OTMLocatoinInputViewController: UIViewController, UITextFieldDelegate {
     var userMapPinData: OTMMapData?
     var placeName: String!
     
+    var doneAdding: Bool?
+    
     // IBOutlets
     @IBOutlet weak var locationEntry: UITextField!
     @IBOutlet weak var findLocationButton: UIButton!
@@ -25,6 +27,13 @@ class OTMLocatoinInputViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.locationEntry.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        if (self.doneAdding) != nil {
+            self.dismiss(animated: false, completion: nil)
+        }
     }
 
     @IBAction func findLocationButtonPressed(_ sender: Any) {
@@ -63,18 +72,25 @@ class OTMLocatoinInputViewController: UIViewController, UITextFieldDelegate {
                 location = placemarks.first?.location
             }
 
-            let userDataDictionary: [String : AnyObject] = [OTMClient.Constants.JSONMapResponseKeys.Key:OTMClient.sharedInstance().userID as AnyObject,
+            var userDataDictionary: [String : AnyObject] = [OTMClient.Constants.JSONMapResponseKeys.Key:OTMClient.sharedInstance().userID as AnyObject,
+                                                            OTMClient.Constants.JSONMapResponseKeys.NameLast:OTMClient.sharedInstance().firstName as AnyObject,
+                                                            OTMClient.Constants.JSONMapResponseKeys.NameFirst:OTMClient.sharedInstance().lastName as AnyObject,
                                                             OTMClient.Constants.JSONMapResponseKeys.MapString: placeName as AnyObject,
                                       OTMClient.Constants.JSONMapResponseKeys.Latitude:location?.coordinate.latitude as AnyObject,
                                       OTMClient.Constants.JSONMapResponseKeys.Longitude:location?.coordinate.longitude as AnyObject,
-                                      OTMClient.Constants.JSONMapResponseKeys.CreationDate:location?.timestamp as AnyObject,
-                                      OTMClient.Constants.JSONMapResponseKeys.UpdatedDate:location?.timestamp as AnyObject
                                       ]
+            
+            if OTMClient.sharedInstance().usersExistingObjectID != nil {
+                userDataDictionary[OTMClient.Constants.JSONMapResponseKeys.ObjectID] = OTMClient.sharedInstance().usersExistingObjectID as AnyObject
+            }
             
             print(location ?? "location was nil")
             userMapPinData = OTMMapData(dictionary: userDataDictionary as [String : AnyObject])
             let addLocationVC = storyboard?.instantiateViewController(withIdentifier: "AddLocationView") as! OTMAddLocationViewController
             addLocationVC.userMapPinData = userMapPinData
+            
+            // Set doneAdding to true so that when the AddLocatoinVC finishes up adding the URL, this VC will go away as well
+            self.doneAdding = true
             present(addLocationVC, animated: true, completion: nil)
         }
     }

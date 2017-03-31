@@ -3,10 +3,10 @@
 import UIKit
 import MapKit
 import CoreLocation
-import PlaygroundSupport
+//import PlaygroundSupport
 
 // this line tells the Playground to execute indefinitely
-PlaygroundPage.current.needsIndefiniteExecution = true
+//PlaygroundPage.current.needsIndefiniteExecution = true
 
 //var str = "Hello, playground"
 //
@@ -17,25 +17,28 @@ PlaygroundPage.current.needsIndefiniteExecution = true
 //
 //print(escapedURL)
 
-let request = MKLocalSearchRequest()
-request.naturalLanguageQuery = "Berlin, Germany"
+//let request = MKLocalSearchRequest()
+//request.naturalLanguageQuery = "Berlin, Germany"
+//
+//let search = MKLocalSearch(request: request)
+//
+//search.start { (response, error) in
+//
+//    
+//    if error != nil {
+//        print("Error \(error.debugDescription)")
+//    } else {
+//        for item in response!.mapItems {
+//            print(item.name ?? "No Item")
+//            print(item.placemark.coordinate)
+//        }
+//    }
+//}
+//
+//CLGeocoder().geocodeAddressString("Seattle, WA") { (placemark, error) in
+//    print(placemark ?? "Can't find it")
+//}
 
-let search = MKLocalSearch(request: request)
-
-search.start { (response, error) in
-
-    
-    if error != nil {
-        print("Error \(error.debugDescription)")
-    } else {
-        for item in response!.mapItems {
-            print(item.name ?? "No Item")
-            print(item.placemark.coordinate)
-        }
-    }
-}
-
-CLGeocoder().geocodeAddressString("Seattle, WA") { (placemark, error) in
-    print(placemark ?? "Can't find it")
-}
-
+let url = "http://www.apple.com"
+print(url)
+let httpURL = url.substring(to: url.index(url.startIndex, offsetBy: 7))

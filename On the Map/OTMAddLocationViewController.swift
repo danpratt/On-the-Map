@@ -11,7 +11,7 @@ import MapKit
 
 // MARK: - OTMAddLocationViewController Class
 
-class OTMAddLocationViewController: UIViewController {
+class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
 
     // MARK: - Properties
     
@@ -20,11 +20,12 @@ class OTMAddLocationViewController: UIViewController {
     
     // IBOutlets
     @IBOutlet weak var addPointMapView: MKMapView!
+    @IBOutlet weak var urlEntryTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(userMapPinData)
         centerMap()
+        urlEntryTextField.delegate = self
     }
     
     // MARK: - Private Functions
@@ -32,11 +33,55 @@ class OTMAddLocationViewController: UIViewController {
     // Center the map at a specific point
     private func centerMap() {
         let coordinate = CLLocationCoordinate2D(latitude: userMapPinData.latitude, longitude: userMapPinData.longitude)
-        print(userMapPinData)
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
         annotation.title = userMapPinData.mapString
         addPointMapView.addAnnotation(annotation)
         addPointMapView.setRegion(MKCoordinateRegion.init(center: annotation.coordinate, span: .init(latitudeDelta: 1, longitudeDelta: 1)), animated: true)
     }
+    
+    // Add the locatoin to the map, and return to the navigation view
+    private func addLocation() {
+        print("adding location, woot!")
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    // MARK: - Delegate Functions
+    
+    // Clear text entry when user clicks into field
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        textField.text = ""
+        return true
+    }
+    
+    // When Go Button is Pressed, begin adding URL
+    // Go button will only work if user has typed something, so checking
+    // that something is in the textField will be redundant
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        // Textfield must have something in it to get this far, so no check for empty string is necessary
+        let url = self.urlEntryTextField.text
+        
+        // Make sure that the user has entered http:// or https:// at the start of the URL
+        if (url?.characters.count)! > 8 {
+            let http = url?.substring(to: (url?.index((url?.startIndex)!, offsetBy: 7))!).lowercased()
+            let https = url?.substring(to: (url?.index((url?.startIndex)!, offsetBy: 8))!).lowercased()
+            if (http == "http://") || (https == "https://") {
+                addLocation()
+            }
+        } else {
+            print("You must enter a valid url")
+        }
+    
+        
+        return true
+    }
+    
+    // If user taps out, we want the keyboard to go away, but we don't want to start the search
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if self.urlEntryTextField.isFirstResponder {
+            self.urlEntryTextField.resignFirstResponder()
+        }
+    }
+
 }

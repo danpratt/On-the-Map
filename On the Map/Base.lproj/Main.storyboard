@@ -283,6 +283,7 @@ IAo
                     </view>
                     <connections>
                         <outlet property="addPointMapView" destination="SWL-06-1ql" id="hjD-Fb-F8C"/>
+                        <outlet property="urlEntryTextField" destination="lCK-NR-ZXA" id="JDu-kD-Skv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jqr-vl-6ch" userLabel="First Responder" sceneMemberID="firstResponder"/>
