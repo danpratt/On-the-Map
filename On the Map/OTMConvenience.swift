@@ -36,8 +36,6 @@ extension OTMClient {
                         self.firstName = first
                         self.lastName = last
                         
-                        print("First Name: \(String(describing: self.firstName))")
-                        print("Last Name:  \(String(describing: self.lastName))")
                         
                         // Get the data to populate the map with
                         self.getMapPinData() { (success, mapPinData, errorString) in
@@ -97,7 +95,7 @@ extension OTMClient {
             return
         }
         
-        let method = ("\(Constants.Methods.GetPublicUserData)/\(ID)")
+        let method = ("\(Constants.Methods.GetPublicUserData)\(ID)")
         
         let _ = taskForGETMethod(method) { (data, error) in
             if let error = error {
