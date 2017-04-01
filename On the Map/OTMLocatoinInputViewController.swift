@@ -73,8 +73,8 @@ class OTMLocatoinInputViewController: UIViewController, UITextFieldDelegate {
             }
 
             var userDataDictionary: [String : AnyObject] = [OTMClient.Constants.JSONMapResponseKeys.Key:OTMClient.sharedInstance().userID as AnyObject,
-                                                            OTMClient.Constants.JSONMapResponseKeys.NameLast:OTMClient.sharedInstance().firstName as AnyObject,
-                                                            OTMClient.Constants.JSONMapResponseKeys.NameFirst:OTMClient.sharedInstance().lastName as AnyObject,
+                                                            OTMClient.Constants.JSONMapResponseKeys.NameFirst:OTMClient.sharedInstance().firstName as AnyObject,
+                                                            OTMClient.Constants.JSONMapResponseKeys.NameLast:OTMClient.sharedInstance().lastName as AnyObject,
                                                             OTMClient.Constants.JSONMapResponseKeys.MapString: placeName as AnyObject,
                                       OTMClient.Constants.JSONMapResponseKeys.Latitude:location?.coordinate.latitude as AnyObject,
                                       OTMClient.Constants.JSONMapResponseKeys.Longitude:location?.coordinate.longitude as AnyObject,

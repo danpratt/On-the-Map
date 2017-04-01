@@ -43,7 +43,15 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
     // Add the locatoin to the map, and return to the navigation view
     private func addLocation() {
         print("adding location, woot!")
-        self.dismiss(animated: true, completion: nil)
+        OTMClient.sharedInstance().addUserLocation(withUserMapPinData: userMapPinData) { (success, error) in
+            if success {
+                print("Success")
+                self.dismiss(animated: true, completion: nil)
+            } else {
+                print(error ?? "No error given")
+            }
+        }
+        
     }
     
     // MARK: - Delegate Functions
@@ -67,7 +75,12 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
             let http = url?.substring(to: (url?.index((url?.startIndex)!, offsetBy: 7))!).lowercased()
             let https = url?.substring(to: (url?.index((url?.startIndex)!, offsetBy: 8))!).lowercased()
             if (http == "http://") || (https == "https://") {
-                addLocation()
+                if (userMapPinData.addURL(url!)) {
+                    addLocation()
+                } else {
+                    print("URL already exists")
+                }
+                
             }
         } else {
             print("You must enter a valid url")

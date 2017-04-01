@@ -20,7 +20,7 @@ extension OTMClient {
             static let Username = "username"
             static let Password = "password"
             
-            // PUT Location
+            // PUT or POST Location
             static let UniqueKey = "uniqueKey"
             static let FirstName = "firstName"
             static let LastName = "lastName"
@@ -92,7 +92,7 @@ extension OTMClient {
             static let AuthenticateSession = "https://www.udacity.com/api/session"
             
             // Getting Student Locations
-            static let StudentLocations = "https://parse.udacity.com/parse/classes/StudentLocation"
+            static let StudentLocation = "https://parse.udacity.com/parse/classes/StudentLocation"
             
             // Getting Public User Data
             static let GetPublicUserData = "https://www.udacity.com/api/users/"

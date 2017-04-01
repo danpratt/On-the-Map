@@ -38,6 +38,8 @@ extension OTMClient {
                         // Write the User's First / Last Name
                         self.firstName = first
                         self.lastName = last
+                        print("First: \(String(describing: first))")
+                        print("Last: \(String(describing: last))")
                         
                         
                         // Get the data to populate the map with
@@ -58,6 +60,50 @@ extension OTMClient {
         
     }
     
+    // Call to add a location
+    func addUserLocation(withUserMapPinData data: OTMMapData, completionHandlerForAddLocation: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
+        
+        // Setup the headers and parameters that both calls will use
+        let httpHeaderFields = [Constants.ParameterKeys.API_Key:Constants.JSONParameterKeys.APIHeaderField,
+                                Constants.ParameterKeys.ApplicationID:Constants.JSONParameterKeys.IDHeaderField
+        ]
+        
+        // Everything will be here in order to get to this point, so we can force unwrap safely
+        let parametersDictionary = [Constants.ParameterKeys.UniqueKey:data.uniqueKey!,
+                                    Constants.ParameterKeys.FirstName:data.firstName!,
+                                    Constants.ParameterKeys.LastName:data.lastName!,
+                                    Constants.ParameterKeys.MapString:data.mapString!,
+                                    Constants.ParameterKeys.MediaURL:data.mediaURL!,
+                                    Constants.ParameterKeys.Latitude:String(data.latitude),
+                                    Constants.ParameterKeys.Longitude:String(data.longitude)
+                                    ]
+        
+        // If the user has never uploaded go ahead and do a post
+        // Otherwise warn user and do put
+        if usersExistingObjectID == nil {
+            // Post Data
+            let method = Constants.Methods.StudentLocation
+            print("We would be posting data using:")
+            print("httpHeaderFields: \(String(describing: httpHeaderFields))")
+            print("parametersDictionary: \(String(describing: parametersDictionary))")
+            print("method: \(String(describing: method))")
+        } else {
+            // warn user
+            // Put
+            let method = (Constants.Methods.StudentLocation) + (self.usersExistingObjectID)!
+            print("We would be posting data using:")
+            print("httpHeaderFields: \(String(describing: httpHeaderFields))")
+            print("parametersDictionary: \(String(describing: parametersDictionary))")
+            print("method: \(String(describing: method))")
+        }
+        
+        completionHandlerForAddLocation(true, nil)
+        
+    }
+    
+    // MARK: - Privater Helper Functions
+    
+    // Tries to login using UN/PW and gets the user id and session id
     private func getLoginItems(_ completionHandlerForLogin: @escaping (_ success: Bool, _ userID: String?, _ sessionID: String?, _ errorString: String?) -> Void) {
         
         // Setup paramets and headers for method call
@@ -128,7 +174,7 @@ extension OTMClient {
     private func getMapPinData(_ completionHandlerForGetMapPindata: @escaping (_ succes: Bool, _ mapPinData: [OTMMapData]?, _ errorString: String?) -> Void) {
         let httpHeaderFields = [OTMClient.Constants.ParameterKeys.ApplicationID:OTMClient.Constants.JSONParameterKeys.IDHeaderField, OTMClient.Constants.ParameterKeys.API_Key:OTMClient.Constants.JSONParameterKeys.APIHeaderField]
         
-        let _ = taskForGETMethod(Constants.Methods.StudentLocations, httpHeaderFields: httpHeaderFields) { (data, error) in
+        let _ = taskForGETMethod(Constants.Methods.StudentLocation, httpHeaderFields: httpHeaderFields) { (data, error) in
             if let error = error {
                 print(error)
                 completionHandlerForGetMapPindata(false, nil, "Unable to get map data")
@@ -141,5 +187,4 @@ extension OTMClient {
             }
         }
     }
-    
 }

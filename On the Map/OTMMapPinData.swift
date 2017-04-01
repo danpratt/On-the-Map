@@ -19,7 +19,7 @@ struct OTMMapData {
     let firstName: String?
     let lastName: String?
     let mapString: String? // The location string used for geocoding the student location
-    let mediaURL: String? // URL Provided by student
+    var mediaURL: String? // URL Provided by student
     let latitude: Double
     let longitude: Double
     
@@ -36,6 +36,18 @@ struct OTMMapData {
         longitude = dictionary[OTMClient.Constants.JSONMapResponseKeys.Longitude] as! Double
     }
     
+    // Add a URL if none exists yet
+    // May remove the condition and allow it to always be overwritten
+    mutating func addURL(_ url: String) -> Bool {
+        if self.mediaURL == nil {
+            self.mediaURL = url
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    // Static function to create an array of all map data dictionaries
     static func mapDataFromDictionaries(_ dictionaries:[[String:AnyObject]]) -> [OTMMapData] {
         var mapData = [OTMMapData]()
         

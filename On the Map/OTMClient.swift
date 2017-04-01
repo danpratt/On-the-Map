@@ -19,7 +19,7 @@ class OTMClient: NSObject {
     var userID: String? = nil
     var firstName: String? = nil
     var lastName: String? = nil
-    var usersExistingObjectID: String? = nil
+    var usersExistingObjectID: String? = nil    
     
     // MapPin Data
     var mapPinData: [OTMMapData]? = nil
@@ -100,17 +100,26 @@ class OTMClient: NSObject {
     func taskForPOSTMethod(_ method: String, parameters: [String:String], httpHeaderFields: [String:String],completionHandlerForPOST: @escaping (_ result: NSDictionary?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         // Setup parameters
-        let parentParameters = "{\"\(OTMClient.Constants.ParameterKeys.Udacity)\": {"
-        let parameters = OTMParametersFromDictionary(parameters, withParent: parentParameters)
+        // Check if we are authenticating a session, if so, use parent parameters
+        // Otherwise we don't need parent parameters
+        var parametersData: Data!
+        if method == Constants.Methods.AuthenticateSession {
+            let parentParameters = "{\"\(OTMClient.Constants.ParameterKeys.Udacity)\": {"
+            parametersData = OTMParametersFromDictionary(parameters, withParent: parentParameters)
+        } else {
+            parametersData = OTMParametersFromDictionary(parameters)
+        }
         
         // Build request for task
         var request = URLRequest(url: URL(string: method)!)
         request.httpMethod = Constants.HTTPMethods.Post
+        // All posts use ("application/json", forHTTPHeaderField: "Content-Type") so we will add it here
+        // It should not be a part of the httpHeaderFields dictionary in the call
         request.addValue(OTMClient.Constants.JSONParameterKeys.JSONApplication, forHTTPHeaderField: OTMClient.Constants.JSONParameterKeys.Content)
         for (key, value) in httpHeaderFields {
             request.addValue(key, forHTTPHeaderField: value)
         }
-        request.httpBody = parameters
+        request.httpBody = parametersData
         
         // Create task
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
