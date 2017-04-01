@@ -35,10 +35,21 @@ import CoreLocation
 //    }
 //}
 //
-//CLGeocoder().geocodeAddressString("Seattle, WA") { (placemark, error) in
-//    print(placemark ?? "Can't find it")
-//}
+CLGeocoder().geocodeAddressString("Seattle, WA") { (placemark, error) in
+    print(placemark ?? "Can't find it")
+}
+//
+//let url = "http://www.apple.com"
+//print(url)
+//let httpURL = url.substring(to: url.index(url.startIndex, offsetBy: 7))
 
-let url = "http://www.apple.com"
-print(url)
-let httpURL = url.substring(to: url.index(url.startIndex, offsetBy: 7))
+//var myArray = ["Hello", "World", "My", "Name", "Is", "Daniel"]
+//
+//for (index, word) in myArray.enumerated() {
+//    if word == "Is" {
+//        myArray[index] = "is"
+//    }
+//    
+//}
+//
+//print(myArray)

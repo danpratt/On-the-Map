@@ -44,7 +44,11 @@ class OTMLocatoinInputViewController: UIViewController, UITextFieldDelegate {
                 self.findLocationActivityMonitor.startAnimating()
                 self.findLocationButton.isEnabled = false
             }
+            print("Searching for: \(String(describing: searchString))")
             geoCoder.geocodeAddressString(searchString, completionHandler: { (placemarks, error) in
+                if error != nil {
+                    print("Found an error")
+                }
                 self.processResponse(withPlacemarks: placemarks, error: error)
             })
         } else {

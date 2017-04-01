@@ -42,10 +42,22 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
     
     // Add the locatoin to the map, and return to the navigation view
     private func addLocation() {
-        print("adding location, woot!")
-        OTMClient.sharedInstance().addUserLocation(withUserMapPinData: userMapPinData) { (success, error) in
+        OTMClient.sharedInstance().addUserLocation(withUserMapPinData: userMapPinData) { (success, wasNew, error) in
             if success {
-                print("Success")
+                // Add the location to the array of mapPinData so we don't need to load from the network again.
+                if wasNew {
+                    OTMClient.sharedInstance().mapPinData?.append(self.userMapPinData)
+                } else {
+                    // Find and replace the old one
+                    for (index, data) in OTMClient.sharedInstance().mapPinData!.enumerated() {
+                        if data.objectID == OTMClient.sharedInstance().usersExistingObjectID {
+                            OTMClient.sharedInstance().mapPinData?[index] = self.userMapPinData
+                        }
+                    }
+                }
+                
+                // Tell the VC to reload data
+                OTMClient.sharedInstance().mapPinDataUpdated = true
                 self.dismiss(animated: true, completion: nil)
             } else {
                 print(error ?? "No error given")

@@ -38,9 +38,6 @@ extension OTMClient {
                         // Write the User's First / Last Name
                         self.firstName = first
                         self.lastName = last
-                        print("First: \(String(describing: first))")
-                        print("Last: \(String(describing: last))")
-                        
                         
                         // Get the data to populate the map with
                         self.getMapPinData() { (success, mapPinData, errorString) in
@@ -61,7 +58,7 @@ extension OTMClient {
     }
     
     // Call to add a location
-    func addUserLocation(withUserMapPinData data: OTMMapData, completionHandlerForAddLocation: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
+    func addUserLocation(withUserMapPinData data: OTMMapData, completionHandlerForAddLocation: @escaping (_ success: Bool, _ wasNewEntry: Bool, _ errorString: String?) -> Void) {
         
         // Setup the headers and parameters that both calls will use
         let httpHeaderFields = [Constants.ParameterKeys.API_Key:Constants.JSONParameterKeys.APIHeaderField,
@@ -87,6 +84,7 @@ extension OTMClient {
             print("httpHeaderFields: \(String(describing: httpHeaderFields))")
             print("parametersDictionary: \(String(describing: parametersDictionary))")
             print("method: \(String(describing: method))")
+            completionHandlerForAddLocation(true, true, nil)
         } else {
             // warn user
             // Put
@@ -95,9 +93,10 @@ extension OTMClient {
             print("httpHeaderFields: \(String(describing: httpHeaderFields))")
             print("parametersDictionary: \(String(describing: parametersDictionary))")
             print("method: \(String(describing: method))")
+            completionHandlerForAddLocation(true, false, nil)
         }
         
-        completionHandlerForAddLocation(true, nil)
+        
         
     }
     

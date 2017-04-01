@@ -19,9 +19,20 @@ class OTMMapViewController: UIViewController, MKMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("viewDidLoad")
         loadMapPins()
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        print("viewWillAppear")
+        // Reload if the map was updated
+        if OTMClient.sharedInstance().mapPinDataUpdated {
+            loadMapPins()
+            OTMClient.sharedInstance().mapPinDataUpdated = false
+        }
     }
     
     private func loadMapPins() {
