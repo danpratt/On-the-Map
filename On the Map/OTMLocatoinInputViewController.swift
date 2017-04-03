@@ -91,10 +91,11 @@ class OTMLocatoinInputViewController: UIViewController, UITextFieldDelegate {
             userMapPinData = OTMMapData(dictionary: userDataDictionary as [String : AnyObject])
             let addLocationVC = storyboard?.instantiateViewController(withIdentifier: "AddLocationView") as! OTMAddLocationViewController
             addLocationVC.userMapPinData = userMapPinData
+            addLocationVC.previousVC = self
             
             // Set doneAdding to true so that when the AddLocatoinVC finishes up adding the URL, this VC will go away as well
-            self.doneAdding = true
-            present(addLocationVC, animated: true, completion: nil)
+//            self.doneAdding = true
+            self.navigationController?.pushViewController(addLocationVC, animated: true)
         }
     }
     

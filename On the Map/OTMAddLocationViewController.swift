@@ -18,6 +18,9 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
     // User Entry
     var userMapPinData: OTMMapData!
     
+    // Previous View Controller
+    var previousVC: UIViewController? = nil
+    
     // IBOutlets
     @IBOutlet weak var addPointMapView: MKMapView!
     @IBOutlet weak var urlEntryTextField: UITextField!
@@ -102,6 +105,12 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
     // that something is in the textField will be redundant
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        // This will always work, but I would rather do it safely
+        if let locationVC = previousVC as? OTMLocatoinInputViewController {
+            // lets OTMLocationInputVC know that it can dismiss itself after we dismiss this VC
+            locationVC.doneAdding = true
+        }
+        
         // Textfield must have something in it to get this far, so no check for empty string is necessary
         let url = self.urlEntryTextField.text
         

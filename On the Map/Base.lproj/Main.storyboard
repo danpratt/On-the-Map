@@ -54,6 +54,22 @@
             </objects>
             <point key="canvasLocation" x="1490" y="-55"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Bch-SP-zUN">
+            <objects>
+                <navigationController storyboardIdentifier="AddPointNavView" id="8z7-dm-Zo9" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="T8K-fh-qJT">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="lFN-er-GdO" kind="relationship" relationship="rootViewController" id="y0y-Oi-CoA"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rah-7R-Xhg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1026" y="-717"/>
+        </scene>
         <!--Locatoin Input View Controller-->
         <scene sceneID="UJo-DH-upj">
             <objects>
@@ -160,6 +176,7 @@ IAo
                             <constraint firstItem="llT-yL-IGo" firstAttribute="top" secondItem="M11-Wc-G0H" secondAttribute="bottom" constant="12" id="tyI-LG-GjB"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="3f9-D6-Myn"/>
                     <connections>
                         <outlet property="findLocationActivityMonitor" destination="ki7-dg-xSK" id="y3M-nr-5h9"/>
                         <outlet property="findLocationButton" destination="llT-yL-IGo" id="RVi-pM-nYY"/>
@@ -168,7 +185,7 @@ IAo
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tC7-NR-zC1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-167" y="-729"/>
+            <point key="canvasLocation" x="-165" y="-717"/>
         </scene>
         <!--Add Location View Controller-->
         <scene sceneID="wVG-YK-4ND">
@@ -297,7 +314,7 @@ IAo
                     <navigationItem key="navigationItem" id="KM1-Me-tbf">
                         <barButtonItem key="leftBarButtonItem" image="icon_addpin" id="p4c-NX-9GH">
                             <connections>
-                                <segue destination="lFN-er-GdO" kind="popoverPresentation" popoverAnchorBarButtonItem="p4c-NX-9GH" id="X8Y-8V-K9v">
+                                <segue destination="8z7-dm-Zo9" kind="popoverPresentation" popoverAnchorBarButtonItem="p4c-NX-9GH" id="UwX-Jr-9nS">
                                     <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                 </segue>
                             </connections>
