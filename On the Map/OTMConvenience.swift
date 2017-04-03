@@ -48,10 +48,22 @@ extension OTMClient {
                                 self.mapPinData = mapPinData!
                                 
                                 completionHandlerForAuth(success, nil)
+                            } else {
+                                // Unable to get the mapPinData
+                                print("Error String Message: \(String(describing: errorString))")
+                                completionHandlerForAuth(false, "MAPDATA")
                             }
                         }
+                    } else {
+                        // Unable to get user data
+                        print("Error String Message: \(String(describing: errorString))")
+                        completionHandlerForAuth(false, "USERDATA")
                     }
                 })
+            } else {
+                // Unable to login
+                print("Error String Message: \(String(describing: errorString))")
+                completionHandlerForAuth(false, "LOGIN")
             }
         }
         
@@ -84,6 +96,7 @@ extension OTMClient {
             print("httpHeaderFields: \(String(describing: httpHeaderFields))")
             print("parametersDictionary: \(String(describing: parametersDictionary))")
             print("method: \(String(describing: method))")
+            // Assign object ID to prevent duplicates
             completionHandlerForAddLocation(true, true, nil)
         } else {
             // warn user

@@ -58,6 +58,7 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
                 
                 // Tell the VC to reload data
                 OTMClient.sharedInstance().mapPinDataUpdated = true
+                OTMClient.sharedInstance().listDataUpdated = true
                 self.dismiss(animated: true, completion: nil)
             } else {
                 print(error ?? "No error given")
@@ -95,6 +96,7 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
                 
             }
         } else {
+            // Add popup warning
             print("You must enter a valid url")
         }
     

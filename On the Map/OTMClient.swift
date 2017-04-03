@@ -24,6 +24,7 @@ class OTMClient: NSObject {
     // MapPin Data
     var mapPinData: [OTMMapData]? = nil
     var mapPinDataUpdated: Bool = false
+    var listDataUpdated: Bool = false
     
     // Stored hostVieController to get UN/ PW
     var hostViewController: OTMAuthViewViewController!

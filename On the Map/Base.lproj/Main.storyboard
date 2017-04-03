@@ -133,7 +133,7 @@ IAo
                                     <action selector="findLocationButtonPressed:" destination="lFN-er-GdO" eventType="touchUpInside" id="xNX-xb-7L9"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter Your Location Here" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="M11-Wc-G0H">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter Your Location Here" textAlignment="center" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="M11-Wc-G0H">
                                 <rect key="frame" x="0.0" y="246" width="414" height="239"/>
                                 <color key="backgroundColor" red="0.28750693799999999" green="0.5316470861" blue="0.61968690159999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -240,7 +240,7 @@ IAo
                                     <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="nig-3f-DLA" userLabel="URL Entry Stack View">
                                         <rect key="frame" x="0.0" y="236" width="414" height="236"/>
                                         <subviews>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter a URL Here" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="lCK-NR-ZXA">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter a URL Here" textAlignment="center" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="lCK-NR-ZXA">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="118"/>
                                                 <color key="backgroundColor" red="0.28750693799999999" green="0.5316470861" blue="0.61968690159999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -321,7 +321,7 @@ IAo
         <!--List-->
         <scene sceneID="3jZ-XP-3Cw">
             <objects>
-                <tableViewController storyboardIdentifier="ListView" id="rNF-Jr-J7B" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ListView" id="rNF-Jr-J7B" customClass="OTMTableOfPinsViewController" customModule="On_the_Map" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="9TF-c1-A7b">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
