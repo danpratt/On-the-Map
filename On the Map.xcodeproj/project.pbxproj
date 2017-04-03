@@ -19,6 +19,7 @@
 		65723E5B1E7B54370086F9B8 /* GCDConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65723E5A1E7B54370086F9B8 /* GCDConvenience.swift */; };
 		658F101C1E84438200E6731C /* OTMConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F101B1E84438200E6731C /* OTMConvenience.swift */; };
 		658F101E1E847E8000E6731C /* OTMMapPinData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F101D1E847E8000E6731C /* OTMMapPinData.swift */; };
+		65A9FBF31E92F14000435EFB /* OTMTableofPinsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A9FBF21E92F14000435EFB /* OTMTableofPinsViewCell.swift */; };
 		65CAA68A1E8C6776006C0EF5 /* OTMLocatoinInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CAA6891E8C6776006C0EF5 /* OTMLocatoinInputViewController.swift */; };
 		65DACDD71E85B49200C1A8E5 /* OTMAddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DACDD61E85B49200C1A8E5 /* OTMAddLocationViewController.swift */; };
 /* End PBXBuildFile section */
@@ -41,6 +42,7 @@
 		65723E5E1E7B5D550086F9B8 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
 		658F101B1E84438200E6731C /* OTMConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMConvenience.swift; sourceTree = "<group>"; };
 		658F101D1E847E8000E6731C /* OTMMapPinData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMMapPinData.swift; sourceTree = "<group>"; };
+		65A9FBF21E92F14000435EFB /* OTMTableofPinsViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OTMTableofPinsViewCell.swift; path = "On the Map/OTMTableofPinsViewCell.swift"; sourceTree = "<group>"; };
 		65CAA6891E8C6776006C0EF5 /* OTMLocatoinInputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMLocatoinInputViewController.swift; sourceTree = "<group>"; };
 		65DACDD61E85B49200C1A8E5 /* OTMAddLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMAddLocationViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -61,6 +63,7 @@
 			children = (
 				65723E371E7B3E2C0086F9B8 /* On the Map */,
 				65723E361E7B3E2C0086F9B8 /* Products */,
+				65A9FBF21E92F14000435EFB /* OTMTableofPinsViewCell.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -235,6 +238,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65723E5B1E7B54370086F9B8 /* GCDConvenience.swift in Sources */,
+				65A9FBF31E92F14000435EFB /* OTMTableofPinsViewCell.swift in Sources */,
 				658F101E1E847E8000E6731C /* OTMMapPinData.swift in Sources */,
 				65723E391E7B3E2C0086F9B8 /* AppDelegate.swift in Sources */,
 				65723E591E7B498F0086F9B8 /* OTMClient.swift in Sources */,
