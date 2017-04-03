@@ -60,6 +60,8 @@ class OTMAuthViewViewController: UIViewController, UITextFieldDelegate {
 
     }
     
+    // MARK: - Private helper functions
+    
     private func completeLogin() {
         let controller = storyboard!.instantiateViewController(withIdentifier: "OTMNavController") as! UINavigationController
         present(controller, animated: true, completion: nil)
@@ -113,10 +115,25 @@ class OTMAuthViewViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Delegate Functions
     
-    // Clear text entry when user clicks into field
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        textField.text = ""
-        return true
+    // Resign first responder and switch to password if on e-mail, start login if on password entry
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if emailTextField.isFirstResponder {
+            passwordTextField.becomeFirstResponder()
+        } else if passwordTextField.isFirstResponder {
+            passwordTextField.resignFirstResponder()
+            loginButtonTapped(self) // pretend we tapped the button to start the login process
+        }
+        
+        return false
+    }
+    
+    // If user taps out, we want the keyboard to go away, but we don't want to start the login
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if self.emailTextField.isFirstResponder {
+            self.emailTextField.resignFirstResponder()
+        } else if self.passwordTextField.isFirstResponder {
+            self.passwordTextField.resignFirstResponder()
+        }
     }
 
     
