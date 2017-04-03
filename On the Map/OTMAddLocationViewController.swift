@@ -61,10 +61,32 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
                 OTMClient.sharedInstance().listDataUpdated = true
                 self.dismiss(animated: true, completion: nil)
             } else {
-                print(error ?? "No error given")
+                print("Error adding new pin data: \(String(describing: error))")
+                self.createAlertWithTitle("Error", message: "Unable to upload data.  Please try again later.", actionMessage: "OK", completionHandler: { (alert) in
+                    self.dismiss(animated: true, completion: nil)
+                })
             }
         }
         
+    }
+    
+    // Creates the alert view for error handling and user submission overwrite requests
+    private func createAlertWithTitle(_ title: String, message: String, actionMessage: String? = nil, actionMessages: [String]? = nil, completionHandler: ((UIAlertAction) -> Void)?) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        if let actionMessage = actionMessage {
+            let action = UIAlertAction(title: actionMessage, style: .default, handler: completionHandler)
+            alert.addAction(action)
+        }
+        
+        // Setup multiple actions
+        if let actionMessages = actionMessages {
+            for actionMessage in actionMessages {
+                let action = UIAlertAction(title: actionMessage, style: .default, handler: completionHandler)
+                alert.addAction(action)
+            }
+        }
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Delegate Functions
@@ -88,16 +110,33 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
             let http = url?.substring(to: (url?.index((url?.startIndex)!, offsetBy: 7))!).lowercased()
             let https = url?.substring(to: (url?.index((url?.startIndex)!, offsetBy: 8))!).lowercased()
             if (http == "http://") || (https == "https://") {
-                if (userMapPinData.addURL(url!)) {
+                
+                var addURL: Bool = true
+                
+                // check to see if user data exists
+                if OTMClient.sharedInstance().usersExistingObjectID != nil {
+                    createAlertWithTitle("Existing Data", message: "You have an existing map point.  Would you like to overwrite it?", actionMessages: ["Yes", "No"], completionHandler: { (alert) in
+                        if alert.title == "No" {
+                            addURL = false
+                        }
+                    })
+                }
+                
+                // Make sure that the URL can be added, and that the user hasn't said they don't want to overwrite
+                if (userMapPinData.addURL(url!)) && addURL {
                     addLocation()
                 } else {
-                    print("URL already exists")
+                    //  This really should never happen
+                    createAlertWithTitle("Not Added", message: "The URL and Location was not submitted.  Tap Ok to return to pin data overview.", actionMessage: "OK", completionHandler: { (alert) in
+                        self.dismiss(animated: true, completion: nil)
+                    })
+
                 }
                 
             }
         } else {
-            // Add popup warning
-            print("You must enter a valid url")
+            // Show popup warning
+            createAlertWithTitle("Invalid URL", message: "You must enter a valid URL. \n(e.g. https://www.udacity.com)", actionMessage: "OK", completionHandler: nil)
         }
     
         

@@ -35,9 +35,9 @@ import CoreLocation
 //    }
 //}
 //
-CLGeocoder().geocodeAddressString("Seattle, WA") { (placemark, error) in
-    print(placemark ?? "Can't find it")
-}
+//CLGeocoder().geocodeAddressString("Seattle, WA") { (placemark, error) in
+//    print(placemark ?? "Can't find it")
+//}
 //
 //let url = "http://www.apple.com"
 //print(url)
@@ -53,3 +53,4 @@ CLGeocoder().geocodeAddressString("Seattle, WA") { (placemark, error) in
 //}
 //
 //print(myArray)
+print("Hello, \n World!")

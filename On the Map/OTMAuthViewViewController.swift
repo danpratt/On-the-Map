@@ -12,9 +12,6 @@ class OTMAuthViewViewController: UIViewController, UITextFieldDelegate {
 
     // MARK: Properties
     
-//    var urlRequest: URLRequest? = nil
-//    var requestToken: String? = nil
-//    var completionHandlerForView: ((_ success: Bool, _ errorString: String?) -> Void)? = nil
     var username: String? = nil
     var password: String? = nil
     var session: URLSession!
@@ -62,11 +59,14 @@ class OTMAuthViewViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Private helper functions
     
+    // Loads up the Nav Controller after the login is successful
     private func completeLogin() {
         let controller = storyboard!.instantiateViewController(withIdentifier: "OTMNavController") as! UINavigationController
         present(controller, animated: true, completion: nil)
     }
     
+    // Display an error depending on what the OTMConvenience methods throw back as us 
+    // The login has failed for some reason
     private func displayError(_ error: String) {
         // Stop the animation and let the user try again
         performUIUpdatesOnMain {
@@ -88,7 +88,7 @@ class OTMAuthViewViewController: UIViewController, UITextFieldDelegate {
     
     // ALERT: - Alert Creator Function
     
-    // Creates the alert view
+    // Creates the alert view for login errors
     private func createAlertWithTitle(_ title: String, message: String, actionMessage: String? = nil, completionHandler: ((UIAlertAction) -> Void)?) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         if let actionMessage = actionMessage {
@@ -103,8 +103,9 @@ class OTMAuthViewViewController: UIViewController, UITextFieldDelegate {
         createAlertWithTitle("Login Error", message: "Please check your username and password", actionMessage: "OK", completionHandler: nil)
     }
     
+    // Getting an error that is likely caused by network / udacity issue
     private func showNetworkError() {
-        createAlertWithTitle("Network Error", message: "Unable to retrieve your user data.  Check your network connection and try again.", actionMessage: "OK", completionHandler: nil)
+        createAlertWithTitle("Network Error", message: "Unable to retrieve your user data.  If your network connection is okay, wait five minutes and try again.", actionMessage: "OK", completionHandler: nil)
     }
     
     // Default error, if no error string is present

@@ -455,7 +455,7 @@ IAo
         <scene sceneID="67M-7Z-bQG">
             <objects>
                 <navigationController storyboardIdentifier="OTMNavController" id="aK7-Hl-fTf" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="dLS-G6-1JQ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="dLS-G6-1JQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

@@ -37,25 +37,25 @@ class OTMLocatoinInputViewController: UIViewController, UITextFieldDelegate {
     }
 
     @IBAction func findLocationButtonPressed(_ sender: Any) {
-        if let searchString = locationEntry.text {
-            placeName = searchString
-            performUIUpdatesOnMain {
-                self.findLocationActivityMonitor.isHidden = false
-                self.findLocationActivityMonitor.startAnimating()
-                self.findLocationButton.isEnabled = false
+        guard let searchString = locationEntry.text, searchString != "", searchString != "Enter Your Location Here" else {
+            createAlertWithTitle("Empty Search", message: "Please enter a location to search for.", actionMessage: "Ok", completionHandler: nil)
+            return
             }
-            print("Searching for: \(String(describing: searchString))")
-            geoCoder.geocodeAddressString(searchString, completionHandler: { (placemarks, error) in
-                if error != nil {
-                    print("Found an error")
-                }
-                self.processResponse(withPlacemarks: placemarks, error: error)
-            })
-        } else {
-            print("You Must enter something")
+        
+        placeName = searchString
+        performUIUpdatesOnMain {
+            self.findLocationActivityMonitor.isHidden = false
+            self.findLocationActivityMonitor.startAnimating()
+            self.findLocationButton.isEnabled = false
         }
-        
-        
+        print("Searching for: \(String(describing: searchString))")
+        geoCoder.geocodeAddressString(searchString, completionHandler: { (placemarks, error) in
+            if error != nil {
+                print("Error finding map data: \(String(describing: error))")
+                self.createAlertWithTitle("Error", message: "Unable to find location.  Please try again", actionMessage: "Ok", completionHandler: nil)
+            }
+            self.processResponse(withPlacemarks: placemarks, error: error)
+        })
     }
     
     // MARK: - Private Helper Functions
@@ -88,7 +88,6 @@ class OTMLocatoinInputViewController: UIViewController, UITextFieldDelegate {
                 userDataDictionary[OTMClient.Constants.JSONMapResponseKeys.ObjectID] = OTMClient.sharedInstance().usersExistingObjectID as AnyObject
             }
             
-            print(location ?? "location was nil")
             userMapPinData = OTMMapData(dictionary: userDataDictionary as [String : AnyObject])
             let addLocationVC = storyboard?.instantiateViewController(withIdentifier: "AddLocationView") as! OTMAddLocationViewController
             addLocationVC.userMapPinData = userMapPinData
@@ -97,6 +96,17 @@ class OTMLocatoinInputViewController: UIViewController, UITextFieldDelegate {
             self.doneAdding = true
             present(addLocationVC, animated: true, completion: nil)
         }
+    }
+    
+    // Creates the alert view for error handling and user submission overwrite requests
+    private func createAlertWithTitle(_ title: String, message: String, actionMessage: String? = nil, completionHandler: ((UIAlertAction) -> Void)?) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        if let actionMessage = actionMessage {
+            let action = UIAlertAction(title: actionMessage, style: .default, handler: completionHandler)
+            alert.addAction(action)
+        }
+        
+         self.present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Delegate Functions
