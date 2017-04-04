@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 // MARK: = OTMClient: NSObject
 
@@ -25,6 +26,7 @@ class OTMClient: NSObject {
     var mapPinData: [OTMMapData]? = nil
     var mapPinDataUpdated: Bool = false
     var listDataUpdated: Bool = false
+    var userLocation: CLLocationCoordinate2D? = nil
     
     // Stored hostVieController to get UN/ PW
     var hostViewController: OTMAuthViewViewController!
@@ -65,16 +67,10 @@ class OTMClient: NSObject {
             }
             
             /* GUARD: Did we get a successful 200 response? */
-            guard let statusCode = ((response as? HTTPURLResponse)?.statusCode) else {
+            guard let statusCode = ((response as? HTTPURLResponse)?.statusCode), statusCode >= 200 && statusCode <= 299 else {
                 sendError("Your request returned an invalid status code")
                 return
             }
-            
-            print("GET status code: \(statusCode)")
-            
-            // Check statusCode for other failures
-            // check username/password
-            // check invalid url
             
             /* GUARD: Was there any data returned? */
             guard let data = data else {
@@ -99,17 +95,19 @@ class OTMClient: NSObject {
     
     // MARK: POST
     
-    func taskForPOSTMethod(_ method: String, parameters: [String:String], httpHeaderFields: [String:String],completionHandlerForPOST: @escaping (_ result: NSDictionary?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func taskForPOSTMethod(_ method: String, parameters: [String:String]? = nil, jsonBody: Data? = nil, httpHeaderFields: [String:String],completionHandlerForPOST: @escaping (_ result: NSDictionary?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         // Setup parameters
         // Check if we are authenticating a session, if so, use parent parameters
         // Otherwise we don't need parent parameters
         var parametersData: Data!
+        var shaveFiveChars: Bool!
         if method == Constants.Methods.AuthenticateSession {
             let parentParameters = "{\"\(OTMClient.Constants.ParameterKeys.Udacity)\": {"
-            parametersData = OTMParametersFromDictionary(parameters, withParent: parentParameters)
+            parametersData = OTMParametersFromDictionary(parameters!, withParent: parentParameters)
+            shaveFiveChars = true
         } else {
-            parametersData = OTMParametersFromDictionary(parameters)
+            shaveFiveChars = false
         }
         
         // Build request for task
@@ -121,7 +119,13 @@ class OTMClient: NSObject {
         for (key, value) in httpHeaderFields {
             request.addValue(key, forHTTPHeaderField: value)
         }
-        request.httpBody = parametersData
+        
+        if jsonBody == nil {
+            request.httpBody = parametersData
+        } else {
+            request.httpBody = jsonBody
+        }
+        
         
         // Create task
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
@@ -139,14 +143,10 @@ class OTMClient: NSObject {
             }
             
             /* GUARD: Did we get a successful 200 response? */
-            guard let statusCode = ((response as? HTTPURLResponse)?.statusCode), statusCode == 200 else {
+            guard let statusCode = ((response as? HTTPURLResponse)?.statusCode), statusCode >= 200 && statusCode <= 299 else {
                 sendError("Your request returned an invalid status code")
                 return
             }
-            
-            // Check statusCode for other failures
-            // check username/password
-            // check invalid url
             
             /* GUARD: Was there any data returned? */
             guard let data = data else {
@@ -154,8 +154,13 @@ class OTMClient: NSObject {
                 return
             }
             
-            let newData = self.removeFirstFiveCharactersFrom(data: data)
-            self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForPOST)
+            if shaveFiveChars {
+                let newData = self.removeFirstFiveCharactersFrom(data: data)
+                self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForPOST)
+            } else {
+                self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPOST)
+            }
+            
         }
         
         // Start the request
@@ -165,13 +170,10 @@ class OTMClient: NSObject {
     }
     
     // MARK: PUT
-    func taskForPUTMethod(_ method: String, withObjectID objectID: String, parameters: [String:String], httpHeaderFields: [String:String], completionHandlerForPUT: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func taskForPUTMethod(_ method: String, withObjectID objectID: String, jsonBody: Data, httpHeaderFields: [String:String], completionHandlerForPUT: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         // Create a URL using the objectID
         let urlString = method + "/" + objectID
-        
-        // Setup parameters
-        let parameters = OTMParametersFromDictionary(parameters)
         
         // Create the request
         var request = URLRequest(url: URL(string: urlString)!)
@@ -180,7 +182,9 @@ class OTMClient: NSObject {
         for (key, value) in httpHeaderFields {
             request.addValue(key, forHTTPHeaderField: value)
         }
-        request.httpBody = parameters
+        
+        request.httpBody = jsonBody
+        
         
         // Create the task
         let task = session.dataTask(with: request) { data, response, error in
@@ -198,7 +202,7 @@ class OTMClient: NSObject {
             }
             
             /* GUARD: Did we get a successful 200 response? */
-            guard let statusCode = ((response as? HTTPURLResponse)?.statusCode), statusCode == 200 else {
+            guard let statusCode = ((response as? HTTPURLResponse)?.statusCode), statusCode >= 200 && statusCode <= 299 else {
                 sendError("Your request returned an invalid status code")
                 return
             }
@@ -248,7 +252,7 @@ class OTMClient: NSObject {
             }
             
             /* GUARD: Did we get a successful 200 response? */
-            guard let statusCode = ((response as? HTTPURLResponse)?.statusCode), statusCode == 200 else {
+            guard let statusCode = ((response as? HTTPURLResponse)?.statusCode), statusCode >= 200 && statusCode <= 299 else {
                 sendError("Your request returned an invalid status code")
                 return
             }
@@ -293,7 +297,7 @@ class OTMClient: NSObject {
         } else {
             paramsToReturn.append("}}")
         }
-        
+
         return paramsToReturn.data(using: String.Encoding.utf8)!
     }
     
@@ -314,6 +318,7 @@ class OTMClient: NSObject {
             let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
             completionHandlerForConvertData(nil, NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
         }
+        
         
         completionHandlerForConvertData(parsedResult as! NSDictionary?, nil)
     }

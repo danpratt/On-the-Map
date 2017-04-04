@@ -78,35 +78,67 @@ extension OTMClient {
         ]
         
         // Everything will be here in order to get to this point, so we can force unwrap safely
-        let parametersDictionary = [Constants.ParameterKeys.UniqueKey:data.uniqueKey!,
+        let parametersDictionary : [String : Any] =
+                                    [Constants.ParameterKeys.UniqueKey:data.uniqueKey!,
                                     Constants.ParameterKeys.FirstName:data.firstName!,
                                     Constants.ParameterKeys.LastName:data.lastName!,
                                     Constants.ParameterKeys.MapString:data.mapString!,
                                     Constants.ParameterKeys.MediaURL:data.mediaURL!,
-                                    Constants.ParameterKeys.Latitude:String(data.latitude),
-                                    Constants.ParameterKeys.Longitude:String(data.longitude)
+                                    Constants.ParameterKeys.Latitude:Double(data.latitude),
+                                    Constants.ParameterKeys.Longitude:Double(data.longitude)
                                     ]
+        
+        guard let jsonBodyParameters = try? JSONSerialization.data(withJSONObject: parametersDictionary, options: .prettyPrinted) else {
+            completionHandlerForAddLocation(false, false, "Unable to create data for JSON Body")
+            return
+        }
         
         // If the user has never uploaded go ahead and do a post
         // Otherwise warn user and do put
         if usersExistingObjectID == nil {
             // Post Data
             let method = Constants.Methods.StudentLocation
-            print("We would be posting data using:")
-            print("httpHeaderFields: \(String(describing: httpHeaderFields))")
-            print("parametersDictionary: \(String(describing: parametersDictionary))")
-            print("method: \(String(describing: method))")
-            // Assign object ID to prevent duplicates
-            completionHandlerForAddLocation(true, true, nil)
+//            print("parametersDictionary: \(String(describing: parametersDictionary))")
+            let _ = taskForPOSTMethod(method, jsonBody: jsonBodyParameters, httpHeaderFields: httpHeaderFields, completionHandlerForPOST: { (postData, error) in
+                if let error = error {
+                    print(error)
+                    completionHandlerForAddLocation(false, true, error.localizedDescription)
+                } else {
+                    guard let objectID = postData?[Constants.JSONMapResponseKeys.ObjectID] as? String else {
+                        print("Error getting object ID: \(String(describing: error))")
+                        completionHandlerForAddLocation(false, true, error?.localizedDescription)
+                        return
+                    }
+                    
+                    // Set the object ID to the one we got
+                    OTMClient.sharedInstance().usersExistingObjectID = objectID
+                    completionHandlerForAddLocation(true, true, nil)
+                }
+            })
+            
         } else {
-            // warn user
+            // User has already been warned, so we can go ahead
             // Put
-            let method = (Constants.Methods.StudentLocation) + (self.usersExistingObjectID)!
-            print("We would be posting data using:")
-            print("httpHeaderFields: \(String(describing: httpHeaderFields))")
-            print("parametersDictionary: \(String(describing: parametersDictionary))")
-            print("method: \(String(describing: method))")
-            completionHandlerForAddLocation(true, false, nil)
+//            print("We would be posting data using:")
+//            print("httpHeaderFields: \(String(describing: httpHeaderFields))")
+//            print("parametersDictionary: \(String(describing: parametersDictionary))")
+//            print("method: \(String(describing: method))")
+            
+            let _ = taskForPUTMethod(Constants.Methods.StudentLocation, withObjectID: (self.usersExistingObjectID)!, jsonBody: jsonBodyParameters, httpHeaderFields: httpHeaderFields, completionHandlerForPUT: { (data, error) in
+                if let error = error {
+                    print(error)
+                    completionHandlerForAddLocation(false, false, error.localizedDescription)
+                } else {
+                    // This should always work, but we check just in case
+                    guard let _ = data?[Constants.JSONMapResponseKeys.UpdatedDate] else {
+                        completionHandlerForAddLocation(false, false, error?.localizedDescription)
+                        return
+                    }
+                    
+                    // ObjectID already exists, so we don't need to update it before returning success
+                    completionHandlerForAddLocation(true, false, nil)
+                }
+            })
         }
         
         
@@ -124,7 +156,7 @@ extension OTMClient {
         
         let headerFields = [OTMClient.Constants.JSONParameterKeys.JSONApplication:OTMClient.Constants.JSONParameterKeys.Accept]
         
-        let _ = taskForPOSTMethod(Constants.Methods.AuthenticateSession, parameters: parameters as! [String : String], httpHeaderFields: headerFields) { (loginItems, error) in
+        let _ = taskForPOSTMethod(Constants.Methods.AuthenticateSession, parameters: parameters as? [String : String], httpHeaderFields: headerFields) { (loginItems, error) in
             
             // check for error
             if let error = error {

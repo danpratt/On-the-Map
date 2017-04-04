@@ -14,7 +14,6 @@ import MapKit
 class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
 
     // MARK: - Properties
-    
     // User Entry
     var userMapPinData: OTMMapData!
     
@@ -47,13 +46,29 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
     private func addLocation() {
         OTMClient.sharedInstance().addUserLocation(withUserMapPinData: userMapPinData) { (success, wasNew, error) in
             if success {
+                
+                // Lets the map view center on the user location
+                OTMClient.sharedInstance().userLocation = CLLocationCoordinate2D(latitude: self.userMapPinData.latitude, longitude: self.userMapPinData.longitude)
+                
+                // Get the objectID from the sharedInstance (was written to during addUserLocatoin call) and add it to the userMapPinData object
+                if let objectID = OTMClient.sharedInstance().usersExistingObjectID {
+                    self.userMapPinData.objectID = objectID
+                    
+                } else {
+                    // This will never happen if there is a success message, but safety first!
+                    self.createAlertWithTitle("Error", message: "There was an error adding your location.  Please exit the app and try again later", actionMessage: "OK", completionHandler: nil)
+                }
+                
                 // Add the location to the array of mapPinData so we don't need to load from the network again.
                 if wasNew {
                     OTMClient.sharedInstance().mapPinData?.append(self.userMapPinData)
+                   
+                    
                 } else {
                     // Find and replace the old one
                     for (index, data) in OTMClient.sharedInstance().mapPinData!.enumerated() {
                         if data.objectID == OTMClient.sharedInstance().usersExistingObjectID {
+                            
                             OTMClient.sharedInstance().mapPinData?[index] = self.userMapPinData
                         }
                     }
@@ -117,7 +132,7 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
                     addLocation()
                 } else {
                     //  This really should never happen
-                    createAlertWithTitle("Not Added", message: "The URL and Location was not submitted.  Tap Ok to return to pin data overview.", actionMessage: "OK", completionHandler: { (alert) in
+                    createAlertWithTitle("Not Added", message: "The URL and Location was not submitted.  Tap OK to return to pin data overview.", actionMessage: "OK", completionHandler: { (alert) in
                         self.dismiss(animated: true, completion: nil)
                     })
 

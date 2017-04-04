@@ -57,8 +57,8 @@
         <!--Navigation Controller-->
         <scene sceneID="Bch-SP-zUN">
             <objects>
-                <navigationController storyboardIdentifier="AddPointNavView" id="8z7-dm-Zo9" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="T8K-fh-qJT">
+                <navigationController storyboardIdentifier="AddPointNavView" automaticallyAdjustsScrollViewInsets="NO" id="8z7-dm-Zo9" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="T8K-fh-qJT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -348,7 +348,7 @@ IAo
                                 <rect key="frame" x="0.0" y="28" width="414" height="75"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FQP-yN-PhJ" id="gvF-Kb-gEG">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="74.666666666666671"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="74.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="t1Z-ig-nww" userLabel="Cell Stack View">
@@ -516,8 +516,8 @@ IAo
         <!--Navigation Controller-->
         <scene sceneID="67M-7Z-bQG">
             <objects>
-                <navigationController storyboardIdentifier="OTMNavController" id="aK7-Hl-fTf" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="dLS-G6-1JQ">
+                <navigationController storyboardIdentifier="OTMNavController" automaticallyAdjustsScrollViewInsets="NO" id="aK7-Hl-fTf" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="dLS-G6-1JQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

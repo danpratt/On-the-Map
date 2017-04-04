@@ -15,11 +15,26 @@ class OTMTableOfPinsViewController: UITableViewController {
     
     // Model
     var tableData = [OTMMapData]()
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+    
+    // Setup the view during first load
+    override func viewDidLoad() {
+        super.viewDidLoad()
         tableData = OTMClient.sharedInstance().mapPinData!
         self.tableView.reloadData()
+        OTMClient.sharedInstance().mapPinDataUpdated = false
+    }
+    
+    // Reload if user has updated the view
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        // Reload the table if we have updated data to use
+        if OTMClient.sharedInstance().mapPinDataUpdated {
+            tableData = OTMClient.sharedInstance().mapPinData!
+            self.tableView.reloadData()
+            OTMClient.sharedInstance().mapPinDataUpdated = false
+        }
+        
     }
     
 
@@ -63,7 +78,7 @@ class OTMTableOfPinsViewController: UITableViewController {
         
         // setup map in cell
         cell.mapView.addAnnotation(annotation)
-        cell.mapView.setRegion(MKCoordinateRegion.init(center: annotation.coordinate, span: .init(latitudeDelta: 2, longitudeDelta: 2)), animated: true)
+        cell.mapView.setRegion(MKCoordinateRegion.init(center: annotation.coordinate, span: .init(latitudeDelta: 2, longitudeDelta: 2)), animated: false)
         
         // setup labels in cell
         cell.nameLabel.text = name()

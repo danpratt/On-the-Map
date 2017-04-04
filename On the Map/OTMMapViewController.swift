@@ -20,6 +20,11 @@ class OTMMapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadMapPins()
+        
+        // If an existing entry from previous session is found from the user, center the map there
+        if let userLocation = OTMClient.sharedInstance().userLocation {
+            mapView.setRegion(MKCoordinateRegion.init(center: userLocation, span: .init(latitudeDelta: 1, longitudeDelta: 1)), animated: true)
+        }
 
         // Do any additional setup after loading the view.
     }
@@ -29,6 +34,10 @@ class OTMMapViewController: UIViewController, MKMapViewDelegate {
         // Reload if the map was updated
         if OTMClient.sharedInstance().mapPinDataUpdated {
             loadMapPins()
+            if let userLocation = OTMClient.sharedInstance().userLocation {
+                mapView.setRegion(MKCoordinateRegion.init(center: userLocation, span: .init(latitudeDelta: 1, longitudeDelta: 1)), animated: true)
+            }
+            
             OTMClient.sharedInstance().mapPinDataUpdated = false
         }
     }
@@ -43,7 +52,10 @@ class OTMMapViewController: UIViewController, MKMapViewDelegate {
     private func createAnnotations() {
         let mapPins = OTMClient.sharedInstance().mapPinData! as [OTMMapData]
         
+        // While writing this, somehow a student named Michael Stram managed to upload nil coordinates
+        // This makes sure we don't crash and just ignores these
         for map in mapPins {
+
             let latitude = CLLocationDegrees(map.latitude)
             let longitude = CLLocationDegrees(map.longitude)
             let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
@@ -60,7 +72,8 @@ class OTMMapViewController: UIViewController, MKMapViewDelegate {
             if let url = map.mediaURL {
                 annotation.subtitle = url
             }
-          annotations.append(annotation)
+            annotations.append(annotation)
+            
         }
     }
     
@@ -98,11 +111,10 @@ class OTMMapViewController: UIViewController, MKMapViewDelegate {
 
                 } else if !toOpen.contains(" ") {
                     app.open(URL(string: toOpen)!)
-                } else {
-                    print("Invalid URL")
-                    createAlertWithTitle("Error", message: "Unable to open URL because it is not valid.", actionMessage: "OK", completionHandler: nil)
                 }
-                
+            } else {
+                print("Invalid URL")
+                createAlertWithTitle("Error", message: "Unable to open URL because it is not valid.", actionMessage: "OK", completionHandler: nil)
             }
         }
     }

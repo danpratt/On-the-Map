@@ -9,12 +9,13 @@
 // MARK: MapPinData Struct
 
 import Foundation
+import MapKit
 
 struct OTMMapData {
     
     // MARK: Properties
     
-    let objectID: String?
+    var objectID: String?
     let uniqueKey: String?
     let firstName: String?
     let lastName: String?
@@ -22,6 +23,7 @@ struct OTMMapData {
     var mediaURL: String? // URL Provided by student
     let latitude: Double
     let longitude: Double
+    var hasNilCoord: Bool = false
     
     // MARK: Init
     
@@ -32,8 +34,20 @@ struct OTMMapData {
         lastName = dictionary[OTMClient.Constants.JSONMapResponseKeys.NameLast] as? String
         mapString = dictionary[OTMClient.Constants.JSONMapResponseKeys.MapString] as? String
         mediaURL = dictionary[OTMClient.Constants.JSONMapResponseKeys.MediaURL] as? String
-        latitude = dictionary[OTMClient.Constants.JSONMapResponseKeys.Latitude] as! Double
-        longitude = dictionary[OTMClient.Constants.JSONMapResponseKeys.Longitude] as! Double
+        if let lat = dictionary[OTMClient.Constants.JSONMapResponseKeys.Latitude] as? Double {
+            
+            latitude = lat
+        } else {
+            hasNilCoord = true
+            latitude = 0.0
+        }
+        if let long = dictionary[OTMClient.Constants.JSONMapResponseKeys.Longitude] as? Double {
+            longitude = long
+        } else {
+            
+            hasNilCoord = true
+            longitude = 0.0
+        }
     }
     
     // Add a URL if none exists yet
@@ -50,14 +64,31 @@ struct OTMMapData {
     // Static function to create an array of all map data dictionaries
     static func mapDataFromDictionaries(_ dictionaries:[[String:AnyObject]]) -> [OTMMapData] {
         var mapData = [OTMMapData]()
-        
         // Iterate through the data and create map data objects
         for dictionary in dictionaries {
-            if dictionary[OTMClient.Constants.JSONMapResponseKeys.Key] as? String == OTMClient.sharedInstance().userID {
-                print("Found existing")
-                OTMClient.sharedInstance().usersExistingObjectID = dictionary[OTMClient.Constants.JSONMapResponseKeys.ObjectID] as? String
+            var append = true
+            
+            // check to make sure there is data
+            // while I was writing this, somehow a student named Michael Stram managed to upload nil longitude coordinates which caused a crash
+            // This makes sure we don't crash and just ignores these
+            if let latitude = dictionary[OTMClient.Constants.JSONMapResponseKeys.Latitude] as? Double, let longitude = dictionary[OTMClient.Constants.JSONMapResponseKeys.Longitude] as? Double {
+                // to reduce code, we can just check here
+                if dictionary[OTMClient.Constants.JSONMapResponseKeys.Key] as? String == OTMClient.sharedInstance().userID {
+                    print("Found existing")
+                    OTMClient.sharedInstance().usersExistingObjectID = dictionary[OTMClient.Constants.JSONMapResponseKeys.ObjectID] as? String
+                    OTMClient.sharedInstance().userLocation = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                }
+            } else {
+//                print("Found nil")
+//                print("Longitude: \(dictionary[OTMClient.Constants.JSONMapResponseKeys.Longitude])")
+//                print("Latitude: \(dictionary[OTMClient.Constants.JSONMapResponseKeys.Latitude])")
+                append = false
             }
-            mapData.append(OTMMapData(dictionary: dictionary))
+            
+            if append {
+                mapData.append(OTMMapData(dictionary: dictionary))
+            }
+            
         }
         
         return mapData
