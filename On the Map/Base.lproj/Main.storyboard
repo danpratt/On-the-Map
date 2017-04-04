@@ -358,13 +358,13 @@ IAo
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="t1Z-ig-nww" userLabel="Cell Stack View">
                                             <rect key="frame" x="8" y="0.0" width="406" height="66"/>
                                             <subviews>
-                                                <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="GPE-UJ-tSe">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_world" translatesAutoresizingMaskIntoConstraints="NO" id="sfv-6c-cRD">
                                                     <rect key="frame" x="0.0" y="0.0" width="66" height="66"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="66" id="1jy-YD-cF2"/>
-                                                        <constraint firstAttribute="height" constant="66" id="5Nn-6K-JN4"/>
+                                                        <constraint firstAttribute="width" constant="66" id="PCg-qg-L6C"/>
+                                                        <constraint firstAttribute="height" constant="66" id="WwW-ro-a9f"/>
                                                     </constraints>
-                                                </mapView>
+                                                </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="IKS-hK-sxk" userLabel="Labels Stack View">
                                                     <rect key="frame" x="73" y="0.0" width="333" height="66"/>
                                                     <subviews>
@@ -396,7 +396,6 @@ IAo
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="mapView" destination="GPE-UJ-tSe" id="xdr-yP-f99"/>
                                     <outlet property="nameLabel" destination="Zg9-zM-AiR" id="KKg-d3-sRT"/>
                                     <outlet property="webLabel" destination="T99-bC-Fx8" id="ofD-1F-lEN"/>
                                 </connections>
@@ -543,6 +542,7 @@ IAo
         <image name="icon_listview-deselected" width="75" height="50"/>
         <image name="icon_mapview-selected" width="75" height="50"/>
         <image name="icon_refresh" width="24" height="24"/>
+        <image name="icon_world" width="52" height="67"/>
         <image name="logo-u" width="62" height="62"/>
     </resources>
 </document>

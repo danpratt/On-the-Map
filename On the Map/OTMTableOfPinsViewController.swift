@@ -52,7 +52,6 @@ class OTMTableOfPinsViewController: UITableViewController {
         // Get ready
         let cell = tableView.dequeueReusableCell(withIdentifier: "OTMDataCell", for: indexPath) as! OTMTableofPinsViewCell
         let data = tableData[indexPath.row]
-        let cellLoadQueue = DispatchQueue.init(label: "loadQueue", attributes: .concurrent)
         
         let name = { () -> String in
             if let first = data.firstName, let last = data.lastName {
@@ -71,24 +70,11 @@ class OTMTableOfPinsViewController: UITableViewController {
             }
         }
         
-        // Function to safely get name
-        cellLoadQueue.sync {
-            // create location for map
-            let location = CLLocationCoordinate2D(latitude: data.latitude, longitude: data.longitude)
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = location
-            annotation.title = name()
+        performUIUpdatesOnMain {
             
-            // setup map in cell
-            cell.mapView.addAnnotation(annotation)
-            cell.mapView.setRegion(MKCoordinateRegion.init(center: annotation.coordinate, span: .init(latitudeDelta: 2, longitudeDelta: 2)), animated: false)
-            
-            performUIUpdatesOnMain {
-                
-                // setup labels in cell
-                cell.nameLabel.text = name()
-                cell.webLabel.text = url()
-            }
+            // setup labels in cell
+            cell.nameLabel.text = name()
+            cell.webLabel.text = url()
         }
         
         return cell

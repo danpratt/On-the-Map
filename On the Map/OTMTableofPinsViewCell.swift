@@ -13,7 +13,6 @@ class OTMTableofPinsViewCell: UITableViewCell {
 
     // MARK: - IBOutlets
     
-    @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var webLabel: UILabel!
 

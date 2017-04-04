@@ -123,19 +123,14 @@ extension OTMClient {
 //            print("httpHeaderFields: \(String(describing: httpHeaderFields))")
 //            print("parametersDictionary: \(String(describing: parametersDictionary))")
 //            print("method: \(String(describing: method))")
-            
             let _ = taskForPUTMethod(Constants.Methods.StudentLocation, withObjectID: (self.usersExistingObjectID)!, jsonBody: jsonBodyParameters, httpHeaderFields: httpHeaderFields, completionHandlerForPUT: { (data, error) in
                 if let error = error {
                     print(error)
                     completionHandlerForAddLocation(false, false, error.localizedDescription)
                 } else {
-                    // This should always work, but we check just in case
-                    guard let _ = data?[Constants.JSONMapResponseKeys.UpdatedDate] else {
-                        completionHandlerForAddLocation(false, false, error?.localizedDescription)
-                        return
-                    }
-                    
+
                     // ObjectID already exists, so we don't need to update it before returning success
+                    print("Completed PUT")
                     completionHandlerForAddLocation(true, false, nil)
                 }
             })
@@ -231,6 +226,7 @@ extension OTMClient {
             }
         }
     }
+    
 }
 
 extension UIViewController {

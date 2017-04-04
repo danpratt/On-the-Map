@@ -14,11 +14,15 @@ import MapKit
 class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
 
     // MARK: - Properties
+    
     // User Entry
     var userMapPinData: OTMMapData!
     
     // Previous View Controller
     var previousVC: UIViewController? = nil
+    
+    // Indicator View
+    let Indicator = OTMActivityIndicator()
     
     // IBOutlets
     @IBOutlet weak var addPointMapView: MKMapView!
@@ -44,8 +48,13 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
     
     // Add the locatoin to the map, and return to the navigation view
     private func addLocation() {
+        let activity = Indicator.StartActivityIndicator(obj: self)
+        
         OTMClient.sharedInstance().addUserLocation(withUserMapPinData: userMapPinData) { (success, wasNew, error) in
+            
             if success {
+                
+
                 
                 // Lets the map view center on the user location
                 OTMClient.sharedInstance().userLocation = CLLocationCoordinate2D(latitude: self.userMapPinData.latitude, longitude: self.userMapPinData.longitude)
@@ -62,13 +71,10 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
                 // Add the location to the array of mapPinData so we don't need to load from the network again.
                 if wasNew {
                     OTMClient.sharedInstance().mapPinData?.append(self.userMapPinData)
-                   
-                    
                 } else {
                     // Find and replace the old one
                     for (index, data) in OTMClient.sharedInstance().mapPinData!.enumerated() {
                         if data.objectID == OTMClient.sharedInstance().usersExistingObjectID {
-                            
                             OTMClient.sharedInstance().mapPinData?[index] = self.userMapPinData
                         }
                     }
@@ -77,12 +83,22 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
                 // Tell the VC to reload data
                 OTMClient.sharedInstance().mapPinDataUpdated = true
                 OTMClient.sharedInstance().listDataUpdated = true
+                performUIUpdatesOnMain {
+                    self.Indicator.StopActivityIndicator(obj: self, indicator: activity)
+                }
                 self.dismiss(animated: true, completion: nil)
             } else {
+                print("There was an error")
                 print("Error adding new pin data: \(String(describing: error))")
-                self.createAlertWithTitle("Error", message: "Unable to upload data.  Please try again later.", actionMessage: "OK", completionHandler: { (alert) in
+                performUIUpdatesOnMain {
+                    self.Indicator.StopActivityIndicator(obj: self, indicator: activity)
+                    self.createAlertWithTitle("Error", message: "Unable to upload data.  Please try again later.", actionMessage: "OK", completionHandler: { (alert) in
+                        self.dismiss(animated: true, completion: nil)
+                    })
+                    
                     self.dismiss(animated: true, completion: nil)
-                })
+                }
+                
             }
         }
         
@@ -116,23 +132,24 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
             let https = url?.substring(to: (url?.index((url?.startIndex)!, offsetBy: 8))!).lowercased()
             if (http == "http://") || (https == "https://") {
                 
-                var addURL: Bool = true
-                
                 // check to see if user data exists
+                // if it does we will initiate addLocation from here
                 if OTMClient.sharedInstance().usersExistingObjectID != nil {
                     createAlertWithTitle("Existing Data", message: "You have an existing map point.  Would you like to overwrite it?", actionMessages: ["Yes", "No"], completionHandler: { (alert) in
-                        if alert.title == "No" {
-                            addURL = false
+                        if alert.title == "Yes" {
+                            self.addLocation()
+                        } else {
+                            self.dismiss(animated: true, completion: nil)
                         }
                     })
                 }
                 
-                // Make sure that the URL can be added, and that the user hasn't said they don't want to overwrite
-                if (userMapPinData.addURL(url!)) && addURL {
+                // Make sure that the URL can be added, and that the user doesn't have existing data that was uploaded
+                if (userMapPinData.addURL(url!)) && OTMClient.sharedInstance().usersExistingObjectID == nil {
                     addLocation()
                 } else {
                     //  This really should never happen
-                    createAlertWithTitle("Not Added", message: "The URL and Location was not submitted.  Tap OK to return to pin data overview.", actionMessage: "OK", completionHandler: { (alert) in
+                    createAlertWithTitle("Not Added", message: "The URL and Location were not submitted.  Tap OK to return to pin data overview.", actionMessage: "OK", completionHandler: { (alert) in
                         self.dismiss(animated: true, completion: nil)
                     })
 
