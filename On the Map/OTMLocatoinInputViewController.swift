@@ -94,20 +94,8 @@ class OTMLocatoinInputViewController: UIViewController, UITextFieldDelegate {
             addLocationVC.previousVC = self
             
             // Set doneAdding to true so that when the AddLocatoinVC finishes up adding the URL, this VC will go away as well
-//            self.doneAdding = true
             self.navigationController?.pushViewController(addLocationVC, animated: true)
         }
-    }
-    
-    // Creates the alert view for error handling and user submission overwrite requests
-    private func createAlertWithTitle(_ title: String, message: String, actionMessage: String? = nil, completionHandler: ((UIAlertAction) -> Void)?) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        if let actionMessage = actionMessage {
-            let action = UIAlertAction(title: actionMessage, style: .default, handler: completionHandler)
-            alert.addAction(action)
-        }
-        
-         self.present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Delegate Functions

@@ -100,6 +100,7 @@ class OTMMapViewController: UIViewController, MKMapViewDelegate {
                     app.open(URL(string: toOpen)!)
                 } else {
                     print("Invalid URL")
+                    createAlertWithTitle("Error", message: "Unable to open URL because it is not valid.", actionMessage: "OK", completionHandler: nil)
                 }
                 
             }

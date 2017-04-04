@@ -88,16 +88,6 @@ class OTMAuthViewViewController: UIViewController, UITextFieldDelegate {
     
     // ALERT: - Alert Creator Function
     
-    // Creates the alert view for login errors
-    private func createAlertWithTitle(_ title: String, message: String, actionMessage: String? = nil, completionHandler: ((UIAlertAction) -> Void)?) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        if let actionMessage = actionMessage {
-            let action = UIAlertAction(title: actionMessage, style: .default, handler: completionHandler)
-            alert.addAction(action)
-        }
-        self.present(alert, animated: true, completion: nil)
-    }
-    
     // Creates error to let user know they need to check username / password
     private func showLoginError() {
         createAlertWithTitle("Login Error", message: "Please check your username and password", actionMessage: "OK", completionHandler: nil)

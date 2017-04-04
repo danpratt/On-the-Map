@@ -73,25 +73,6 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    // Creates the alert view for error handling and user submission overwrite requests
-    private func createAlertWithTitle(_ title: String, message: String, actionMessage: String? = nil, actionMessages: [String]? = nil, completionHandler: ((UIAlertAction) -> Void)?) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        if let actionMessage = actionMessage {
-            let action = UIAlertAction(title: actionMessage, style: .default, handler: completionHandler)
-            alert.addAction(action)
-        }
-        
-        // Setup multiple actions
-        if let actionMessages = actionMessages {
-            for actionMessage in actionMessages {
-                let action = UIAlertAction(title: actionMessage, style: .default, handler: completionHandler)
-                alert.addAction(action)
-            }
-        }
-        
-        self.present(alert, animated: true, completion: nil)
-    }
-    
     // MARK: - Delegate Functions
     
     // Clear text entry when user clicks into field
