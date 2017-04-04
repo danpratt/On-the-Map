@@ -37,6 +37,7 @@ class OTMTableOfPinsViewController: UITableViewController {
         
     }
     
+    
 
     // MARK: - Table view data source
 
@@ -51,9 +52,9 @@ class OTMTableOfPinsViewController: UITableViewController {
         // Get ready
         let cell = tableView.dequeueReusableCell(withIdentifier: "OTMDataCell", for: indexPath) as! OTMTableofPinsViewCell
         let data = tableData[indexPath.row]
+        let cellLoadQueue = DispatchQueue.init(label: "loadQueue", attributes: .concurrent)
         
-        // Function to safely get name
-        let name = { () -> String in 
+        let name = { () -> String in
             if let first = data.firstName, let last = data.lastName {
                 return ("\(first) \(last)")
             } else {
@@ -70,23 +71,30 @@ class OTMTableOfPinsViewController: UITableViewController {
             }
         }
         
-        // create location for map
-        let location = CLLocationCoordinate2D(latitude: data.latitude, longitude: data.longitude)
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = location
-        annotation.title = name()
+        // Function to safely get name
+        cellLoadQueue.sync {
+            // create location for map
+            let location = CLLocationCoordinate2D(latitude: data.latitude, longitude: data.longitude)
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = location
+            annotation.title = name()
+            
+            // setup map in cell
+            cell.mapView.addAnnotation(annotation)
+            cell.mapView.setRegion(MKCoordinateRegion.init(center: annotation.coordinate, span: .init(latitudeDelta: 2, longitudeDelta: 2)), animated: false)
+            
+            performUIUpdatesOnMain {
+                
+                // setup labels in cell
+                cell.nameLabel.text = name()
+                cell.webLabel.text = url()
+            }
+        }
         
-        // setup map in cell
-        cell.mapView.addAnnotation(annotation)
-        cell.mapView.setRegion(MKCoordinateRegion.init(center: annotation.coordinate, span: .init(latitudeDelta: 2, longitudeDelta: 2)), animated: false)
-        
-        // setup labels in cell
-        cell.nameLabel.text = name()
-        cell.webLabel.text = url()
-
         return cell
     }
 
+    // Launch URL when user taps on table row
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let data = tableData[indexPath.row]
