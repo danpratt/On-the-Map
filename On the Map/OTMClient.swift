@@ -100,8 +100,8 @@ class OTMClient: NSObject {
         // Setup parameters
         // Check if we are authenticating a session, if so, use parent parameters
         // Otherwise we don't need parent parameters
-        var parametersData: Data!
-        var shaveFiveChars: Bool!
+        var parametersData: Data = Data()
+        var shaveFiveChars: Bool
         if method == Constants.Methods.AuthenticateSession {
             let parentParameters = "{\"\(OTMClient.Constants.ParameterKeys.Udacity)\": {"
             parametersData = OTMParametersFromDictionary(parameters!, withParent: parentParameters)
