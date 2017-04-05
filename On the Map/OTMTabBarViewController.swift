@@ -58,9 +58,7 @@ class OTMTabBarViewController: UITabBarController {
                         OTMClient.sharedInstance().mapPinData = mapData
                         performUIUpdatesOnMain {
                             self.Indicator.StopActivityIndicator(obj: self, indicator: activity)
-                            _ = self.navigationController?.popToRootViewController(animated: false)
-                            let controller = self.storyboard!.instantiateViewController(withIdentifier: "OTMNavController") as! UINavigationController
-                            self.present(controller, animated: false, completion: nil)
+                            self.navigationController?.popViewController(animated: true)
                         }
                         
                     }
