@@ -172,7 +172,13 @@ IAo
                             <constraint firstItem="llT-yL-IGo" firstAttribute="top" secondItem="M11-Wc-G0H" secondAttribute="bottom" constant="12" id="tyI-LG-GjB"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="3f9-D6-Myn"/>
+                    <navigationItem key="navigationItem" id="3f9-D6-Myn">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="QoD-I7-5fc">
+                            <connections>
+                                <action selector="cancelButtonPressed:" destination="lFN-er-GdO" id="0rl-VD-8Sn"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="findLocationButton" destination="llT-yL-IGo" id="RVi-pM-nYY"/>
                         <outlet property="locationEntry" destination="M11-Wc-G0H" id="5V9-Uz-qhb"/>
@@ -350,7 +356,7 @@ IAo
                                 <rect key="frame" x="0.0" y="28" width="414" height="75"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FQP-yN-PhJ" id="gvF-Kb-gEG">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="74.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="74.666666666666671"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="t1Z-ig-nww" userLabel="Cell Stack View">

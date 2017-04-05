@@ -27,6 +27,8 @@ class OTMLocatoinInputViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var locationEntry: UITextField!
     @IBOutlet weak var findLocationButton: UIButton!
     
+    // MARK: - View Loads
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.locationEntry.delegate = self
@@ -39,6 +41,8 @@ class OTMLocatoinInputViewController: UIViewController, UITextFieldDelegate {
         }
     }
 
+    // MARK: - IBActions
+    
     @IBAction func findLocationButtonPressed(_ sender: Any) {
         guard let searchString = locationEntry.text, searchString != "", searchString != "Enter Your Location Here" else {
             createAlertWithTitle("Empty Search", message: "Please enter a location to search for.", actionMessage: "Ok", completionHandler: nil)
@@ -58,6 +62,12 @@ class OTMLocatoinInputViewController: UIViewController, UITextFieldDelegate {
             self.processResponse(withPlacemarks: placemarks, error: error)
         })
     }
+    
+    // Go back from where we came
+    @IBAction func cancelButtonPressed(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     
     // MARK: - Private Helper Functions
     
