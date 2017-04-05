@@ -19,10 +19,13 @@ class OTMLocatoinInputViewController: UIViewController, UITextFieldDelegate {
     
     var doneAdding: Bool?
     
+    // Indicator View
+    let Indicator = OTMActivityIndicator()
+    var activity: UIActivityIndicatorView!
+    
     // IBOutlets
     @IBOutlet weak var locationEntry: UITextField!
     @IBOutlet weak var findLocationButton: UIButton!
-    @IBOutlet weak var findLocationActivityMonitor: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,9 +47,7 @@ class OTMLocatoinInputViewController: UIViewController, UITextFieldDelegate {
         
         placeName = searchString
         performUIUpdatesOnMain {
-            self.findLocationActivityMonitor.isHidden = false
-            self.findLocationActivityMonitor.startAnimating()
-            self.findLocationButton.isEnabled = false
+            self.activity = self.Indicator.StartActivityIndicator(obj: self, color: .white)
         }
         print("Searching for: \(String(describing: searchString))")
         geoCoder.geocodeAddressString(searchString, completionHandler: { (placemarks, error) in
@@ -63,7 +64,7 @@ class OTMLocatoinInputViewController: UIViewController, UITextFieldDelegate {
     // Process the response
     private func processResponse(withPlacemarks placemarks: [CLPlacemark]?, error: Error?) {
         // Update View
-        findLocationActivityMonitor.stopAnimating()
+        self.Indicator.StopActivityIndicator(obj: self, indicator: activity)
         findLocationButton.isEnabled = true
         
         if let error = error {

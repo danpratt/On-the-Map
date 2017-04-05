@@ -58,7 +58,7 @@
         <scene sceneID="Bch-SP-zUN">
             <objects>
                 <navigationController storyboardIdentifier="AddPointNavView" automaticallyAdjustsScrollViewInsets="NO" id="8z7-dm-Zo9" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="T8K-fh-qJT">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="T8K-fh-qJT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -149,16 +149,13 @@ IAo
                                     <action selector="findLocationButtonPressed:" destination="lFN-er-GdO" eventType="touchUpInside" id="xNX-xb-7L9"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter Your Location Here" textAlignment="center" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="M11-Wc-G0H">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="Enter Your Location Here" textAlignment="center" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="M11-Wc-G0H">
                                 <rect key="frame" x="0.0" y="246" width="414" height="239"/>
                                 <color key="backgroundColor" red="0.28750693799999999" green="0.5316470861" blue="0.61968690159999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="Roboto-Thin" family="Roboto" pointSize="22"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="go" enablesReturnKeyAutomatically="YES"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="yes" spellCheckingType="yes" returnKeyType="go" enablesReturnKeyAutomatically="YES"/>
                             </textField>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="ki7-dg-xSK">
-                                <rect key="frame" x="189" y="379.66666666666669" width="37" height="37"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.36871728300000001" green="0.36870867010000002" blue="0.36871033910000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
@@ -167,9 +164,7 @@ IAo
                             <constraint firstItem="jIM-L7-fgn" firstAttribute="leading" secondItem="M11-Wc-G0H" secondAttribute="leading" id="MaK-zA-uU4"/>
                             <constraint firstItem="llT-yL-IGo" firstAttribute="leading" secondItem="M11-Wc-G0H" secondAttribute="leading" id="Mb5-9N-dfl"/>
                             <constraint firstItem="M11-Wc-G0H" firstAttribute="leading" secondItem="bpx-bX-iKP" secondAttribute="leadingMargin" constant="-20" id="VxJ-Y2-XfS"/>
-                            <constraint firstItem="ki7-dg-xSK" firstAttribute="centerX" secondItem="bpx-bX-iKP" secondAttribute="centerX" id="Wvq-n9-o1X"/>
                             <constraint firstItem="llT-yL-IGo" firstAttribute="trailing" secondItem="M11-Wc-G0H" secondAttribute="trailing" id="ZXp-wq-Awc"/>
-                            <constraint firstItem="ki7-dg-xSK" firstAttribute="centerY" secondItem="bpx-bX-iKP" secondAttribute="centerY" constant="30" id="bks-dT-5LZ"/>
                             <constraint firstItem="jIM-L7-fgn" firstAttribute="top" secondItem="bpx-bX-iKP" secondAttribute="top" id="dE8-oi-KoQ"/>
                             <constraint firstItem="llT-yL-IGo" firstAttribute="bottom" secondItem="a4j-NI-YsE" secondAttribute="top" id="qXr-gs-Yjn"/>
                             <constraint firstItem="M11-Wc-G0H" firstAttribute="top" secondItem="jIM-L7-fgn" secondAttribute="bottom" constant="7" id="r7f-rw-SUC"/>
@@ -178,7 +173,6 @@ IAo
                     </view>
                     <navigationItem key="navigationItem" id="3f9-D6-Myn"/>
                     <connections>
-                        <outlet property="findLocationActivityMonitor" destination="ki7-dg-xSK" id="y3M-nr-5h9"/>
                         <outlet property="findLocationButton" destination="llT-yL-IGo" id="RVi-pM-nYY"/>
                         <outlet property="locationEntry" destination="M11-Wc-G0H" id="5V9-Uz-qhb"/>
                     </connections>
@@ -257,17 +251,13 @@ IAo
                                     <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="nig-3f-DLA" userLabel="URL Entry Stack View">
                                         <rect key="frame" x="0.0" y="236" width="414" height="236"/>
                                         <subviews>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter a URL Here" textAlignment="center" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="lCK-NR-ZXA">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="118"/>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="Enter a URL Here" textAlignment="center" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="lCK-NR-ZXA">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="236"/>
                                                 <color key="backgroundColor" red="0.28750693799999999" green="0.5316470861" blue="0.61968690159999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Thin" family="Roboto" pointSize="22"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="go" enablesReturnKeyAutomatically="YES"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL" returnKeyType="go" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
-                                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="cuP-cB-qE3">
-                                                <rect key="frame" x="0.0" y="118" width="414" height="118"/>
-                                                <color key="backgroundColor" red="0.18127343058586121" green="0.53608345985412598" blue="0.6328049898147583" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </activityIndicatorView>
                                         </subviews>
                                         <color key="backgroundColor" red="0.18127343058586121" green="0.53608345985412598" blue="0.6328049898147583" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </stackView>
@@ -433,7 +423,7 @@ IAo
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="XyP-T3-cg5">
+                            <textField opaque="NO" clipsSubviews="YES" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="center" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="XyP-T3-cg5">
                                 <rect key="frame" x="16" y="252" width="378" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -442,9 +432,9 @@ IAo
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="20"/>
-                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hsu-n6-tv5">
+                            <textField opaque="NO" clipsSubviews="YES" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hsu-n6-tv5">
                                 <rect key="frame" x="16" y="310" width="378" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -453,7 +443,7 @@ IAo
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="20"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="go" secureTextEntry="YES"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="go" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="akI-X9-DjA">
                                 <rect key="frame" x="16" y="368" width="378" height="50"/>
@@ -520,7 +510,7 @@ IAo
         <scene sceneID="67M-7Z-bQG">
             <objects>
                 <navigationController storyboardIdentifier="OTMNavController" automaticallyAdjustsScrollViewInsets="NO" id="aK7-Hl-fTf" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="dLS-G6-1JQ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="dLS-G6-1JQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

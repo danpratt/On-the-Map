@@ -15,7 +15,7 @@ class OTMTabBarViewController: UITabBarController {
     
     @IBAction func reloadButtonPressed(_ sender: Any) {
         
-        let activity = Indicator.StartActivityIndicator(obj: self)
+        let activity = Indicator.StartActivityIndicator(obj: self, color: .blue)
         
         let loadQueue = DispatchQueue.init(label: "loadQueue", attributes: .concurrent)
         

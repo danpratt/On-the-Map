@@ -48,7 +48,7 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
     
     // Add the locatoin to the map, and return to the navigation view
     private func addLocation() {
-        let activity = Indicator.StartActivityIndicator(obj: self)
+        let activity = Indicator.StartActivityIndicator(obj: self, color: .white)
         
         OTMClient.sharedInstance().addUserLocation(withUserMapPinData: userMapPinData) { (success, wasNew, error) in
             
