@@ -74,14 +74,10 @@ struct OTMMapData {
             if let latitude = dictionary[OTMClient.Constants.JSONMapResponseKeys.Latitude] as? Double, let longitude = dictionary[OTMClient.Constants.JSONMapResponseKeys.Longitude] as? Double {
                 // to reduce code, we can just check here
                 if dictionary[OTMClient.Constants.JSONMapResponseKeys.Key] as? String == OTMClient.sharedInstance().userID {
-                    print("Found existing")
                     OTMClient.sharedInstance().usersExistingObjectID = dictionary[OTMClient.Constants.JSONMapResponseKeys.ObjectID] as? String
                     OTMClient.sharedInstance().userLocation = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
                 }
             } else {
-//                print("Found nil")
-//                print("Longitude: \(dictionary[OTMClient.Constants.JSONMapResponseKeys.Longitude])")
-//                print("Latitude: \(dictionary[OTMClient.Constants.JSONMapResponseKeys.Latitude])")
                 append = false
             }
             
