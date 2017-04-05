@@ -12,13 +12,13 @@ import UIKit
 // This class presents an activity view over an existing view
 class OTMActivityIndicator: NSObject {
     
-    enum color {
+    enum Color {
         case white, blue, gray
     }
     
     var myActivityIndicator:UIActivityIndicatorView!
     
-    func StartActivityIndicator(obj:UIViewController, color: color) -> UIActivityIndicatorView
+    func StartActivityIndicator(obj:UIViewController, color: Color) -> UIActivityIndicatorView
     {
         
         myActivityIndicator = UIActivityIndicatorView(frame:CGRect(x: 100, y: 100, width: 100, height: 100)) as UIActivityIndicatorView

@@ -15,19 +15,19 @@ class OTMAuthViewViewController: UIViewController, UITextFieldDelegate {
     var username: String? = nil
     var password: String? = nil
     var session: URLSession!
+    let Indicator = OTMActivityIndicator()
+    var activity = UIActivityIndicatorView()
     
     // MARK: Outlets
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var loginActivity: UIActivityIndicatorView!
     
     
     // MARK: Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loginActivity.stopAnimating()
         emailTextField.delegate = self
         passwordTextField.delegate = self
     }
@@ -70,7 +70,7 @@ class OTMAuthViewViewController: UIViewController, UITextFieldDelegate {
     private func displayError(_ error: String) {
         // Stop the animation and let the user try again
         performUIUpdatesOnMain {
-            self.loginActivity.stopAnimating()
+            self.Indicator.StopActivityIndicator(obj: self, indicator: self.activity)
             self.loginButton.isEnabled = true
         }
 

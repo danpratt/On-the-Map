@@ -21,7 +21,7 @@ extension OTMClient {
         self.hostViewController = hostViewController
         
         hostViewController.loginButton.isEnabled = false
-        hostViewController.loginActivity.startAnimating()
+        hostViewController.activity = hostViewController.Indicator.StartActivityIndicator(obj: hostViewController, color: .white)
         
         // Start the login process
         
@@ -44,7 +44,7 @@ extension OTMClient {
                             
                             if success {
                                 
-                                self.hostViewController.loginActivity.stopAnimating()
+                                self.hostViewController.Indicator.StopActivityIndicator(obj: hostViewController, indicator: hostViewController.activity)
                                 self.mapPinData = mapPinData!
                                 
                                 completionHandlerForAuth(success, nil)
@@ -213,7 +213,10 @@ extension OTMClient {
     func getMapPinData(_ completionHandlerForGetMapPindata: @escaping (_ succes: Bool, _ mapPinData: [OTMMapData]?, _ errorString: String?) -> Void) {
         let httpHeaderFields = [OTMClient.Constants.ParameterKeys.ApplicationID:OTMClient.Constants.JSONParameterKeys.IDHeaderField, OTMClient.Constants.ParameterKeys.API_Key:OTMClient.Constants.JSONParameterKeys.APIHeaderField]
         
-        let _ = taskForGETMethod(Constants.Methods.StudentLocation, httpHeaderFields: httpHeaderFields) { (data, error) in
+        // even though the limit is 100 by default, make this explicit in method call
+        let method = ("\(Constants.Methods.StudentLocation)?limit=100")
+        
+        let _ = taskForGETMethod(method, httpHeaderFields: httpHeaderFields) { (data, error) in
             if let error = error {
                 print(error)
                 completionHandlerForGetMapPindata(false, nil, "Unable to get map data")

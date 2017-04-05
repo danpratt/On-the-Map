@@ -58,7 +58,7 @@
         <scene sceneID="Bch-SP-zUN">
             <objects>
                 <navigationController storyboardIdentifier="AddPointNavView" automaticallyAdjustsScrollViewInsets="NO" id="8z7-dm-Zo9" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="T8K-fh-qJT">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="T8K-fh-qJT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -466,14 +466,6 @@ IAo
                                     <constraint firstAttribute="width" constant="135" id="6pu-4X-Gaq"/>
                                 </constraints>
                             </imageView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Myn-x0-sFd">
-                                <rect key="frame" x="195" y="325" width="20" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="fai-kN-qwN"/>
-                                    <constraint firstAttribute="width" constant="20" id="hzH-UD-5Mc"/>
-                                </constraints>
-                                <color key="color" red="0.0034430453090000001" green="0.70233589409999997" blue="0.89534300570000003" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -482,7 +474,6 @@ IAo
                             <constraint firstItem="AIa-zx-nKY" firstAttribute="top" secondItem="FON-PA-CsC" secondAttribute="bottom" constant="8" id="G8M-J4-jhr"/>
                             <constraint firstItem="akI-X9-DjA" firstAttribute="leading" secondItem="IPk-dj-Zpa" secondAttribute="leadingMargin" constant="-4" id="K9Y-Z2-vOS"/>
                             <constraint firstItem="hsu-n6-tv5" firstAttribute="leading" secondItem="IPk-dj-Zpa" secondAttribute="leadingMargin" constant="-4" id="Kvn-Au-Zff"/>
-                            <constraint firstItem="Myn-x0-sFd" firstAttribute="centerY" secondItem="IPk-dj-Zpa" secondAttribute="centerY" constant="-33" id="MvU-vK-Hra"/>
                             <constraint firstItem="hsu-n6-tv5" firstAttribute="top" secondItem="XyP-T3-cg5" secondAttribute="bottom" constant="8" id="Uqs-Tu-CGZ"/>
                             <constraint firstItem="XyP-T3-cg5" firstAttribute="leading" secondItem="IPk-dj-Zpa" secondAttribute="leadingMargin" constant="-4" id="YLK-Rk-UEE"/>
                             <constraint firstItem="XyP-T3-cg5" firstAttribute="top" secondItem="AIa-zx-nKY" secondAttribute="bottom" constant="8" id="eQB-e8-2jE"/>
@@ -491,13 +482,11 @@ IAo
                             <constraint firstItem="AIa-zx-nKY" firstAttribute="centerX" secondItem="IPk-dj-Zpa" secondAttribute="centerX" id="lDV-Qb-5JV"/>
                             <constraint firstAttribute="trailingMargin" secondItem="hsu-n6-tv5" secondAttribute="trailing" id="pre-a9-wzT"/>
                             <constraint firstItem="akI-X9-DjA" firstAttribute="top" secondItem="hsu-n6-tv5" secondAttribute="bottom" constant="8" id="ptc-gV-e4E"/>
-                            <constraint firstItem="Myn-x0-sFd" firstAttribute="centerX" secondItem="IPk-dj-Zpa" secondAttribute="centerX" constant="-2" id="xAn-bn-l8B"/>
                         </constraints>
                     </view>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <outlet property="emailTextField" destination="XyP-T3-cg5" id="sWN-8b-OMB"/>
-                        <outlet property="loginActivity" destination="Myn-x0-sFd" id="oo7-KL-fwC"/>
                         <outlet property="loginButton" destination="akI-X9-DjA" id="BjG-F4-IeZ"/>
                         <outlet property="passwordTextField" destination="hsu-n6-tv5" id="2Vq-Jb-pXq"/>
                     </connections>
@@ -510,7 +499,7 @@ IAo
         <scene sceneID="67M-7Z-bQG">
             <objects>
                 <navigationController storyboardIdentifier="OTMNavController" automaticallyAdjustsScrollViewInsets="NO" id="aK7-Hl-fTf" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="dLS-G6-1JQ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="dLS-G6-1JQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
