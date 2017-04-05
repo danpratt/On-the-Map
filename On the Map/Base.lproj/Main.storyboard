@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -302,18 +303,20 @@ IAo
             <objects>
                 <tabBarController id="flI-IB-KbU" customClass="OTMTabBarViewController" customModule="On_the_Map" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="KM1-Me-tbf">
-                        <barButtonItem key="leftBarButtonItem" image="icon_addpin" id="p4c-NX-9GH">
-                            <connections>
-                                <segue destination="8z7-dm-Zo9" kind="popoverPresentation" popoverAnchorBarButtonItem="p4c-NX-9GH" id="UwX-Jr-9nS">
-                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                </segue>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="icon_refresh" id="K5C-Zo-une">
-                            <connections>
-                                <action selector="reloadButtonPressed:" destination="flI-IB-KbU" id="N9e-91-o7v"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem image="icon_refresh" id="K5C-Zo-une">
+                                <connections>
+                                    <action selector="reloadButtonPressed:" destination="flI-IB-KbU" id="N9e-91-o7v"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="icon_addpin" id="p4c-NX-9GH">
+                                <connections>
+                                    <segue destination="8z7-dm-Zo9" kind="popoverPresentation" popoverAnchorBarButtonItem="p4c-NX-9GH" id="UwX-Jr-9nS">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="kSZ-fM-Gdz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
