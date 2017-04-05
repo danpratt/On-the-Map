@@ -28,11 +28,23 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var addPointMapView: MKMapView!
     @IBOutlet weak var urlEntryTextField: UITextField!
     
+    // MARK: - viewDidLoad()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         centerMap()
         urlEntryTextField.delegate = self
     }
+    
+    // MARK: - IBActions
+    @IBAction func submitButtonTapped(_ sender: Any) {
+        if urlEntryTextField.isFirstResponder {
+            self.urlEntryTextField.resignFirstResponder()
+        }
+        
+        checkURLBeforeAddLocation()
+    }
+    
     
     // MARK: - Private Functions
     
@@ -44,6 +56,53 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
         annotation.title = userMapPinData.mapString
         addPointMapView.addAnnotation(annotation)
         addPointMapView.setRegion(MKCoordinateRegion.init(center: annotation.coordinate, span: .init(latitudeDelta: 1, longitudeDelta: 1)), animated: true)
+    }
+    
+    // Check to make sure that location is valid
+    private func checkURLBeforeAddLocation() {
+        // This will always work, but I would rather do it safely
+        if let locationVC = previousVC as? OTMLocatoinInputViewController {
+            // lets OTMLocationInputVC know that it can dismiss itself after we dismiss this VC
+            locationVC.doneAdding = true
+        }
+        
+        // Textfield won't be nil, and error handling will be done below.
+        let url = self.urlEntryTextField.text
+        
+        // Make sure that the user has entered http:// or https:// at the start of the URL
+        if (url?.characters.count)! > 8 {
+            let http = url?.substring(to: (url?.index((url?.startIndex)!, offsetBy: 7))!).lowercased()
+            let https = url?.substring(to: (url?.index((url?.startIndex)!, offsetBy: 8))!).lowercased()
+            if (http == "http://") || (https == "https://") {
+                
+                // check to see if user data exists
+                // if it does we will initiate addLocation from here
+                if OTMClient.sharedInstance().usersExistingObjectID != nil {
+                    createAlertWithTitle("Existing Data", message: "You have an existing map point.  Would you like to overwrite it?", actionMessages: ["Yes", "No"], completionHandler: { (alert) in
+                        if alert.title == "Yes" {
+                            self.addLocation()
+                        } else {
+                            self.dismiss(animated: true, completion: nil)
+                        }
+                    })
+                }
+                
+                // Make sure that the URL can be added, and that the user doesn't have existing data that was uploaded
+                if (userMapPinData.addURL(url!)) && OTMClient.sharedInstance().usersExistingObjectID == nil {
+                    addLocation()
+                } else {
+                    //  This really should never happen
+                    createAlertWithTitle("Not Added", message: "The URL and Location were not submitted.  Tap OK to return to pin data overview.", actionMessage: "OK", completionHandler: { (alert) in
+                        self.dismiss(animated: true, completion: nil)
+                    })
+                    
+                }
+                
+            }
+        } else {
+            // Show popup warning
+            createAlertWithTitle("Invalid URL", message: "You must enter a valid URL. \n(e.g. https://www.udacity.com)", actionMessage: "OK", completionHandler: nil)
+        }
     }
     
     // Add the locatoin to the map, and return to the navigation view
@@ -117,51 +176,7 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
     // that something is in the textField will be redundant
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        // This will always work, but I would rather do it safely
-        if let locationVC = previousVC as? OTMLocatoinInputViewController {
-            // lets OTMLocationInputVC know that it can dismiss itself after we dismiss this VC
-            locationVC.doneAdding = true
-        }
-        
-        // Textfield must have something in it to get this far, so no check for empty string is necessary
-        let url = self.urlEntryTextField.text
-        
-        // Make sure that the user has entered http:// or https:// at the start of the URL
-        if (url?.characters.count)! > 8 {
-            let http = url?.substring(to: (url?.index((url?.startIndex)!, offsetBy: 7))!).lowercased()
-            let https = url?.substring(to: (url?.index((url?.startIndex)!, offsetBy: 8))!).lowercased()
-            if (http == "http://") || (https == "https://") {
-                
-                // check to see if user data exists
-                // if it does we will initiate addLocation from here
-                if OTMClient.sharedInstance().usersExistingObjectID != nil {
-                    createAlertWithTitle("Existing Data", message: "You have an existing map point.  Would you like to overwrite it?", actionMessages: ["Yes", "No"], completionHandler: { (alert) in
-                        if alert.title == "Yes" {
-                            self.addLocation()
-                        } else {
-                            self.dismiss(animated: true, completion: nil)
-                        }
-                    })
-                }
-                
-                // Make sure that the URL can be added, and that the user doesn't have existing data that was uploaded
-                if (userMapPinData.addURL(url!)) && OTMClient.sharedInstance().usersExistingObjectID == nil {
-                    addLocation()
-                } else {
-                    //  This really should never happen
-                    createAlertWithTitle("Not Added", message: "The URL and Location were not submitted.  Tap OK to return to pin data overview.", actionMessage: "OK", completionHandler: { (alert) in
-                        self.dismiss(animated: true, completion: nil)
-                    })
-
-                }
-                
-            }
-        } else {
-            // Show popup warning
-            createAlertWithTitle("Invalid URL", message: "You must enter a valid URL. \n(e.g. https://www.udacity.com)", actionMessage: "OK", completionHandler: nil)
-        }
-    
-        
+        checkURLBeforeAddLocation()
         return true
     }
     

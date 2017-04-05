@@ -255,16 +255,30 @@ IAo
                                             </label>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="nig-3f-DLA" userLabel="URL Entry Stack View">
+                                    <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" distribution="fillProportionally" spacing="-2" translatesAutoresizingMaskIntoConstraints="NO" id="nig-3f-DLA" userLabel="URL Entry Stack View">
                                         <rect key="frame" x="0.0" y="236" width="414" height="236"/>
                                         <subviews>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="Enter a URL Here" textAlignment="center" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="lCK-NR-ZXA">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="236"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="213"/>
                                                 <color key="backgroundColor" red="0.28750693799999999" green="0.5316470861" blue="0.61968690159999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Thin" family="Roboto" pointSize="22"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL" returnKeyType="go" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K9V-45-MHy" userLabel="Submit Button">
+                                                <rect key="frame" x="0.0" y="211" width="414" height="25"/>
+                                                <color key="backgroundColor" red="0.28750693799999999" green="0.5316470861" blue="0.61968690159999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="25" id="Qdo-HK-Mhj"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="22"/>
+                                                <state key="normal" title="Submit">
+                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="submitButtonTapped:" destination="9hR-zx-Y9i" eventType="touchUpInside" id="gos-uL-BFh"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.18127343058586121" green="0.53608345985412598" blue="0.6328049898147583" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </stackView>
