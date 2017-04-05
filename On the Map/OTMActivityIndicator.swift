@@ -4,6 +4,7 @@
 //
 //  Created by Daniel Pratt on 4/4/17.
 //  Copyright © 2017 Daniel Pratt. All rights reserved.
+//  Adapted from: http://stackoverflow.com/questions/30021475/activity-indicator-in-swift
 //
 
 import Foundation
