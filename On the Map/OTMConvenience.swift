@@ -21,7 +21,6 @@ extension OTMClient {
         self.hostViewController = hostViewController
         
         hostViewController.loginButton.isEnabled = false
-        hostViewController.activity = hostViewController.Indicator.StartActivityIndicator(obj: hostViewController, color: .white)
         
         // Start the login process
         
@@ -44,12 +43,12 @@ extension OTMClient {
                             
                             if success {
                                 
-                                self.hostViewController.Indicator.StopActivityIndicator(obj: hostViewController, indicator: hostViewController.activity)
                                 self.mapPinData = mapPinData!
                                 
                                 completionHandlerForAuth(success, nil)
                             } else {
                                 // Unable to get the mapPinData
+                                
                                 print("Error String Message: \(String(describing: errorString))")
                                 completionHandlerForAuth(false, "MAPDATA")
                             }
@@ -98,7 +97,6 @@ extension OTMClient {
         if usersExistingObjectID == nil {
             // Post Data
             let method = Constants.Methods.StudentLocation
-//            print("parametersDictionary: \(String(describing: parametersDictionary))")
             let _ = taskForPOSTMethod(method, jsonBody: jsonBodyParameters, httpHeaderFields: httpHeaderFields, completionHandlerForPOST: { (postData, error) in
                 if let error = error {
                     print(error)
@@ -118,11 +116,6 @@ extension OTMClient {
             
         } else {
             // User has already been warned, so we can go ahead
-            // Put
-//            print("We would be posting data using:")
-//            print("httpHeaderFields: \(String(describing: httpHeaderFields))")
-//            print("parametersDictionary: \(String(describing: parametersDictionary))")
-//            print("method: \(String(describing: method))")
             let _ = taskForPUTMethod(Constants.Methods.StudentLocation, withObjectID: (self.usersExistingObjectID)!, jsonBody: jsonBodyParameters, httpHeaderFields: httpHeaderFields, completionHandlerForPUT: { (data, error) in
                 if let error = error {
                     print(error)

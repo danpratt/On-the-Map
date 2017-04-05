@@ -298,11 +298,16 @@ IAo
             </objects>
             <point key="canvasLocation" x="3207" y="-748"/>
         </scene>
-        <!--Tab Bar View Controller-->
+        <!--On the Map-->
         <scene sceneID="tJK-2C-lJh">
             <objects>
                 <tabBarController id="flI-IB-KbU" customClass="OTMTabBarViewController" customModule="On_the_Map" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="KM1-Me-tbf">
+                    <navigationItem key="navigationItem" title="On the Map" id="KM1-Me-tbf">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="JE5-WF-fJC">
+                            <connections>
+                                <action selector="logoutButtonTapped:" destination="flI-IB-KbU" id="EMQ-ve-QgA"/>
+                            </connections>
+                        </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem image="icon_refresh" id="K5C-Zo-une">
                                 <connections>
@@ -345,7 +350,7 @@ IAo
                                 <rect key="frame" x="0.0" y="28" width="414" height="75"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FQP-yN-PhJ" id="gvF-Kb-gEG">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="74.666666666666671"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="74.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="t1Z-ig-nww" userLabel="Cell Stack View">

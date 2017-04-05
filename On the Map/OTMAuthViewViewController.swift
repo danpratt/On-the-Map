@@ -17,6 +17,7 @@ class OTMAuthViewViewController: UIViewController, UITextFieldDelegate {
     var session: URLSession!
     let Indicator = OTMActivityIndicator()
     var activity = UIActivityIndicatorView()
+    var firstLoad = true
     
     // MARK: Outlets
     @IBOutlet weak var emailTextField: UITextField!
@@ -32,6 +33,18 @@ class OTMAuthViewViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.delegate = self
     }
     
+    // After logout, reset this view
+    // We could do it in completeLogin(), but I prefer to do it here
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        if !firstLoad {
+            viewDidLoad()
+            loginButton.isEnabled = true
+            emailTextField.text = ""
+            passwordTextField.text = ""
+        }
+    }
+    
     // MARK: Actions
     
     // This method is called when the user tapps the login button and begins the login process.
@@ -41,9 +54,10 @@ class OTMAuthViewViewController: UIViewController, UITextFieldDelegate {
         password = passwordTextField.text
         
         if username != "" && password != "" {
-            
+            activity = Indicator.StartActivityIndicator(obj: self, color: .white)
             OTMClient.sharedInstance().authenticateWithUdacity(self) { (success, errorString) in
                 performUIUpdatesOnMain {
+                    self.Indicator.StopActivityIndicator(obj: self, indicator: self.activity)
                     if success {
                         self.completeLogin()
                     } else {
@@ -61,6 +75,7 @@ class OTMAuthViewViewController: UIViewController, UITextFieldDelegate {
     
     // Loads up the Nav Controller after the login is successful
     private func completeLogin() {
+        self.firstLoad = false
         let controller = storyboard!.instantiateViewController(withIdentifier: "OTMNavController") as! UINavigationController
         present(controller, animated: true, completion: nil)
     }
@@ -68,9 +83,8 @@ class OTMAuthViewViewController: UIViewController, UITextFieldDelegate {
     // Display an error depending on what the OTMConvenience methods throw back as us 
     // The login has failed for some reason
     private func displayError(_ error: String) {
-        // Stop the animation and let the user try again
+        // let the user try again
         performUIUpdatesOnMain {
-            self.Indicator.StopActivityIndicator(obj: self, indicator: self.activity)
             self.loginButton.isEnabled = true
         }
 

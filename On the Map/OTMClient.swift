@@ -242,7 +242,7 @@ class OTMClient: NSObject {
             func sendError(_ error: String) {
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForDELETE(nil, NSError(domain: "taskForPOSTMethod: \(method)", code: 1, userInfo: userInfo))
+                completionHandlerForDELETE(nil, NSError(domain: "taskForDELETEMethod: \(method)", code: 1, userInfo: userInfo))
             }
             
             /* GUARD: Was there an error? */
@@ -262,8 +262,17 @@ class OTMClient: NSObject {
                 sendError("No data was returned by the request!")
                 return
             }
+            let newData = self.removeFirstFiveCharactersFrom(data: data)
+            var parsedData: NSDictionary?
+            self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: { (dictionary, error) in
+                if error == nil {
+                    parsedData = dictionary
+                    completionHandlerForDELETE(parsedData as AnyObject, nil)
+                } else {
+                    completionHandlerForDELETE(nil, NSError(domain: "taskForDELETEMethod: \(method)", code: 5))
+                }
+            })
             
-            completionHandlerForDELETE(self.removeFirstFiveCharactersFrom(data: data) as AnyObject, nil)
         }
         task.resume()
         
