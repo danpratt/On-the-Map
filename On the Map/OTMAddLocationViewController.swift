@@ -93,7 +93,10 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
                 } else {
                     //  This really should never happen
                     createAlertWithTitle("Not Added", message: "The URL and Location were not submitted.  Tap OK to return to pin data overview.", actionMessage: "OK", completionHandler: { (alert) in
-                        self.dismiss(animated: true, completion: nil)
+                        if alert.title == "OK" {
+                            self.dismiss(animated: true, completion: nil)
+                        }
+                        
                     })
                     
                 }
