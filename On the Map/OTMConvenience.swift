@@ -28,15 +28,15 @@ extension OTMClient {
         getLoginItems() { (success, userID, sessionID, errorString) in
             if success {
                 // Write User and session ID's
-                self.userID = userID!
+                OTMMapDataModel.mapModel().userID = userID!
                 self.sessionID = sessionID!
                 
                 // Get the logged in user's data
                 self.getUsersData({ (success, first, last, errorString) in
                     if success {
                         // Write the User's First / Last Name
-                        self.firstName = first
-                        self.lastName = last
+                        OTMMapDataModel.mapModel().firstName = first
+                        OTMMapDataModel.mapModel().lastName = last
                         
                         // Get the data to populate the map with
                         self.getMapPinData() { (success, mapData, errorString) in
@@ -94,7 +94,7 @@ extension OTMClient {
         
         // If the user has never uploaded go ahead and do a post
         // Otherwise warn user and do put
-        if usersExistingObjectID == nil {
+        if OTMMapDataModel.mapModel().usersExistingObjectID == nil {
             // Post Data
             let method = Constants.Methods.StudentLocation
             let _ = taskForPOSTMethod(method, jsonBody: jsonBodyParameters, httpHeaderFields: httpHeaderFields, completionHandlerForPOST: { (postData, error) in
@@ -109,14 +109,14 @@ extension OTMClient {
                     }
                     
                     // Set the object ID to the one we got
-                    OTMClient.sharedInstance().usersExistingObjectID = objectID
+                    OTMMapDataModel.mapModel().usersExistingObjectID = objectID
                     completionHandlerForAddLocation(true, true, nil)
                 }
             })
             
         } else {
             // User has already been warned, so we can go ahead
-            let _ = taskForPUTMethod(Constants.Methods.StudentLocation, withObjectID: (self.usersExistingObjectID)!, jsonBody: jsonBodyParameters, httpHeaderFields: httpHeaderFields, completionHandlerForPUT: { (data, error) in
+            let _ = taskForPUTMethod(Constants.Methods.StudentLocation, withObjectID: (OTMMapDataModel.mapModel().usersExistingObjectID)!, jsonBody: jsonBodyParameters, httpHeaderFields: httpHeaderFields, completionHandlerForPUT: { (data, error) in
                 if let error = error {
                     print(error)
                     completionHandlerForAddLocation(false, false, error.localizedDescription)
@@ -171,7 +171,7 @@ extension OTMClient {
     private func getUsersData(_ completionHandlerForGetUserDate: @escaping (_ success: Bool, _ firstName: String?, _ lastName: String?, _ errorString: String?) -> Void) {
         
         // Make sure the UserID has been populated
-        guard let ID = self.userID else {
+        guard let ID = OTMMapDataModel.mapModel().userID else {
             completionHandlerForGetUserDate(false, nil, nil, "Getting User ID Failed")
             return
         }

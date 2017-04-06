@@ -87,16 +87,16 @@ class OTMLocatoinInputViewController: UIViewController, UITextFieldDelegate {
                 location = placemarks.first?.location
             }
 
-            var userDataDictionary: [String : AnyObject] = [OTMClient.Constants.JSONMapResponseKeys.Key:OTMClient.sharedInstance().userID as AnyObject,
-                                                            OTMClient.Constants.JSONMapResponseKeys.NameFirst:OTMClient.sharedInstance().firstName as AnyObject,
-                                                            OTMClient.Constants.JSONMapResponseKeys.NameLast:OTMClient.sharedInstance().lastName as AnyObject,
+            var userDataDictionary: [String : AnyObject] = [OTMClient.Constants.JSONMapResponseKeys.Key:OTMMapDataModel.mapModel().userID as AnyObject,
+                                                            OTMClient.Constants.JSONMapResponseKeys.NameFirst:OTMMapDataModel.mapModel().firstName as AnyObject,
+                                                            OTMClient.Constants.JSONMapResponseKeys.NameLast:OTMMapDataModel.mapModel().lastName as AnyObject,
                                                             OTMClient.Constants.JSONMapResponseKeys.MapString: placeName as AnyObject,
                                       OTMClient.Constants.JSONMapResponseKeys.Latitude:location?.coordinate.latitude as AnyObject,
                                       OTMClient.Constants.JSONMapResponseKeys.Longitude:location?.coordinate.longitude as AnyObject,
                                       ]
             
-            if OTMClient.sharedInstance().usersExistingObjectID != nil {
-                userDataDictionary[OTMClient.Constants.JSONMapResponseKeys.ObjectID] = OTMClient.sharedInstance().usersExistingObjectID as AnyObject
+            if OTMMapDataModel.mapModel().usersExistingObjectID != nil {
+                userDataDictionary[OTMClient.Constants.JSONMapResponseKeys.ObjectID] = OTMMapDataModel.mapModel().usersExistingObjectID as AnyObject
             }
             
             userMapPinData = OTMMapData(dictionary: userDataDictionary as [String : AnyObject])

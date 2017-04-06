@@ -22,11 +22,10 @@ class OTMMapViewController: UIViewController, MKMapViewDelegate {
         loadMapPins()
         
         // If an existing entry from previous session is found from the user, center the map there
-        if let userLocation = OTMClient.sharedInstance().userLocation {
+        if let userLocation = OTMMapDataModel.mapModel().userLocation {
             mapView.setRegion(MKCoordinateRegion.init(center: userLocation, span: .init(latitudeDelta: 1, longitudeDelta: 1)), animated: true)
         }
 
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -34,7 +33,7 @@ class OTMMapViewController: UIViewController, MKMapViewDelegate {
         // Reload if the map was updated
         if OTMMapDataModel.mapModel().mapPinDataUpdated {
             loadMapPins()
-            if let userLocation = OTMClient.sharedInstance().userLocation {
+            if let userLocation = OTMMapDataModel.mapModel().userLocation {
                 mapView.setRegion(MKCoordinateRegion.init(center: userLocation, span: .init(latitudeDelta: 1, longitudeDelta: 1)), animated: true)
             }
             

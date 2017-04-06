@@ -78,9 +78,9 @@ struct OTMMapData {
             // This makes sure we don't crash and just ignores these
             if let latitude = dictionary[OTMClient.Constants.JSONMapResponseKeys.Latitude] as? Double, let longitude = dictionary[OTMClient.Constants.JSONMapResponseKeys.Longitude] as? Double {
                 // to reduce code, we can just check here
-                if dictionary[OTMClient.Constants.JSONMapResponseKeys.Key] as? String == OTMClient.sharedInstance().userID {
-                    OTMClient.sharedInstance().usersExistingObjectID = dictionary[OTMClient.Constants.JSONMapResponseKeys.ObjectID] as? String
-                    OTMClient.sharedInstance().userLocation = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                if dictionary[OTMClient.Constants.JSONMapResponseKeys.Key] as? String == OTMMapDataModel.mapModel().userID {
+                    OTMMapDataModel.mapModel().usersExistingObjectID = dictionary[OTMClient.Constants.JSONMapResponseKeys.ObjectID] as? String
+                    OTMMapDataModel.mapModel().userLocation = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
                 }
             } else {
                 append = false

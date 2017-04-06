@@ -77,7 +77,7 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
                 
                 // check to see if user data exists
                 // if it does we will initiate addLocation from here
-                if OTMClient.sharedInstance().usersExistingObjectID != nil {
+                if OTMMapDataModel.mapModel().usersExistingObjectID != nil {
                     createAlertWithTitle("Existing Data", message: "You have an existing map point.  Would you like to overwrite it?", actionMessages: ["Yes", "No"], completionHandler: { (alert) in
                         if alert.title == "Yes" {
                             self.addLocation()
@@ -88,7 +88,7 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
                 }
                 
                 // Make sure that the URL can be added, and that the user doesn't have existing data that was uploaded
-                if (userMapPinData.addURL(url!)) && OTMClient.sharedInstance().usersExistingObjectID == nil {
+                if (userMapPinData.addURL(url!)) && OTMMapDataModel.mapModel().usersExistingObjectID == nil {
                     addLocation()
                 } else {
                     //  This really should never happen
@@ -116,10 +116,10 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
 
                 
                 // Lets the map view center on the user location
-                OTMClient.sharedInstance().userLocation = CLLocationCoordinate2D(latitude: self.userMapPinData.latitude, longitude: self.userMapPinData.longitude)
+                OTMMapDataModel.mapModel().userLocation = CLLocationCoordinate2D(latitude: self.userMapPinData.latitude, longitude: self.userMapPinData.longitude)
                 
                 // Get the objectID from the sharedInstance (was written to during addUserLocatoin call) and add it to the userMapPinData object
-                if let objectID = OTMClient.sharedInstance().usersExistingObjectID {
+                if let objectID = OTMMapDataModel.mapModel().usersExistingObjectID {
                     self.userMapPinData.objectID = objectID
                     
                 } else {
@@ -133,7 +133,7 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
                 } else {
                     // Find and remove the old one.  Put the new one at the top of the list
                     for (index, data) in (OTMMapDataModel.mapModel().mapData?.enumerated())! {
-                        if data.objectID == OTMClient.sharedInstance().usersExistingObjectID {
+                        if data.objectID == OTMMapDataModel.mapModel().usersExistingObjectID {
                             OTMMapDataModel.mapModel().mapData?.remove(at: index)
                             OTMMapDataModel.mapModel().mapData?.insert((self.userMapPinData), at: 0)
                         }

@@ -18,13 +18,6 @@ class OTMClient: NSObject {
     var session = URLSession.shared
     var sessionID: String? = nil
     
-    // User specific info
-    var userID: String? = nil
-    var firstName: String? = nil
-    var lastName: String? = nil
-    var usersExistingObjectID: String? = nil
-    var userLocation: CLLocationCoordinate2D? = nil
-    
     // Stored hostVieController to get UN/ PW
     var hostViewController: OTMAuthViewViewController!
     

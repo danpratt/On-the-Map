@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MapKit
 
 // MARK: - OTMMapDataModel Class
 class OTMMapDataModel {
@@ -19,6 +20,13 @@ class OTMMapDataModel {
     // Update info
     var mapPinDataUpdated: Bool = false
     var listDataUpdated: Bool = false
+    
+    // User specific info
+    var userID: String? = nil
+    var firstName: String? = nil
+    var lastName: String? = nil
+    var usersExistingObjectID: String? = nil
+    var userLocation: CLLocationCoordinate2D?
     
     // MARK: Shared Instance
     
