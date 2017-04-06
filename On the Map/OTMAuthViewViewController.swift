@@ -53,21 +53,27 @@ class OTMAuthViewViewController: UIViewController, UITextFieldDelegate {
         username = emailTextField.text
         password = passwordTextField.text
         
-        if username != "" && password != "" {
-            activity = Indicator.StartActivityIndicator(obj: self, color: .white)
-            OTMClient.sharedInstance().authenticateWithUdacity(self) { (success, errorString) in
-                performUIUpdatesOnMain {
-                    self.Indicator.StopActivityIndicator(obj: self, indicator: self.activity)
-                    if success {
-                        self.completeLogin()
-                    } else {
-                        self.displayError(errorString ?? "NOERRORSTRING")
+        if Reachability.isConnectedToNetwork() {
+            if username != "" && password != "" {
+                activity = Indicator.StartActivityIndicator(obj: self, color: .white)
+                OTMClient.sharedInstance().authenticateWithUdacity(self) { (success, errorString) in
+                    performUIUpdatesOnMain {
+                        self.Indicator.StopActivityIndicator(obj: self, indicator: self.activity)
+                        if success {
+                            self.completeLogin()
+                        } else {
+                            self.displayError(errorString ?? "NOERRORSTRING")
+                        }
                     }
                 }
+            } else {
+                displayError("BLANKFIELDS")
             }
         } else {
-            displayError("BLANKFIELDS")
+            showNetworkError()
         }
+        
+        
 
     }
     
@@ -109,7 +115,7 @@ class OTMAuthViewViewController: UIViewController, UITextFieldDelegate {
     
     // Getting an error that is likely caused by network / udacity issue
     private func showNetworkError() {
-        createAlertWithTitle("Network Error", message: "Unable to retrieve your user data.  If your network connection is okay, wait five minutes and try again.", actionMessage: "OK", completionHandler: nil)
+        createAlertWithTitle("Network Error", message: "Unable to retrieve your user data.  Check your network connection and try again.", actionMessage: "OK", completionHandler: nil)
     }
     
     // Default error, if no error string is present

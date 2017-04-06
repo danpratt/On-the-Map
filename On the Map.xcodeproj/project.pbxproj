@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6528F9151E9690380043E514 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6528F9141E9690380043E514 /* Reachability.swift */; };
 		655FF1321E9445060091B797 /* OTMTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655FF1311E9445060091B797 /* OTMTabBarViewController.swift */; };
 		655FF1341E9450A00091B797 /* OTMActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655FF1331E9450A00091B797 /* OTMActivityIndicator.swift */; };
 		65723E391E7B3E2C0086F9B8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65723E381E7B3E2C0086F9B8 /* AppDelegate.swift */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6528F9141E9690380043E514 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		655FF1311E9445060091B797 /* OTMTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMTabBarViewController.swift; sourceTree = "<group>"; };
 		655FF1331E9450A00091B797 /* OTMActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMActivityIndicator.swift; sourceTree = "<group>"; };
 		65723E351E7B3E2C0086F9B8 /* On the Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On the Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,6 +117,7 @@
 				65CAA6891E8C6776006C0EF5 /* OTMLocatoinInputViewController.swift */,
 				65723E501E7B460D0086F9B8 /* OTMMapViewController.swift */,
 				65723E521E7B46320086F9B8 /* OTMTableOfPinsViewController.swift */,
+				6528F9141E9690380043E514 /* Reachability.swift */,
 				65723E561E7B49170086F9B8 /* OTMAuthViewViewController.swift */,
 				655FF1311E9445060091B797 /* OTMTabBarViewController.swift */,
 				655FF1331E9450A00091B797 /* OTMActivityIndicator.swift */,
@@ -251,6 +254,7 @@
 				655FF1341E9450A00091B797 /* OTMActivityIndicator.swift in Sources */,
 				65723E531E7B46320086F9B8 /* OTMTableOfPinsViewController.swift in Sources */,
 				655FF1321E9445060091B797 /* OTMTabBarViewController.swift in Sources */,
+				6528F9151E9690380043E514 /* Reachability.swift in Sources */,
 				658F101C1E84438200E6731C /* OTMConvenience.swift in Sources */,
 				65723E551E7B47460086F9B8 /* OTMConstants.swift in Sources */,
 				65DACDD71E85B49200C1A8E5 /* OTMAddLocationViewController.swift in Sources */,
