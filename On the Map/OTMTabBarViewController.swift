@@ -60,7 +60,7 @@ class OTMTabBarViewController: UITabBarController {
                         OTMMapDataModel.mapModel().listDataUpdated = true
                         performUIUpdatesOnMain {
                             self.Indicator.StopActivityIndicator(obj: self, indicator: activity)
-                            self.navigationController?.popViewController(animated: true)
+                            self.viewWillAppear(true)
                         }
                         
                     }
