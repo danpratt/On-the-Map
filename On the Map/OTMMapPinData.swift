@@ -24,6 +24,7 @@ struct OTMMapData {
     let latitude: Double
     let longitude: Double
     var hasNilCoord: Bool = false
+    var updatedAt: String?
     
     // MARK: Init
     
@@ -34,6 +35,7 @@ struct OTMMapData {
         lastName = dictionary[OTMClient.Constants.JSONMapResponseKeys.NameLast] as? String
         mapString = dictionary[OTMClient.Constants.JSONMapResponseKeys.MapString] as? String
         mediaURL = dictionary[OTMClient.Constants.JSONMapResponseKeys.MediaURL] as? String
+        updatedAt = dictionary[OTMClient.Constants.JSONMapResponseKeys.UpdatedDate] as? String
         if let lat = dictionary[OTMClient.Constants.JSONMapResponseKeys.Latitude] as? Double {
             
             latitude = lat

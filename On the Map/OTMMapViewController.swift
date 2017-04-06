@@ -58,6 +58,7 @@ class OTMMapViewController: UIViewController, MKMapViewDelegate {
         // This makes sure we don't crash and just ignores these
         for map in mapPins {
 
+            
             let latitude = CLLocationDegrees(map.latitude)
             let longitude = CLLocationDegrees(map.longitude)
             let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)

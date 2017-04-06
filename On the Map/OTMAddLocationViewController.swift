@@ -129,12 +129,13 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
                 
                 // Add the location to the array of mapPinData so we don't need to load from the network again.
                 if wasNew {
-                    OTMClient.sharedInstance().mapPinData?.append(self.userMapPinData)
+                    OTMClient.sharedInstance().mapPinData?.insert((self.userMapPinData), at: 0)
                 } else {
-                    // Find and replace the old one
+                    // Find and remove the old one.  Put the new one at the top of the list
                     for (index, data) in OTMClient.sharedInstance().mapPinData!.enumerated() {
                         if data.objectID == OTMClient.sharedInstance().usersExistingObjectID {
-                            OTMClient.sharedInstance().mapPinData?[index] = self.userMapPinData
+                            OTMClient.sharedInstance().mapPinData?.remove(at: index)
+                            OTMClient.sharedInstance().mapPinData?.insert((self.userMapPinData), at: 0)
                         }
                     }
                 }

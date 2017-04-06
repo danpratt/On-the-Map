@@ -207,7 +207,7 @@ extension OTMClient {
         let httpHeaderFields = [OTMClient.Constants.ParameterKeys.ApplicationID:OTMClient.Constants.JSONParameterKeys.IDHeaderField, OTMClient.Constants.ParameterKeys.API_Key:OTMClient.Constants.JSONParameterKeys.APIHeaderField]
         
         // even though the limit is 100 by default, make this explicit in method call
-        let method = ("\(Constants.Methods.StudentLocation)?limit=100")
+        let method = ("\(Constants.Methods.StudentLocation)?limit=100&order=-updatedAt")
         
         let _ = taskForGETMethod(method, httpHeaderFields: httpHeaderFields) { (data, error) in
             if let error = error {
