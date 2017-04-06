@@ -1,5 +1,5 @@
 //
-//  MapPinData.swift
+//  MapData.swift
 //  On the Map
 //
 //  Created by Daniel Pratt on 3/23/17.
@@ -25,6 +25,7 @@ struct OTMMapData {
     let longitude: Double
     var hasNilCoord: Bool = false
     var updatedAt: String?
+    var location: CLLocationCoordinate2D?
     
     // MARK: Init
     
@@ -50,6 +51,8 @@ struct OTMMapData {
             hasNilCoord = true
             longitude = 0.0
         }
+        
+        location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
     
     // Add a URL if none exists yet

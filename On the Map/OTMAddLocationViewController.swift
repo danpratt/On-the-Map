@@ -129,20 +129,20 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
                 
                 // Add the location to the array of mapPinData so we don't need to load from the network again.
                 if wasNew {
-                    OTMClient.sharedInstance().mapPinData?.insert((self.userMapPinData), at: 0)
+                    OTMMapDataModel.mapModel().mapData?.insert((self.userMapPinData), at: 0)
                 } else {
                     // Find and remove the old one.  Put the new one at the top of the list
-                    for (index, data) in OTMClient.sharedInstance().mapPinData!.enumerated() {
+                    for (index, data) in (OTMMapDataModel.mapModel().mapData?.enumerated())! {
                         if data.objectID == OTMClient.sharedInstance().usersExistingObjectID {
-                            OTMClient.sharedInstance().mapPinData?.remove(at: index)
-                            OTMClient.sharedInstance().mapPinData?.insert((self.userMapPinData), at: 0)
+                            OTMMapDataModel.mapModel().mapData?.remove(at: index)
+                            OTMMapDataModel.mapModel().mapData?.insert((self.userMapPinData), at: 0)
                         }
                     }
                 }
                 
                 // Tell the VC to reload data
-                OTMClient.sharedInstance().mapPinDataUpdated = true
-                OTMClient.sharedInstance().listDataUpdated = true
+                OTMMapDataModel.mapModel().mapPinDataUpdated = true
+                OTMMapDataModel.mapModel().listDataUpdated = true
                 performUIUpdatesOnMain {
                     self.Indicator.StopActivityIndicator(obj: self, indicator: activity)
                 }

@@ -21,7 +21,8 @@
 		65723E591E7B498F0086F9B8 /* OTMClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65723E581E7B498F0086F9B8 /* OTMClient.swift */; };
 		65723E5B1E7B54370086F9B8 /* GCDConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65723E5A1E7B54370086F9B8 /* GCDConvenience.swift */; };
 		658F101C1E84438200E6731C /* OTMConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F101B1E84438200E6731C /* OTMConvenience.swift */; };
-		658F101E1E847E8000E6731C /* OTMMapPinData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F101D1E847E8000E6731C /* OTMMapPinData.swift */; };
+		658F101E1E847E8000E6731C /* OTMMapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F101D1E847E8000E6731C /* OTMMapData.swift */; };
+		6593CAE01E96A4BC0098DE04 /* OTMMapDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6593CADF1E96A4BC0098DE04 /* OTMMapDataModel.swift */; };
 		65A9FBF31E92F14000435EFB /* OTMTableofPinsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A9FBF21E92F14000435EFB /* OTMTableofPinsViewCell.swift */; };
 		65CAA68A1E8C6776006C0EF5 /* OTMLocatoinInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CAA6891E8C6776006C0EF5 /* OTMLocatoinInputViewController.swift */; };
 		65DACDD71E85B49200C1A8E5 /* OTMAddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DACDD61E85B49200C1A8E5 /* OTMAddLocationViewController.swift */; };
@@ -47,7 +48,8 @@
 		65723E5D1E7B5D550086F9B8 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		65723E5E1E7B5D550086F9B8 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
 		658F101B1E84438200E6731C /* OTMConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMConvenience.swift; sourceTree = "<group>"; };
-		658F101D1E847E8000E6731C /* OTMMapPinData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMMapPinData.swift; sourceTree = "<group>"; };
+		658F101D1E847E8000E6731C /* OTMMapData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMMapData.swift; sourceTree = "<group>"; };
+		6593CADF1E96A4BC0098DE04 /* OTMMapDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMMapDataModel.swift; sourceTree = "<group>"; };
 		65A9FBF21E92F14000435EFB /* OTMTableofPinsViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMTableofPinsViewCell.swift; sourceTree = "<group>"; };
 		65CAA6891E8C6776006C0EF5 /* OTMLocatoinInputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMLocatoinInputViewController.swift; sourceTree = "<group>"; };
 		65DACDD61E85B49200C1A8E5 /* OTMAddLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMAddLocationViewController.swift; sourceTree = "<group>"; };
@@ -102,7 +104,8 @@
 		65723E4B1E7B44B10086F9B8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				658F101D1E847E8000E6731C /* OTMMapPinData.swift */,
+				6593CADF1E96A4BC0098DE04 /* OTMMapDataModel.swift */,
+				658F101D1E847E8000E6731C /* OTMMapData.swift */,
 				65723E541E7B47460086F9B8 /* OTMConstants.swift */,
 				65723E581E7B498F0086F9B8 /* OTMClient.swift */,
 				658F101B1E84438200E6731C /* OTMConvenience.swift */,
@@ -248,13 +251,14 @@
 			files = (
 				65723E5B1E7B54370086F9B8 /* GCDConvenience.swift in Sources */,
 				65A9FBF31E92F14000435EFB /* OTMTableofPinsViewCell.swift in Sources */,
-				658F101E1E847E8000E6731C /* OTMMapPinData.swift in Sources */,
+				658F101E1E847E8000E6731C /* OTMMapData.swift in Sources */,
 				65723E391E7B3E2C0086F9B8 /* AppDelegate.swift in Sources */,
 				65723E591E7B498F0086F9B8 /* OTMClient.swift in Sources */,
 				655FF1341E9450A00091B797 /* OTMActivityIndicator.swift in Sources */,
 				65723E531E7B46320086F9B8 /* OTMTableOfPinsViewController.swift in Sources */,
 				655FF1321E9445060091B797 /* OTMTabBarViewController.swift in Sources */,
 				6528F9151E9690380043E514 /* Reachability.swift in Sources */,
+				6593CAE01E96A4BC0098DE04 /* OTMMapDataModel.swift in Sources */,
 				658F101C1E84438200E6731C /* OTMConvenience.swift in Sources */,
 				65723E551E7B47460086F9B8 /* OTMConstants.swift in Sources */,
 				65DACDD71E85B49200C1A8E5 /* OTMAddLocationViewController.swift in Sources */,

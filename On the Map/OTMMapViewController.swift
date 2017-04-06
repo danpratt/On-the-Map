@@ -32,13 +32,13 @@ class OTMMapViewController: UIViewController, MKMapViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         // Reload if the map was updated
-        if OTMClient.sharedInstance().mapPinDataUpdated {
+        if OTMMapDataModel.mapModel().mapPinDataUpdated {
             loadMapPins()
             if let userLocation = OTMClient.sharedInstance().userLocation {
                 mapView.setRegion(MKCoordinateRegion.init(center: userLocation, span: .init(latitudeDelta: 1, longitudeDelta: 1)), animated: true)
             }
             
-            OTMClient.sharedInstance().mapPinDataUpdated = false
+            OTMMapDataModel.mapModel().mapPinDataUpdated = false
         }
     }
     
@@ -52,31 +52,32 @@ class OTMMapViewController: UIViewController, MKMapViewDelegate {
     }
 
     private func createAnnotations() {
-        let mapPins = OTMClient.sharedInstance().mapPinData! as [OTMMapData]
-        
         // While writing this, somehow a student named Michael Stram managed to upload nil coordinates
         // This makes sure we don't crash and just ignores these
-        for map in mapPins {
-
-            
-            let latitude = CLLocationDegrees(map.latitude)
-            let longitude = CLLocationDegrees(map.longitude)
-            let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = coordinate
-            
-            if let first = map.firstName, let last = map.lastName {
-                annotation.title = "\(first) \(last)"
-            } else {
-                annotation.title = "No Name"
+        
+        // Make sure that there is mapModel data
+        if OTMMapDataModel.mapModel().mapData != nil {
+            for map in OTMMapDataModel.mapModel().mapData! {
+                
+                let latitude = CLLocationDegrees(map.latitude)
+                let longitude = CLLocationDegrees(map.longitude)
+                let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = coordinate
+                
+                if let first = map.firstName, let last = map.lastName {
+                    annotation.title = "\(first) \(last)"
+                } else {
+                    annotation.title = "No Name"
+                }
+                
+                if let url = map.mediaURL {
+                    annotation.subtitle = url
+                }
+                annotations.append(annotation)
+                
             }
-            
-            if let url = map.mediaURL {
-                annotation.subtitle = url
-            }
-            annotations.append(annotation)
-            
         }
     }
     

@@ -39,11 +39,11 @@ extension OTMClient {
                         self.lastName = last
                         
                         // Get the data to populate the map with
-                        self.getMapPinData() { (success, mapPinData, errorString) in
+                        self.getMapPinData() { (success, mapData, errorString) in
                             
                             if success {
                                 
-                                self.mapPinData = mapPinData!
+                                OTMMapDataModel.mapModel().mapData = mapData!
                                 
                                 completionHandlerForAuth(success, nil)
                             } else {

@@ -13,15 +13,11 @@ class OTMTableOfPinsViewController: UITableViewController {
     
     // MARK: - Properties
     
-    // Model
-    var tableData = [OTMMapData]()
-    
     // Setup the view during first load
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableData = OTMClient.sharedInstance().mapPinData!
         self.tableView.reloadData()
-        OTMClient.sharedInstance().mapPinDataUpdated = false
+        OTMMapDataModel.mapModel().listDataUpdated = false
     }
     
     // Reload if user has updated the view
@@ -29,10 +25,9 @@ class OTMTableOfPinsViewController: UITableViewController {
         super.viewWillAppear(true)
         
         // Reload the table if we have updated data to use
-        if OTMClient.sharedInstance().mapPinDataUpdated {
-            tableData = OTMClient.sharedInstance().mapPinData!
+        if OTMMapDataModel.mapModel().listDataUpdated {
             self.tableView.reloadData()
-            OTMClient.sharedInstance().mapPinDataUpdated = false
+            OTMMapDataModel.mapModel().listDataUpdated = false
         }
         
     }
@@ -43,7 +38,7 @@ class OTMTableOfPinsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return tableData.count
+        return (OTMMapDataModel.mapModel().mapData?.count)!
     }
 
     // Load up cell with data from tableData
@@ -51,10 +46,10 @@ class OTMTableOfPinsViewController: UITableViewController {
         
         // Get ready
         let cell = tableView.dequeueReusableCell(withIdentifier: "OTMDataCell", for: indexPath) as! OTMTableofPinsViewCell
-        let data = tableData[indexPath.row]
+        let data = OTMMapDataModel.mapModel().mapData?[indexPath.row]
         
         let name = { () -> String in
-            if let first = data.firstName, let last = data.lastName {
+            if let first = data?.firstName, let last = data?.lastName {
                 return ("\(first) \(last)")
             } else {
                 return "Unkown Student"
@@ -63,8 +58,8 @@ class OTMTableOfPinsViewController: UITableViewController {
         
         // Function to safely get URL
         let url = { () -> String in
-            if let _ = data.mediaURL {
-                return data.mediaURL!
+            if let _ = data?.mediaURL {
+                return data!.mediaURL!
             } else {
                 return "No URL Provided"
             }
@@ -83,10 +78,10 @@ class OTMTableOfPinsViewController: UITableViewController {
     // Launch URL when user taps on table row
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let data = tableData[indexPath.row]
+        let data = OTMMapDataModel.mapModel().mapData?[indexPath.row]
         
         let app = UIApplication.shared
-        if let toOpen = data.mediaURL {
+        if let toOpen = data?.mediaURL {
             if !toOpen.contains("http") && !toOpen.contains(" ") {
                 let url = "http://" + toOpen
                 app.open(URL(string: url)!)

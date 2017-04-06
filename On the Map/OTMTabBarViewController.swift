@@ -55,7 +55,9 @@ class OTMTabBarViewController: UITabBarController {
             OTMClient.sharedInstance().getMapPinData { (success, data, error) in
                 if success {
                     if let mapData = data {
-                        OTMClient.sharedInstance().mapPinData = mapData
+                        OTMMapDataModel.mapModel().mapData = mapData
+                        OTMMapDataModel.mapModel().mapPinDataUpdated = true
+                        OTMMapDataModel.mapModel().listDataUpdated = true
                         performUIUpdatesOnMain {
                             self.Indicator.StopActivityIndicator(obj: self, indicator: activity)
                             self.navigationController?.popViewController(animated: true)
