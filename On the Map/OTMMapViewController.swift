@@ -29,7 +29,7 @@ class OTMMapViewController: UIViewController, MKMapViewDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        super.viewWillAppear(animated)
         // Reload if the map was updated
         if OTMMapDataModel.mapModel().mapPinDataUpdated {
             loadMapPins()

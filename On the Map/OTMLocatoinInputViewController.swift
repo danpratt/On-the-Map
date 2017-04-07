@@ -35,7 +35,7 @@ class OTMLocatoinInputViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        super.viewWillAppear(animated)
         if (self.doneAdding) != nil {
             self.dismiss(animated: false, completion: nil)
         }

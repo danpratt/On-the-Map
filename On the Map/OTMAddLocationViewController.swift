@@ -39,7 +39,7 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
     // MARK: - IBActions
     @IBAction func submitButtonTapped(_ sender: Any) {
         if urlEntryTextField.isFirstResponder {
-            self.urlEntryTextField.resignFirstResponder()
+            urlEntryTextField.resignFirstResponder()
         }
         
         checkURLBeforeAddLocation()
@@ -67,7 +67,7 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
         }
         
         // Textfield won't be nil, and error handling will be done below.
-        let url = self.urlEntryTextField.text
+        let url = urlEntryTextField.text
         
         // Make sure that the user has entered http:// or https:// at the start of the URL
         if (url?.characters.count)! > 8 {
@@ -186,8 +186,8 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
     
     // If user taps out, we want the keyboard to go away, but we don't want to start the search
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if self.urlEntryTextField.isFirstResponder {
-            self.urlEntryTextField.resignFirstResponder()
+        if urlEntryTextField.isFirstResponder {
+            urlEntryTextField.resignFirstResponder()
         }
     }
 

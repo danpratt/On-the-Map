@@ -16,17 +16,17 @@ class OTMTableOfPinsViewController: UITableViewController {
     // Setup the view during first load
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.reloadData()
+        tableView.reloadData()
         OTMMapDataModel.mapModel().listDataUpdated = false
     }
     
     // Reload if user has updated the view
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        super.viewWillAppear(animated)
         
         // Reload the table if we have updated data to use
         if OTMMapDataModel.mapModel().listDataUpdated {
-            self.tableView.reloadData()
+            tableView.reloadData()
             OTMMapDataModel.mapModel().listDataUpdated = false
         }
         

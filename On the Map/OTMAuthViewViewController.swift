@@ -36,7 +36,7 @@ class OTMAuthViewViewController: UIViewController, UITextFieldDelegate {
     // After logout, reset this view
     // We could do it in completeLogin(), but I prefer to do it here
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        super.viewWillAppear(animated)
         if !firstLoad {
             viewDidLoad()
             loginButton.isEnabled = true
