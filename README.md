@@ -17,4 +17,4 @@ This was an assignment for my iOS degree course at Udacity.  The purpose of this
 This app is specific to Udacity's Nanodegree course, and doesn't require contributions.  For non-Udacity students who are learning about using web API's, and JSON parsing, feel free to poke through the code.
 
 ## License
-[MIT License](Tip-Calculator/LICENSE.txt)
+[MIT License](LICENSE.md)
