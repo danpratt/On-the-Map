@@ -73,8 +73,8 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
         if (url?.count)! > 8 {
 //            let http = url?.substring(to: (url?.index((url?.startIndex)!, offsetBy: 7))!).lowercased()
 //            let https = url?.substring(to: (url?.index((url?.startIndex)!, offsetBy: 8))!).lowercased()
-            let http = url?.prefix(upTo: (url?.index((url?.startIndex)!, offsetBy: 7))!)
-            let https = url?.prefix(upTo: (url?.index((url?.startIndex)!, offsetBy: 8))!)
+            let http = url?.prefix(upTo: (url?.index((url?.startIndex)!, offsetBy: 7))!).lowercased()
+            let https = url?.prefix(upTo: (url?.index((url?.startIndex)!, offsetBy: 8))!).lowercased()
             
             if (http == "http://") || (https == "https://") {
                 
