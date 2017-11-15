@@ -28,7 +28,7 @@ class OTMActivityIndicator: NSObject {
         case .white:
             myActivityIndicator.color = UIColor.white
         case .blue:
-            myActivityIndicator.color = UIColor(colorLiteralRed: 1.0/255.0, green: 179.0/255.0, blue: 228.0/255.0, alpha: 1.0)
+            myActivityIndicator.color = UIColor(red: 1.0/255.0, green: 179.0/255.0, blue: 228.0/255.0, alpha: 1.0)
         case .gray:
             fallthrough
         default:

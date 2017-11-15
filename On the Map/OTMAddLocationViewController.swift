@@ -70,9 +70,12 @@ class OTMAddLocationViewController: UIViewController, UITextFieldDelegate {
         let url = urlEntryTextField.text
         
         // Make sure that the user has entered http:// or https:// at the start of the URL
-        if (url?.characters.count)! > 8 {
-            let http = url?.substring(to: (url?.index((url?.startIndex)!, offsetBy: 7))!).lowercased()
-            let https = url?.substring(to: (url?.index((url?.startIndex)!, offsetBy: 8))!).lowercased()
+        if (url?.count)! > 8 {
+//            let http = url?.substring(to: (url?.index((url?.startIndex)!, offsetBy: 7))!).lowercased()
+//            let https = url?.substring(to: (url?.index((url?.startIndex)!, offsetBy: 8))!).lowercased()
+            let http = url?.prefix(upTo: (url?.index((url?.startIndex)!, offsetBy: 7))!)
+            let https = url?.prefix(upTo: (url?.index((url?.startIndex)!, offsetBy: 8))!)
+            
             if (http == "http://") || (https == "https://") {
                 
                 // check to see if user data exists

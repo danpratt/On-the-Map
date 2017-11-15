@@ -288,8 +288,8 @@ class OTMClient: NSObject {
         }
         
         // Get rid of the extra comma and space
-        paramsToReturn.characters.removeLast()
-        paramsToReturn.characters.removeLast()
+        paramsToReturn.removeLast()
+        paramsToReturn.removeLast()
         // Add closing brackets
         if parent == nil {
             paramsToReturn.append("}")
